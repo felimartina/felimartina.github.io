@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Itinerario de Viaje a Asia 2025</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- MUI Icons Link -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <!-- Flag Icons CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/7.2.1/css/flag-icons.min.css" xintegrity="sha512-WIPN9Aw2nFinqTh2iQcQ2jEiP09Z0K5s8L3OPpSXcOT9VlRLEnqgRVRbW3vhd8QCqz_Tw4V2aUb6Aa1kZ3hA7Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .leaflet-container { border-radius: 0.5rem; }
+        #itinerary-list::-webkit-scrollbar, #details-content::-webkit-scrollbar { width: 8px; }
+        #itinerary-list::-webkit-scrollbar-track, #details-content::-webkit-scrollbar-track { background: #f1f5f9; }
+        #itinerary-list::-webkit-scrollbar-thumb, #details-content::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 4px; }
+        #itinerary-list::-webkit-scrollbar-thumb:hover, #details-content::-webkit-scrollbar-thumb:hover { background: #64748b; }
+
+        .timeline-item-container { position: relative; padding-left: 50px; padding-bottom: 25px; cursor: pointer; }
+        .timeline-item-container:last-child { padding-bottom: 5px; }
+        .timeline-line { position: absolute; left: 20px; top: 5px; width: 2px; height: 100%; background-color: #e2e8f0; }
+        .timeline-icon { position: absolute; left: 0; top: 5px; width: 42px; height: 42px; border-radius: 50%; background-color: #475569; border: 2px solid white; display: flex; align-items: center; justify-content: center; color: white; }
+        .timeline-item-container.active .timeline-icon { background-color: #1e40af; }
+        .material-symbols-outlined { font-size: 24px; }
+
+        .city-timeline { position: relative; display: flex; justify-content: space-between; padding: 1.5rem 0; margin: 0 2rem; }
+        .city-timeline::before { content: ''; position: absolute; top: 32px; left: 0; right: 0; height: 3px; background-color: #e2e8f0; z-index: 5; }
+        .city-timeline-item { display: flex; flex-direction: column; align-items: center; position: relative; flex-grow: 1; z-index: 10; }
+        .city-timeline-node { width: 32px; height: 32px; background-color: #fff; border-radius: 50%; border: 2px solid #cbd5e1; transition: border-color 0.3s ease; flex-shrink: 0; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+        .city-timeline-node .fi { font-size: 28px; width: 1em; height: 1em; line-height: 1em; }
+        .city-timeline-item.active .city-timeline-node { border-color: #1e40af; }
+        .city-timeline-label { margin-top: 0.5rem; font-size: 0.875rem; font-weight: 500; color: #475569; transition: color 0.3s ease; text-align: center; }
+        .city-timeline-item.active .city-timeline-label { color: #1e40af; font-weight: 600; }
+        .stay-info { display: flex; gap: 0.75rem; margin-top: 0.25rem; color: #64748b; }
+        .stay-info-item { display: flex; align-items: center; font-size: 0.875rem; }
+        .stay-info-item span:first-child { margin-right: 2px; }
+        .stay-info-item .material-symbols-outlined { font-size: 18px; }
+        .half-day { margin-right: 0.25rem; }
+        .transport-icon { position: absolute; top: -16px; left: 100%; transform: translateX(-50%); background-color: #f8fafc; padding: 4px; border-radius: 50%; z-index: 15; color: #475569; }
+        .transport-icon .material-symbols-outlined { font-size: 20px; }
+        .city-timeline-item:last-child .transport-icon { display: none; }
+        
+        .poi-category h4 { font-weight: 600; color: #334155; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.25rem; margin-bottom: 0.5rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+        .poi-category h4 .material-symbols-outlined { font-size: 20px; margin-right: 8px; }
+        .poi-list { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
+        .poi-list.open { max-height: 1000px; }
+        .poi-item { margin-bottom: 0.75rem; padding-left: 0.5rem; }
+        .poi-name { font-weight: 500; }
+        .poi-desc { font-size: 0.875rem; color: #64748b; }
+        .leaflet-div-icon { background: #fff; border: 2px solid #64748b; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        .leaflet-div-icon .material-symbols-outlined { font-size: 18px; color: #64748b; }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800 antialiased">
+    <div class="container mx-auto p-4 md:p-6 lg:p-8">
+        <header class="text-center mb-6">
+            <h1 class="text-4xl md:text-5xl font-bold text-slate-900">Itinerario de Viaje a Asia</h1>
+            <p class="text-lg text-slate-600 mt-2">Septiembre 27 - Octubre 20, 2025</p>
+        </header>
+
+        <div id="city-timeline-container" class="bg-white p-2 rounded-lg shadow-lg mb-6 overflow-x-auto"></div>
+
+        <main class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="lg:col-span-1 bg-white p-4 rounded-lg shadow-lg flex flex-col h-[85vh]">
+                <div class="flex justify-between items-center border-b pb-2 mb-2">
+                    <h2 class="text-2xl font-bold text-slate-900">Plan de Viaje</h2>
+                    <div class="flex gap-2">
+                        <button id="prevBtn" class="p-2 rounded-md bg-slate-200 hover:bg-slate-300 text-slate-600 disabled:opacity-50 disabled:cursor-not-allowed"><span class="material-symbols-outlined">arrow_back</span></button>
+                        <button id="nextBtn" class="p-2 rounded-md bg-slate-200 hover:bg-slate-300 text-slate-600 disabled:opacity-50 disabled:cursor-not-allowed"><span class="material-symbols-outlined">arrow_forward</span></button>
+                    </div>
+                </div>
+                <div id="itinerary-list" class="overflow-y-auto flex-grow pr-2"></div>
+            </div>
+
+            <div class="lg:col-span-2 flex flex-col gap-6">
+                <div id="map" class="w-full h-[40vh] shadow-lg rounded-lg"></div>
+                <div class="bg-white p-4 rounded-lg shadow-lg flex-grow flex flex-col">
+                    <h2 id="details-title" class="text-2xl font-bold mb-4 text-slate-900 border-b pb-2">Detalles</h2>
+                    <div id="details-content" class="text-slate-700 space-y-2 flex-grow overflow-y-auto pr-2">
+                        <p class="text-slate-500">Selecciona un evento del itinerario para ver los detalles.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // --- DATABASE ---
+        const itineraryData = [
+  {
+    "datetime": "2025-09-27T21:10:00.000Z",
+    "type": "flight",
+    "title": "Vuelo a Montreal (escala)",
+    "location": "Fort Lauderdale",
+    "coords": [
+      26.0726,
+      -80.1528
+    ],
+    "duration": "~3h 50m",
+    "details": {
+      "Reserva": "AY2GE4",
+      "Aerolínea": "Air Canada",
+      "Sale de": "Fort Lauderdale (FLL)",
+      "Llega a": "Montreal (YUL)"
+    }
+  },
+  {
+    "datetime": "2025-09-28T01:30:00.000Z",
+    "type": "lodging",
+    "title": "DoubleTree by Hilton Montreal Airport",
+    "location": "Montreal",
+    "coords": [
+      45.4706,
+      -73.7408
+    ],
+    "details": {
+      "Confirmación": "257-4614967",
+      "Dirección": "705 Avenue Michel-Jasmin Dorval QC H9P 1B8 CA",
+      "Check-out": "12:00 PM"
+    }
+  },
+  {
+    "datetime": "2025-09-28T13:45:00.000Z",
+    "type": "flight",
+    "title": "Vuelo a Tokio",
+    "location": "Montreal",
+    "coords": [
+      45.4706,
+      -73.7408
+    ],
+    "duration": "~14h",
+    "details": {
+      "Reserva": "AY2GE4",
+      "Aerolínea": "Air Canada",
+      "Sale de": "Montreal (YUL)",
+      "Llega a": "Tokio (NRT)"
+    }
+  },
+  {
+    "datetime": "2025-09-29T15:25:00.000Z",
+    "type": "flight_arrival",
+    "title": "Llegada a Tokio",
+    "location": "Tokio",
+    "coords": [
+      35.772,
+      140.3863
+    ],
+    "details": {
+      "Transporte Sugerido": "Narita Express (N'EX) a Shinjuku/Tokyo Station."
+    }
+  },
+  {
+    "datetime": "2025-09-29T23:00:00.000Z",
+    "type": "sleep",
+    "title": "Noche en Tokio",
+    "location": "Tokio",
+    "coords": [
+      35.6895,
+      139.6917
+    ],
+    "details": {
+      "Alojamiento": "NEED TO BOOK"
+    }
+  },
+  {
+    "datetime": "2025-09-30T09:00:00.000Z",
+    "type": "activity",
+    "title": "Día en Tokio",
+    "location": "Tokio",
+    "coords": [
+      35.6895,
+      139.6917
+    ],
+    "details": {
+      "Plan": "Explorar la zona de Shibuya y Harajuku."
+    }
+  },
+  {
+    "datetime": "2025-09-30T23:00:00.000Z",
+    "type": "sleep",
+    "title": "Noche en Tokio",
+    "location": "Tokio",
+    "coords": [
+      35.6895,
+      139.6917
+    ],
+    "details": {
+      "Alojamiento": "NEED TO BOOK"
+    }
+  },
+  {
+    "datetime": "2025-10-01T09:00:00.000Z",
+    "type": "activity",
+    "title": "Día en Tokio",
+    "location": "Tokio",
+    "coords": [
+      35.6895,
+      139.6917
+    ],
+    "details": {
+      "Plan": "Explorar la zona de Asakusa y Ueno."
+    }
+  },
+  {
+    "datetime": "2025-10-01T23:00:00.000Z",
+    "type": "sleep",
+    "title": "Noche en Tokio",
+    "location": "Tokio",
+    "coords": [
+      35.6895,
+      139.6917
+    ],
+    "details": {
+      "Alojamiento": "NEED TO BOOK"
+    }
+  },
+  {
+    "datetime": "2025-10-02T09:00:00.000Z",
+    "type": "activity",
+    "title": "Día en Tokio",
+    "location": "Tokio",
+    "coords": [
+      35.6895,
+      139.6917
+    ],
+    "details": {
+      "Plan": "Visitar el mercado de Tsukiji y los jardines del Palacio Imperial."
+    }
+  },
+  {
+    "datetime": "2025-10-02T23:00:00.000Z",
+    "type": "sleep",
+    "title": "Noche en Tokio",
+    "location": "Tokio",
+    "coords": [
+      35.6895,
+      139.6917
+    ],
+    "details": {
+      "Alojamiento": "NEED TO BOOK"
+    }
+  },
+  {
+    "datetime": "2025-10-03T09:00:00.000Z",
+    "type": "business",
+    "title": "Visita a Google Office",
+    "location": "Tokio",
+    "coords": [
+      35.658,
+      139.7016
+    ],
+    "details": {
+      "Dirección": "Shibuya Stream, 3-21-3 Shibuya"
+    }
+  },
+  {
+    "datetime": "2025-10-03T13:00:00.000Z",
+    "type": "activity",
+    "title": "Tarde en Tokio",
+    "location": "Tokio",
+    "coords": [
+      35.6895,
+      139.6917
+    ],
+    "details": {
+      "Plan": "Tiempo libre para explorar Shibuya."
+    }
+  },
+  {
+    "datetime": "2025-10-03T23:00:00.000Z",
+    "type": "sleep",
+    "title": "Noche en Tokio",
+    "location": "Tokio",
+    "coords": [
+      35.6895,
+      139.6917
+    ],
+    "details": {
+      "Alojamiento": "NEED TO BOOK"
+    }
+  },
+  {
+    "datetime": "2025-10-04T09:00:00.000Z",
+    "type": "activity",
+    "title": "Día en Tokio",
+    "location": "Tokio",
+    "coords": [
+      35.6895,
+      139.6917
+    ],
+    "details": {
+      "Plan": "Día libre para explorar o compras."
+    }
+  },
+  {
+    "datetime": "2025-10-04T23:00:00.000Z",
+    "type": "sleep",
+    "title": "Noche en Tokio",
+    "location": "Tokio",
+    "coords": [
+      35.6895,
+      139.6917
+    ],
+    "details": {
+      "Alojamiento": "NEED TO BOOK"
+    }
+  },
+  {
+    "datetime": "2025-10-05T09:00:00.000Z",
+    "type": "flight",
+    "title": "Vuelo a Busán",
+    "location": "Busán",
+    "coords": [
+      35.1796,
+      129.0756
+    ],
+    "duration": "~2h 30m",
+    "details": {
+      "Aeropuerto Salida": "Narita (NRT)",
+      "Aerolíneas Sugeridas": "Jin Air, Jeju Air, etc."
+    }
+  },
+  {
+    "datetime": "2025-10-05T13:00:00.000Z",
+    "type": "activity",
+    "title": "Día en Busán",
+    "location": "Busán",
+    "coords": [
+      35.1796,
+      129.0756
+    ],
+    "details": {
+      "Plan": "Explorar la zona de la playa Haeundae."
+    }
+  },
+  {
+    "datetime": "2025-10-05T23:00:00.000Z",
+    "type": "sleep",
+    "title": "Noche en Busán",
+    "location": "Busán",
+    "coords": [
+      35.1796,
+      129.0756
+    ],
+    "details": {
+      "Alojamiento": "NEED TO BOOK"
+    }
+  },
+  {
+    "datetime": "2025-10-06T09:00:00.000Z",
+    "type": "transport",
+    "title": "Tren a Gyeongju",
+    "location": "Gyeongju",
+    "coords": [
+      35.8562,
+      129.2247
+    ],
+    "duration": "~30m",
+    "details": {
+      "Transporte": "Tren de alta velocidad KTX."
+    }
+  },
+  {
+    "datetime": "2025-10-06T10:00:00.000Z",
+    "type": "day_trip",
+    "title": "Día en Gyeongju",
+    "location": "Gyeongju",
+    "coords": [
+      35.8562,
+      129.2247
+    ],
+    "details": {
+      "Plan": "Explorar la capital del antiguo reino de Silla."
+    }
+  },
+  {
+    "datetime": "2025-10-06T22:00:00.000Z",
+    "type": "transport",
+    "title": "Tren a Seúl",
+    "location": "Seúl",
+    "coords": [
+      37.5665,
+      126.978
+    ],
+    "duration": "~2h 15m",
+    "details": {
+      "Transporte": "Tren KTX nocturno desde Gyeongju."
+    }
+  },
+  {
+    "datetime": "2025-10-06T23:59:00.000Z",
+    "type": "sleep",
+    "title": "Noche en Seúl",
+    "location": "Seúl",
+    "coords": [
+      37.5665,
+      126.978
+    ],
+    "details": {
+      "Alojamiento": "NEED TO BOOK"
+    }
+  },
+  {
+    "datetime": "2025-10-07T09:00:00.000Z",
+    "type": "business",
+    "title": "Visita a Google Office",
+    "location": "Seúl",
+    "coords": [
+      37.5063,
+      127.035
+    ],
+    "details": {
+      "Dirección": "Gangnam Finance Center"
+    }
+  },
+  {
+    "datetime": "2025-10-07T13:00:00.000Z",
+    "type": "activity",
+    "title": "Tarde en Seúl",
+    "location": "Seúl",
+    "coords": [
+      37.5665,
+      126.978
+    ],
+    "details": {
+      "Plan": "Explorar la zona de Gangnam."
+    }
+  },
+  {
+    "datetime": "2025-10-07T23:59:00.000Z",
+    "type": "sleep",
+    "title": "Noche en Seúl",
+    "location": "Seúl",
+    "coords": [
+      37.5665,
+      126.978
+    ],
+    "details": {
+      "Alojamiento": "NEED TO BOOK"
+    }
+  },
+  {
+    "datetime": "2025-10-08T09:00:00.000Z",
+    "type": "activity",
+    "title": "Día en Seúl",
+    "location": "Seúl",
+    "coords": [
+      37.5665,
+      126.978
+    ],
+    "details": {
+      "Plan": "Visitar el palacio Gyeongbokgung y Bukchon Hanok Village."
+    }
+  },
+  {
+    "datetime": "2025-10-08T23:00:00.000Z",
+    "type": "sleep",
+    "title": "Noche en Seúl",
+    "location": "Seúl",
+    "coords": [
+      37.5665,
+      126.978
+    ],
+    "details": {
+      "Alojamiento": "NEED TO BOOK"
+    }
+  },
+  {
+    "datetime": "2025-10-09T09:00:00.000Z",
+    "type": "activity",
+    "title": "Día en Seúl",
+    "location": "Seúl",
+    "coords": [
+      37.5665,
+      126.978
+    ],
+    "details": {
+      "Plan": "Explorar la zona de Myeongdong e Insadong."
+    }
+  },
+  {
+    "datetime": "2025-10-09T23:00:00.000Z",
+    "type": "sleep",
+    "title": "Noche en Seúl",
+    "location": "Seúl",
+    "coords": [
+      37.5665,
+      126.978
+    ],
+    "details": {
+      "Alojamiento": "NEED TO BOOK"
+    }
+  },
+  {
+    "datetime": "2025-10-10T09:00:00.000Z",
+    "type": "activity",
+    "title": "Día en Seúl",
+    "location": "Seúl",
+    "coords": [
+      37.5665,
+      126.978
+    ],
+    "details": {
+      "Plan": "Día libre para explorar o compras."
+    }
+  },
+  {
+    "datetime": "2025-10-10T10:00:00.000Z",
+    "type": "flight",
+    "title": "Vuelo a Taipéi",
+    "location": "Taipéi",
+    "coords": [
+      25.033,
+      121.5654
+    ],
+    "duration": "~2h 30m",
+    "details": {
+      "Aeropuerto Salida": "Seúl (ICN)",
+      "Aerolíneas Sugeridas": "Jeju Air, Scoot, etc."
+    }
+  },
+  {
+    "datetime": "2025-10-10T14:30:00.000Z",
+    "type": "activity",
+    "title": "Tarde en Taipéi",
+    "location": "Taipéi",
+    "coords": [
+      25.033,
+      121.5654
+    ],
+    "details": {
+      "Plan": "Tiempo libre para explorar."
+    }
+  },
+  {
+    "datetime": "2025-10-10T23:00:00.000Z",
+    "type": "sleep",
+    "title": "Noche en Taipéi",
+    "location": "Taipéi",
+    "coords": [
+      25.033,
+      121.5654
+    ],
+    "details": {
+      "Alojamiento": "NEED TO BOOK"
+    }
+  },
+  {
+    "datetime": "2025-10-11T10:00:00.000Z",
+    "type": "activity",
+    "title": "Día en Taipéi",
+    "location": "Taipéi",
+    "coords": [
+      25.033,
+      121.5654
+    ],
+    "details": {
+      "Plan": "Visitar el memorial de Chiang Kai-shek y mercado nocturno."
+    }
+  },
+  {
+    "datetime": "2025-10-11T23:00:00.000Z",
+    "type": "sleep",
+    "title": "Noche en Taipéi",
+    "location": "Taipéi",
+    "coords": [
+      25.033,
+      121.5654
+    ],
+    "details": {
+      "Alojamiento": "NEED TO BOOK"
+    }
+  },
+  {
+    "datetime": "2025-10-12T09:00:00.000Z",
+    "type": "business",
+    "title": "Visita a Google Office",
+    "location": "Taipéi",
+    "coords": [
+      25.0338,
+      121.5645
+    ],
+    "details": {
+      "Dirección": "Taipei 101 Tower"
+    }
+  },
+  {
+    "datetime": "2025-10-12T13:00:00.000Z",
+    "type": "activity",
+    "title": "Tarde en Taipéi",
+    "location": "Taipéi",
+    "coords": [
+      25.033,
+      121.5654
+    ],
+    "details": {
+      "Plan": "Visitar Taipei 101."
+    }
+  },
+  {
+    "datetime": "2025-10-12T23:00:00.000Z",
+    "type": "sleep",
+    "title": "Noche en Taipéi",
+    "location": "Taipéi",
+    "coords": [
+      25.033,
+      121.5654
+    ],
+    "details": {
+      "Alojamiento": "NEED TO BOOK"
+    }
+  },
+  {
+    "datetime": "2025-10-13T09:00:00.000Z",
+    "type": "day_trip",
+    "title": "Excursión a Jiufen y Shifen",
+    "location": "Taipéi",
+    "coords": [
+      25.1092,
+      121.8449
+    ],
+    "details": {
+      "Sugerencia": "Contratar conductor para el día."
+    }
+  },
+  {
+    "datetime": "2025-10-13T15:00:00.000Z",
+    "type": "flight",
+    "title": "Vuelo a Osaka",
+    "location": "Osaka",
+    "coords": [
+      34.6937,
+      135.5023
+    ],
+    "duration": "~2h 30m",
+    "details": {
+      "Aeropuerto Salida": "Taipéi (TPE)",
+      "Aeropuerto Llegada": "Osaka (KIX)",
+      "Aerolíneas Sugeridas": "Peach, Jetstar Japan, etc."
+    }
+  },
+  {
+    "datetime": "2025-10-13T23:00:00.000Z",
+    "type": "sleep",
+    "title": "Noche en Osaka",
+    "location": "Osaka",
+    "coords": [
+      34.6937,
+      135.5023
+    ],
+    "details": {
+      "Alojamiento": "NEED TO BOOK"
+    }
+  },
+  {
+    "datetime": "2025-10-14T09:00:00.000Z",
+    "type": "transport",
+    "title": "Tren a Kioto",
+    "location": "Kioto",
+    "coords": [
+      35.0116,
+      135.7681
+    ],
+    "duration": "~30m",
+    "details": {
+      "Ruta": "Tren local."
+    }
+  },
+  {
+    "datetime": "2025-10-14T10:00:00.000Z",
+    "type": "activity",
+    "title": "Día en Kioto",
+    "location": "Kioto",
+    "coords": [
+      35.0116,
+      135.7681
+    ],
+    "details": {
+      "Plan": "Explorar la zona de Gion y Higashiyama."
+    }
+  },
+  {
+    "datetime": "2025-10-14T23:00:00.000Z",
+    "type": "sleep",
+    "title": "Noche en Kioto",
+    "location": "Kioto",
+    "coords": [
+      35.0116,
+      135.7681
+    ],
+    "details": {
+      "Alojamiento": "NEED TO BOOK"
+    }
+  },
+  {
+    "datetime": "2025-10-15T09:00:00.000Z",
+    "type": "activity",
+    "title": "Día en Kioto",
+    "location": "Kioto",
+    "coords": [
+      35.0116,
+      135.7681
+    ],
+    "details": {
+      "Plan": "Explorar la zona de Gion y Higashiyama."
+    }
+  },
+  {
+    "datetime": "2025-10-15T23:00:00.000Z",
+    "type": "sleep",
+    "title": "Noche en Kioto",
+    "location": "Kioto",
+    "coords": [
+      35.0116,
+      135.7681
+    ],
+    "details": {
+      "Alojamiento": "NEED TO BOOK"
+    }
+  },
+  {
+    "datetime": "2025-10-16T09:00:00.000Z",
+    "type": "transport",
+    "title": "Tren a Nara",
+    "location": "Nara",
+    "coords": [
+      34.6851,
+      135.8048
+    ],
+    "duration": "~45m",
+    "details": {
+      "Transporte": "Tren local JR."
+    }
+  },
+  {
+    "datetime": "2025-10-16T10:00:00.000Z",
+    "type": "day_trip",
+    "title": "Excursión a Nara",
+    "location": "Nara",
+    "coords": [
+      34.6851,
+      135.8048
+    ],
+    "details": {
+      "Plan": "Visitar el Templo Tōdai-ji y el parque de los ciervos."
+    }
+  },
+  {
+    "datetime": "2025-10-16T17:30:00.000Z",
+    "type": "transport",
+    "title": "Tren de regreso a Kioto",
+    "location": "Kioto",
+    "coords": [
+      35.0116,
+      135.7681
+    ],
+    "duration": "~45m",
+    "details": {
+      "Transporte": "Tren local JR."
+    }
+  },
+  {
+    "datetime": "2025-10-16T23:00:00.000Z",
+    "type": "sleep",
+    "title": "Noche en Kioto",
+    "location": "Kioto",
+    "coords": [
+      35.0116,
+      135.7681
+    ],
+    "details": {
+      "Alojamiento": "NEED TO BOOK"
+    }
+  },
+  {
+    "datetime": "2025-10-17T09:00:00.000Z",
+    "type": "activity",
+    "title": "Día en Kioto",
+    "location": "Kioto",
+    "coords": [
+      35.0116,
+      135.7681
+    ],
+    "details": {
+      "Plan": "Visitar el Pabellón Dorado y Arashiyama."
+    }
+  },
+  {
+    "datetime": "2025-10-17T23:00:00.000Z",
+    "type": "sleep",
+    "title": "Noche en Kioto",
+    "location": "Kioto",
+    "coords": [
+      35.0116,
+      135.7681
+    ],
+    "details": {
+      "Alojamiento": "NEED TO BOOK"
+    }
+  },
+  {
+    "datetime": "2025-10-18T09:00:00.000Z",
+    "type": "transport",
+    "title": "Tren a Hakone",
+    "location": "Hakone",
+    "coords": [
+      35.2333,
+      139.1
+    ],
+    "duration": "~2h 30m",
+    "details": {
+      "Ruta": "Shinkansen a Odawara, luego tren local."
+    }
+  },
+  {
+    "datetime": "2025-10-18T13:00:00.000Z",
+    "type": "day_trip",
+    "title": "Visita a Woven City",
+    "location": "Susono",
+    "coords": [
+      35.17,
+      138.9
+    ],
+    "details": {
+      "Plan": "Excursión a la ciudad prototipo de Toyota.",
+      "Nota": "Se debe verificar el acceso al público."
+    }
+  },
+  {
+    "datetime": "2025-10-18T16:00:00.000Z",
+    "type": "activity",
+    "title": "Vistas del Monte Fuji",
+    "location": "Hakone",
+    "coords": [
+      35.2333,
+      139.1
+    ],
+    "details": {
+      "Plan": "Paseo en barco por el Lago Ashi."
+    }
+  },
+  {
+    "datetime": "2025-10-18T23:00:00.000Z",
+    "type": "sleep",
+    "title": "Noche en Hakone",
+    "location": "Hakone",
+    "coords": [
+      35.2333,
+      139.1
+    ],
+    "details": {
+      "Alojamiento": "NEED TO BOOK"
+    }
+  },
+  {
+    "datetime": "2025-10-19T10:00:00.000Z",
+    "type": "activity",
+    "title": "Vistas del Monte Fuji",
+    "location": "Hakone",
+    "coords": [
+      35.2333,
+      139.1
+    ],
+    "details": {
+      "Plan": "Parte del 'Hakone Loop' (teleférico)."
+    }
+  },
+  {
+    "datetime": "2025-10-19T12:00:00.000Z",
+    "type": "transport",
+    "title": "Tren a Tokio",
+    "location": "Tokio",
+    "coords": [
+      35.6895,
+      139.6917
+    ],
+    "duration": "~1h 15m",
+    "details": {
+      "Ruta": "Tren local a Odawara, luego Shinkansen directo a Tokio."
+    }
+  },
+  {
+    "datetime": "2025-10-19T23:00:00.000Z",
+    "type": "sleep",
+    "title": "Noche en Tokio",
+    "location": "Tokio",
+    "coords": [
+      35.6895,
+      139.6917
+    ],
+    "details": {
+      "Alojamiento": "NEED TO BOOK"
+    }
+  },
+  {
+    "datetime": "2025-10-20T11:00:00.000Z",
+    "type": "transport",
+    "title": "Tren a Narita",
+    "location": "Narita",
+    "coords": [
+      35.772,
+      140.3863
+    ],
+    "duration": "~1h",
+    "details": {
+      "Transporte": "Narita Express (N'EX)."
+    }
+  },
+  {
+    "datetime": "2025-10-20T16:55:00.000Z",
+    "type": "flight",
+    "title": "Vuelo desde Narita",
+    "location": "Fort Lauderdale",
+    "coords": [
+      26.0726,
+      -80.1528
+    ],
+    "duration": "~12h 15m",
+    "details": {
+      "Reserva": "AY2GE4",
+      "Aerolínea": "Air Canada",
+      "Sale de": "Narita (NRT)",
+      "Llega a": "Fort Lauderdale (FLL) a las 11:10 PM"
+    }
+  }
+];
+
+        const pointsOfInterest = {
+            "Tokio": [
+                { name: 'Shinjuku Gyoen National Garden', category: 'Parque', description: 'Uno de los parques más grandes y populares de Tokio, con jardines de estilo inglés, francés y japonés.', coords: [35.6852, 139.7100] },
+                { name: 'Omoide Yokocho', category: 'Atracción', description: 'Conocido como "Piss Alley", es un callejón estrecho lleno de pequeños bares y restaurantes de yakitori.', coords: [35.6931, 139.7001] },
+                { name: 'Kabukicho', category: 'Atracción', description: 'El distrito de entretenimiento más grande de Japón, lleno de bares, restaurantes y vida nocturna.', coords: [35.6944, 139.7032] },
+                { name: 'Tokyo Metropolitan Government Building (Tocho)', category: 'Mirador', description: 'Ofrece vistas panorámicas gratuitas de la ciudad desde sus dos observatorios a 202 metros de altura.', coords: [35.6896, 139.6917] },
+                { name: 'Santuario Meiji Jingu', category: 'Templo', description: 'Santuario sintoísta dedicado a los espíritus deificados del Emperador Meiji y su esposa.', coords: [35.6764, 139.6993] },
+                { name: 'Takeshita Street', category: 'Compras', description: 'El epicentro de la cultura adolescente y la moda de Harajuku, famosa por sus tiendas y crepes.', coords: [35.6701, 139.7061] },
+                { name: 'Cruce de Shibuya', category: 'Atracción', description: 'El cruce peatonal más transitado del mundo, un espectáculo de luces de neón y multitudes.', coords: [35.6595, 139.7005] },
+                { name: 'Estatua de Hachiko', category: 'Atracción', description: 'Famosa estatua de bronce que conmemora al leal perro Akita, Hachiko. Punto de encuentro popular.', coords: [35.6591, 139.7006] },
+                { name: 'Templo Senso-ji', category: 'Templo', description: 'El templo más antiguo de Tokio, en Asakusa, con su icónica linterna roja gigante.', coords: [35.7148, 139.7967] },
+                { name: 'Kaminarimon (Puerta del Trueno)', category: 'Atracción', description: 'La imponente puerta de entrada al Templo Senso-ji, un símbolo de Asakusa.', coords: [35.7117, 139.7965] },
+                { name: 'Parque Ueno', category: 'Parque', description: 'Gran parque público que alberga museos, templos y un zoológico.', coords: [35.7142, 139.7742] },
+                { name: 'Mercado Ameya Yokocho (Ameyoko)', category: 'Mercado', description: 'Animado mercado al aire libre que vende de todo, desde mariscos hasta ropa.', coords: [35.7099, 139.7745] },
+                { name: 'Estación de Tokio', category: 'Atracción', description: 'Hito arquitectónico con una hermosa fachada de ladrillo rojo, principal centro de trenes de Japón.', coords: [35.6812, 139.7671] },
+                { name: 'Templo Gotokuji', category: 'Templo', description: 'Famoso por ser el origen del Maneki-neko (gato de la suerte), con miles de estatuillas de gatos.', coords: [35.6483, 139.6469] },
+                { name: 'Tokyo Skytree', category: 'Mirador', description: 'La estructura más alta de Japón, con vistas espectaculares desde sus observatorios.', coords: [35.7101, 139.8107] },
+                { name: 'Palacio Imperial', category: 'Atracción', description: 'La residencia principal del Emperador de Japón, rodeada de grandes jardines y fosos.', coords: [35.6852, 139.7528] },
+                { name: '3Coins+plus', category: 'Tienda', description: 'Tienda popular con artículos para el hogar y accesorios, la mayoría por menos de ¥300.', coords: [35.6939, 139.7023] },
+                { name: 'Alinamin Night Recover', category: 'Tip', description: 'Bebida de recuperación en 7-Eleven, útil para el jet lag.', coords: null },
+            ],
+            "Kioto": [
+                { name: 'Kiyomizu-dera', category: 'Templo', description: 'Famoso por su terraza de madera que sobresale de la ladera, con vistas impresionantes.', coords: [34.9949, 135.7850] },
+                { name: 'Otagi Nenbutsu-ji', category: 'Templo', description: 'Templo encantador famoso por sus 1,200 estatuas de Rakan con expresiones diferentes.', coords: [35.0315, 135.6669] },
+                { name: 'Kinkaku-ji (Pabellón Dorado)', category: 'Templo', description: 'Impresionante templo Zen cuyas dos plantas superiores están cubiertas de pan de oro.', coords: [35.0394, 135.7292] },
+                { name: 'Ginkaku-ji (Pabellón de Plata)', category: 'Templo', description: 'Elegante templo Zen con hermosos jardines de arena y musgo.', coords: [35.0270, 135.7984] },
+                { name: 'Palacio Imperial de Kioto', category: 'Atracción', description: 'Antigua residencia de la Familia Imperial, ubicada en un extenso parque.', coords: [35.0253, 135.7621] },
+                { name: 'Torre de Kioto', category: 'Mirador', description: 'La estructura de acero más alta de Kioto, con vistas de 360 grados.', coords: [34.9876, 135.7592] },
+                { name: 'Fushimi Inari-taisha', category: 'Templo', description: 'Famoso por sus miles de puertas torii de color bermellón en un sendero montañoso.', coords: [34.9671, 135.7726] },
+                { name: 'Barrio de Gion', category: 'Atracción', description: 'El famoso distrito de geishas de Kioto, con casas de té y calles bien conservadas.', coords: [35.0036, 135.7784] },
+                { name: 'Mercado Nishiki', category: 'Mercado', description: 'Estrecha calle comercial con tiendas y restaurantes que venden especialidades locales.', coords: [35.0050, 135.7651] },
+            ],
+            "Osaka": [
+                { name: 'Mercado Kuromon', category: 'Mercado', description: 'Mercado cubierto conocido por su marisco fresco, carne y productos locales.', coords: [34.6659, 135.5069] },
+                { name: 'Castillo de Osaka', category: 'Atracción', description: 'Uno de los castillos más famosos de Japón, con museo y mirador.', coords: [34.6873, 135.5259] },
+                { name: 'Shinsekai', category: 'Atracción', description: 'Distrito con aire retro, famoso por la Torre Tsutenkaku y la comida kushikatsu.', coords: [34.6525, 135.5063] },
+                { name: 'Dotonbori', category: 'Atracción', description: 'El corazón de la vida nocturna de Osaka, con luces de neón y restaurantes.', coords: [34.6687, 135.5015] },
+                { name: 'Umeda Sky Building', category: 'Mirador', description: 'Espectacular rascacielos con un observatorio al aire libre que conecta sus dos torres.', coords: [34.7055, 135.4900] },
+                { name: 'Noria Hep Five', category: 'Atracción', description: 'Gran noria roja en un centro comercial, con excelentes vistas.', coords: [34.7032, 135.4996] },
+                { name: 'Barco Santa María', category: 'Atracción', description: 'Réplica del barco de Colón que ofrece cruceros por la bahía de Osaka.', coords: [34.6558, 135.4312] },
+                { name: 'Namba', category: 'Atracción', description: 'Principal centro de entretenimiento y compras del sur de Osaka.', coords: [34.6644, 135.5003] },
+            ],
+            "Nara": [
+                { name: 'Parque de los Ciervos de Nara', category: 'Parque', description: 'Gran parque con cientos de ciervos sika que deambulan libremente.', coords: [34.6851, 135.8433] },
+                { name: 'Tōdai-ji', category: 'Templo', description: 'Impresionante templo que alberga una de las estatuas de Buda de bronce más grandes del mundo.', coords: [34.6890, 135.8398] },
+                { name: 'Nakatani-dou', category: 'Restaurante', description: 'Famosa tienda de mochi donde se puede ver el tradicional y rápido machacado del arroz.', coords: [34.6836, 135.8285] },
+                { name: 'Barrio de Naramachi', category: 'Atracción', description: 'Antiguo barrio de comerciantes de Nara, con casas tradicionales y tiendas.', coords: [34.6781, 135.8285] },
+                { name: 'Kōfuku-ji', category: 'Templo', description: 'Complejo de templos con una impresionante pagoda de cinco pisos, la segunda más alta de Japón.', coords: [34.6830, 135.8300] },
+            ],
+            "Hakone": [
+                { name: 'Chureito Pagoda', category: 'Mirador', description: 'Pagoda con vistas icónicas del Monte Fuji. Se encuentra cerca de la región de Hakone.', coords: [35.4988, 138.8005] },
+            ],
+            "General": [
+                { name: 'Tren Spacia X', category: 'Tip', description: 'Tren que conecta Tokio y Nikko en ~2 horas. Costo: ~$15 por tramo.' },
+                { name: 'Tren Saphir Odoriko', category: 'Tip', description: 'Tren de lujo y panorámico que recorre la península de Izu desde Tokio. Costo: ~$50.' },
+                { name: 'Tren Aoniyoshi', category: 'Tip', description: 'Tren turístico que conecta Osaka, Nara y Kioto. Costo: ~$5.' },
+            ]
+        };
+
+        const poiIcons = {
+            'Atracción': 'attractions', 'Templo': 'temple_buddhist', 'Parque': 'park', 'Mirador': 'visibility',
+            'Compras': 'shopping_bag', 'Mercado': 'storefront', 'Restaurante': 'restaurant', 'Tienda': 'shopping_cart', 'Tip': 'info',
+        };
+
+        // --- ICONS ---
+        const icons = {
+            flight: `<span class="material-symbols-outlined">flight_takeoff</span>`,
+            flight_arrival: `<span class="material-symbols-outlined">flight_land</span>`,
+            lodging: `<span class="material-symbols-outlined">hotel</span>`,
+            sleep: `<span class="material-symbols-outlined">dark_mode</span>`,
+            transport: `<span class="material-symbols-outlined">train</span>`,
+            activity: `<span class="material-symbols-outlined">location_city</span>`,
+            day_trip: `<span class="material-symbols-outlined">map</span>`,
+            business: `<span class="material-symbols-outlined">work</span>`,
+        };
+        
+        const countryFlags = {
+            "Tokio": `<span class="fi fi-jp fis"></span>`,
+            "Hakone": `<span class="fi fi-jp fis"></span>`,
+            "Kyoto (+ Nara)": `<span class="fi fi-jp fis"></span>`,
+            "Osaka": `<span class="fi fi-jp fis"></span>`,
+            "Narita": `<span class="fi fi-jp fis"></span>`,
+            "Busan (+ Gyeongju)": `<span class="fi fi-kr fis"></span>`,
+            "Seúl": `<span class="fi fi-kr fis"></span>`,
+            "Taipéi": `<span class="fi fi-tw fis"></span>`,
+        };
+
+        // --- RENDER LOGIC ---
+        const map = L.map('map').setView([35.6895, 139.6917], 5);
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', { attribution: '&copy; OpenStreetMap contributors &copy; CARTO' }).addTo(map);
+
+        const itineraryList = document.getElementById('itinerary-list');
+        const detailsContent = document.getElementById('details-content');
+        const detailsTitle = document.getElementById('details-title');
+        const cityTimelineContainer = document.getElementById('city-timeline-container');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        
+        let currentDayIndex = 0;
+        let mainMarker = null;
+        let poiLayerGroup = L.layerGroup().addTo(map);
+        const sortedData = itineraryData.sort((a, b) => a.datetime - b.datetime);
+
+        function renderItinerary() {
+            itineraryList.innerHTML = '';
+            const groupedByDate = sortedData.reduce((acc, item, index) => {
+                const dateKey = item.datetime.toLocaleDateString('es-ES', { weekday: 'short', month: 'short', day: 'numeric' });
+                if (!acc[dateKey]) { acc[dateKey] = []; }
+                acc[dateKey].push({ ...item, originalIndex: index });
+                return acc;
+            }, {});
+
+            for (const date in groupedByDate) {
+                const dayGroup = document.createElement('div');
+                const dayHeader = document.createElement('h3');
+                dayHeader.className = 'text-lg font-semibold text-slate-800 mb-3 pt-4';
+                dayHeader.textContent = date.charAt(0).toUpperCase() + date.slice(1);
+                dayGroup.appendChild(dayHeader);
+
+                groupedByDate[date].forEach(item => {
+                    const timeString = item.datetime.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', hour12: true });
+                    const container = document.createElement('div');
+                    container.className = 'timeline-item-container cursor-pointer';
+                    container.dataset.index = item.originalIndex;
+                    container.innerHTML = `<div class="timeline-line"></div><div class="timeline-icon">${icons[item.type] || icons.activity}</div><p class="font-semibold text-slate-800">${timeString}</p><p class="font-medium text-slate-700">${item.title}</p><p class="text-sm text-slate-500">${item.location}</p>${item.duration ? `<div class="flex items-center text-xs text-slate-500 mt-1"><span class="material-symbols-outlined" style="font-size: 16px; margin-right: 4px;">schedule</span><span>${item.duration}</span></div>` : ''}`;
+                    container.addEventListener('click', () => { currentDayIndex = item.originalIndex; updateView(); });
+                    dayGroup.appendChild(container);
+                });
+                itineraryList.appendChild(dayGroup);
+            }
+        }
+        
+        const cityStays = {
+            "Tokio": { days: "5½", nights: "6", transportToNext: 'train' },
+            "Hakone": { days: "1½", nights: "1", transportToNext: 'train' },
+            "Kyoto (+ Nara)": { days: "3½", nights: "4", transportToNext: 'train' },
+            "Osaka": { days: "1½", nights: "2", transportToNext: 'flight' },
+            "Busan (+ Gyeongju)": { days: "2", nights: "1", transportToNext: 'train' },
+            "Seúl": { days: "3", nights: "3", transportToNext: 'flight' },
+            "Taipéi": { days: "2½", nights: "3", transportToNext: 'flight' },
+            "Narita": { days: "1", nights: "1", transportToNext: null }
+        };
+
+        function renderCityTimeline() {
+            const cityOrder = ["Tokio", "Hakone", "Kyoto (+ Nara)", "Osaka", "Busan (+ Gyeongju)", "Seúl", "Taipéi", "Narita"];
+            const timelineDiv = document.createElement('div');
+            timelineDiv.className = 'city-timeline';
+            
+            cityOrder.forEach(city => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'city-timeline-item';
+                itemDiv.dataset.city = city;
+                const stayInfo = cityStays[city];
+                let stayHtml = stayInfo ? `<div class="stay-info"><div class="stay-info-item" title="${stayInfo.days} Días"><span class="material-symbols-outlined">wb_sunny</span><span class="${String(stayInfo.days).includes('½') ? 'half-day' : ''}">${stayInfo.days}</span></div><div class="stay-info-item" title="${stayInfo.nights} Noches"><span class="material-symbols-outlined">dark_mode</span><span>${stayInfo.nights}</span></div></div>` : '';
+                let transportHtml = (stayInfo && stayInfo.transportToNext) ? `<div class="transport-icon"><span class="material-symbols-outlined">${stayInfo.transportToNext}</span></div>` : '';
+                itemDiv.innerHTML = `<div class="city-timeline-node">${countryFlags[city] || ''}</div><div class="city-timeline-label">${city}</div>${stayHtml}${transportHtml}`;
+                timelineDiv.appendChild(itemDiv);
+            });
+            cityTimelineContainer.innerHTML = '';
+            cityTimelineContainer.appendChild(timelineDiv);
+        }
+
+        function updateView() {
+            const currentItem = sortedData[currentDayIndex];
+            
+            document.querySelectorAll('.timeline-item-container').forEach(el => el.classList.remove('active'));
+            const activeEl = document.querySelector(`.timeline-item-container[data-index="${currentDayIndex}"]`);
+            if (activeEl) {
+                activeEl.classList.add('active');
+                activeEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+            
+            poiLayerGroup.clearLayers();
+            if (mainMarker) map.removeLayer(mainMarker);
+
+            const cityEventTypes = ['activity', 'sleep', 'day_trip', 'business'];
+            let displayLocation = currentItem.location;
+            const cityMap = { "Susono": "Hakone", "Nara": "Kioto", "Gyeongju": "Busan" };
+            if (cityMap[displayLocation]) { displayLocation = cityMap[displayLocation]; }
+
+            if (cityEventTypes.includes(currentItem.type) && pointsOfInterest[displayLocation]) {
+                detailsTitle.textContent = `Atracciones en ${displayLocation}`;
+                const cityPOIs = pointsOfInterest[displayLocation];
+                
+                const groupedPOIs = cityPOIs.reduce((acc, poi) => {
+                    if (!acc[poi.category]) acc[poi.category] = [];
+                    acc[poi.category].push(poi);
+                    return acc;
+                }, {});
+
+                let poiHtml = '';
+                for (const category in groupedPOIs) {
+                    poiHtml += `<div class="poi-category"><h4 onclick="this.nextElementSibling.classList.toggle('open')"><span class="material-symbols-outlined">${poiIcons[category] || 'place'}</span>${category}<span class="material-symbols-outlined">expand_more</span></h4><div class="poi-list">`;
+                    groupedPOIs[category].forEach(poi => {
+                        poiHtml += `<div class="poi-item"><p class="poi-name">${poi.name}</p><p class="poi-desc">${poi.description}</p></div>`;
+                        if (poi.coords) {
+                            const iconHtml = `<span class="material-symbols-outlined">${poiIcons[poi.category] || 'place'}</span>`;
+                            const divIcon = L.divIcon({ className: 'leaflet-div-icon', html: iconHtml, iconSize: [28, 28], iconAnchor: [14, 14] });
+                            L.marker(poi.coords, { icon: divIcon }).addTo(poiLayerGroup).bindPopup(poi.name);
+                        }
+                    });
+                    poiHtml += `</div></div>`;
+                }
+                 detailsContent.innerHTML = poiHtml || '<p class="text-slate-500">No hay puntos de interés para esta ciudad.</p>';
+            } else {
+                detailsTitle.textContent = 'Detalles del Evento';
+                let detailsHtml = `<h3 class="text-lg font-bold text-slate-800 mb-2">${currentItem.title}</h3>`;
+                if (currentItem.details) {
+                    for (const [key, value] of Object.entries(currentItem.details)) {
+                        detailsHtml += `<p><strong>${key}:</strong> ${value}</p>`;
+                    }
+                }
+                detailsContent.innerHTML = detailsHtml;
+            }
+
+            if (currentItem.location.toLowerCase() !== "en vuelo") {
+                mainMarker = L.marker(currentItem.coords).addTo(map).bindPopup(`<b>${currentItem.title}</b><br>${currentItem.location}`).openPopup();
+                map.flyTo(currentItem.coords, 12, { animate: true, duration: 1.5 });
+            }
+
+            document.querySelectorAll('.city-timeline-item').forEach(el => el.classList.remove('active'));
+            const majorCitiesMap = { "Gyeongju": "Busan (+ Gyeongju)", "Nara": "Kyoto (+ Nara)", "Susono": "Hakone", "Montreal": null, "Fort Lauderdale": null, "Kioto": "Kyoto (+ Nara)", "Busán": "Busan (+ Gyeongju)"};
+            let activeCity = currentItem.location;
+            if (majorCitiesMap[activeCity] !== undefined) activeCity = majorCitiesMap[activeCity];
+            if(activeCity) document.querySelector(`.city-timeline-item[data-city="${activeCity}"]`)?.classList.add('active');
+            
+            prevBtn.disabled = currentDayIndex === 0;
+            nextBtn.disabled = currentDayIndex === sortedData.length - 1;
+        }
+
+        prevBtn.addEventListener('click', () => { if (currentDayIndex > 0) { currentDayIndex--; updateView(); } });
+        nextBtn.addEventListener('click', () => { if (currentDayIndex < sortedData.length - 1) { currentDayIndex++; updateView(); } });
+
+        renderCityTimeline();
+        renderItinerary();
+        updateView();
+    </script>
+</body>
+</html>
