@@ -183,6 +183,15 @@
         .poi-category-details[open] .poi-list-modal {
             max-height: 1000px; /* Arbitrary large value */
         }
+
+        /* --- Atracciones Button --- */
+        #poi-modal-btn {
+            background-color: #60A5FA; /* A nice pastel blue - Tailwind's blue-400 */
+            color: white;
+        }
+        #poi-modal-btn:hover {
+            background-color: #3B82F6; /* Darker blue for hover - Tailwind's blue-500 */
+        }
     </style>
 </head>
 <body class="text-slate-800 antialiased">
@@ -229,6 +238,13 @@
 
                     <!-- Map and Details Column -->
                     <div class="lg:col-span-2 space-y-8">
+                        <!-- Atracciones Button -->
+                        <div class="flex justify-start">
+                            <button id="poi-modal-btn" class="flex items-center gap-2 px-4 py-2 font-semibold rounded-lg shadow-md transition">
+                                <span class="material-symbols-outlined">place</span>
+                                Atracciones
+                            </button>
+                        </div>
                          <!-- Map -->
                         <div id="map-container" class="w-full h-96 lg:h-[60vh] bg-white rounded-xl shadow-xl">
                              <div id="map" class="w-full h-full rounded-xl"></div>
@@ -645,7 +661,7 @@
                 const container = document.createElement('div');
                 container.className = 'timeline-item-container group'; // Added group for hover effect
 
-                const hasDetails = (item.details && Object.keys(item.details).length > 0) || (pointsOfInterest[item.location] && ['activity', 'sleep', 'day_trip', 'business', 'lodging'].includes(item.type));
+                const hasDetails = item.details && Object.keys(item.details).length > 0 && ['flight', 'flight_arrival', 'transport', 'lodging'].includes(item.type);
 
                 const infoIconHtml = hasDetails
                     ? `<span class="material-symbols-outlined text-slate-400 group-hover:text-emerald-600 transition ml-2" style="font-size: 20px;">info</span>`
@@ -803,30 +819,20 @@
         // --- Modal ---
         const detailsModal = document.getElementById('details-modal');
         const modalCard = document.getElementById('modal-card');
+        const poiModalBtn = document.getElementById('poi-modal-btn');
         const modalTitle = document.getElementById('modal-title');
         const modalContent = document.getElementById('modal-content');
         const modalCloseBtn = document.getElementById('modal-close-btn');
 
-        function showDetailsModal(item) {
-            modalTitle.textContent = item.title;
+        function showPoiModal(location) {
+            const cityMap = { "Susono": "Hakone", "Narita": "Tokyo", "Gyeongju": "Busan" };
+            let poiLookupLocation = cityMap[location] || location;
+
+            modalTitle.textContent = `Puntos de Interés en ${poiLookupLocation}`;
 
             let contentHtml = '';
 
-            // Render item details
-            if (item.details && Object.keys(item.details).length > 0) {
-                contentHtml += '<div class="space-y-3 p-4 bg-slate-50 rounded-lg shadow-inner">';
-                for (const [key, value] of Object.entries(item.details)) {
-                    contentHtml += `<p><strong class="text-slate-600 font-semibold">${key}:</strong> <span class="text-slate-800">${value}</span></p>`;
-                }
-                contentHtml += '</div>';
-            }
-
-            // Render POIs for the location
-            const cityEventTypes = ['activity', 'sleep', 'day_trip', 'business', 'lodging'];
-            const cityMap = { "Susono": "Hakone", "Narita": "Tokyo", "Gyeongju": "Busan" };
-            let poiLookupLocation = cityMap[item.location] || item.location;
-
-            if (cityEventTypes.includes(item.type) && pointsOfInterest[poiLookupLocation]) {
+            if (pointsOfInterest[poiLookupLocation]) {
                 const cityPOIs = pointsOfInterest[poiLookupLocation];
                 const groupedPOIs = cityPOIs.reduce((acc, poi) => {
                     if (!acc[poi.category]) acc[poi.category] = [];
@@ -834,15 +840,12 @@
                     return acc;
                 }, {});
 
-                contentHtml += `<h4 class="text-lg font-bold mt-6 mb-2 text-slate-800 border-t pt-4">Puntos de Interés en ${item.location}</h4><div class="space-y-4">`;
-                if (item.details?.Alojamiento === "NEED TO BOOK") {
-                     contentHtml += `<div class="p-3 text-sm text-red-800 rounded-lg bg-red-50" role="alert"><span class="font-medium">¡Atención!</span> Necesitas reservar alojamiento para esta noche.</div>`;
-                }
+                contentHtml += `<div class="space-y-4">`;
 
                 for (const category in groupedPOIs) {
                     const count = groupedPOIs[category].length;
                     contentHtml += `
-                        <details class="poi-category-details group">
+                        <details class="poi-category-details group" open>
                             <summary class="poi-category-summary list-none flex justify-between items-center cursor-pointer p-3 bg-slate-100 rounded-lg hover:bg-slate-200 transition">
                                 <div class="flex items-center">
                                     <span class="material-symbols-outlined text-slate-600 mr-3">${poiIcons[category] || 'place'}</span>
@@ -862,7 +865,34 @@
                     contentHtml += `</div></details>`;
                 }
                 contentHtml += '</div>';
+            } else {
+                 contentHtml = `<p class="text-slate-500 italic">No hay Puntos de Interés para mostrar en ${poiLookupLocation}.</p>`;
             }
+
+            modalContent.innerHTML = contentHtml;
+
+            detailsModal.classList.remove('hidden');
+            detailsModal.classList.add('flex');
+            setTimeout(() => { // For transition
+                modalCard.classList.remove('scale-95');
+                modalCard.classList.add('scale-100');
+            }, 10);
+        }
+
+        function showDetailsModal(item) {
+            modalTitle.textContent = item.title;
+
+            let contentHtml = '';
+
+            // Render item details
+            if (item.details && Object.keys(item.details).length > 0) {
+                contentHtml += '<div class="space-y-3 p-4 bg-slate-50 rounded-lg shadow-inner">';
+                for (const [key, value] of Object.entries(item.details)) {
+                    contentHtml += `<p><strong class="text-slate-600 font-semibold">${key}:</strong> <span class="text-slate-800">${value}</span></p>`;
+                }
+                contentHtml += '</div>';
+            }
+
 
             if (contentHtml.trim() === '') {
                 contentHtml = '<p class="text-slate-500 italic">No hay detalles para mostrar.</p>';
@@ -891,6 +921,23 @@
         detailsModal.addEventListener('click', (e) => {
             if (e.target === detailsModal) {
                 hideDetailsModal();
+            }
+        });
+
+        poiModalBtn.addEventListener('click', () => {
+            const currentDayData = groupedByDay[currentDayIndex];
+            if (currentDayData && currentDayData.events.length > 0) {
+                const mainLocation = currentDayData.events[0].location;
+                showPoiModal(mainLocation);
+            } else {
+                modalTitle.textContent = 'Atracciones';
+                modalContent.innerHTML = '<p class="text-slate-500 italic">No hay una ciudad principal para mostrar Puntos de Interés.</p>';
+                detailsModal.classList.remove('hidden');
+                detailsModal.classList.add('flex');
+                 setTimeout(() => {
+                    modalCard.classList.remove('scale-95');
+                    modalCard.classList.add('scale-100');
+                }, 10);
             }
         });
 
