@@ -136,48 +136,41 @@
         .leaflet-div-icon { background: #fff; border: 2px solid #64748b; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); }
         .leaflet-div-icon .material-symbols-outlined { font-size: 18px; color: #64748b; }
 
-        /* --- Mobile Layout & Navigation --- */
-        .shadow-top-lg { box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1), 0 -2px 4px -1px rgba(0, 0, 0, 0.06); }
-        .mobile-nav-btn {
+        /* --- City Timeline Mobile Scroll --- */
+        #city-timeline-container {
+            position: relative;
+        }
+        .scroll-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
             display: flex;
-            flex-direction: column;
             align-items: center;
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: #94a3b8;
-            padding: 0.5rem 1rem;
-            transition: color 0.2s;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 20;
+            transition: opacity 0.2s;
         }
-        .mobile-nav-btn.active {
-            color: var(--primary-color);
+        .scroll-arrow:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
         }
-        .mobile-nav-btn .material-symbols-outlined {
-            font-size: 28px;
-        }
+        .scroll-arrow.left { left: -10px; }
+        .scroll-arrow.right { right: -10px; }
 
-        /* Handle visibility toggling on mobile (Tabbed interface) */
-        @media (max-width: 1023px) {
-            .mobile-content-area {
-                display: none; /* Hide by default */
+        /* --- City Timeline Responsive Behavior --- */
+        @media (min-width: 1024px) {
+            .city-timeline {
+                flex-wrap: wrap;
+                justify-content: center;
             }
-            .mobile-content-area.active {
-                display: block; /* Show when active */
-            }
-             /* Specific adjustments for containers that need to be flex when active */
-             #itinerary-list-container.active, #details-container.active {
-                display: flex;
-            }
-            
-            /* Ensure content areas on mobile allow for scrolling and don't have fixed heights */
-            #map-container, #itinerary-list-container, #details-container {
-                height: auto;
-                /* Ensure a minimum height for usability when content is sparse */
-                min-height: 60vh; 
-            }
-
-            #map {
-                 /* Ensure map takes up adequate height when its tab is active */
-                 height: 65vh !important; 
+            .scroll-arrow {
+                display: none;
             }
         }
 
@@ -204,52 +197,39 @@
             <p class="text-lg md:text-xl text-slate-600 mt-3">Septiembre 27 - Octubre 20, 2025 (Horarios en UTC)</p>
         </header>
 
-        <div id="city-timeline-container" class="bg-white p-4 rounded-xl shadow-xl mb-8 overflow-x-auto whitespace-nowrap scrollbar-hide"></div>
+        <div id="city-timeline-container" class="bg-white p-4 rounded-xl shadow-xl mb-8"></div>
 
-        <main id="main-content" class="grid grid-cols-1 lg:grid-cols-3 gap-8" style="display: none;">
+        <main id="main-content" class="grid grid-cols-1 gap-8" style="display: none;">
             
-            <div id="itinerary-list-container" class="lg:col-span-1 bg-white p-6 rounded-xl shadow-xl flex flex-col lg:h-[85vh] mobile-content-area active" data-mobile-tab="itinerary">
-                <div class="flex justify-between items-center border-b pb-4 mb-4">
-                    <h2 class="text-2xl font-bold text-slate-900">Plan de Viaje</h2>
-                    <div class="flex gap-3">
-                        <button id="prevBtn" class="p-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600 disabled:opacity-50 disabled:cursor-not-allowed transition shadow-sm"><span class="material-symbols-outlined">arrow_back</span></button>
-                        <button id="nextBtn" class="p-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600 disabled:opacity-50 disabled:cursor-not-allowed transition shadow-sm"><span class="material-symbols-outlined">arrow_forward</span></button>
+            <!-- Unified Day-by-Day View -->
+            <div id="day-view" class="col-span-1 space-y-6">
+                <!-- Date Navigator -->
+                <div id="date-nav" class="flex items-center justify-between bg-white p-4 rounded-xl shadow-lg">
+                    <button id="prev-day" class="p-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600 transition shadow-sm"><span class="material-symbols-outlined">chevron_left</span></button>
+                    <div id="date-display" class="text-center">
+                        <h3 class="text-lg font-bold text-slate-900"></h3>
+                        <p class="text-sm text-slate-500"></p>
                     </div>
+                    <button id="next-day" class="p-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600 transition shadow-sm"><span class="material-symbols-outlined">chevron_right</span></button>
                 </div>
-                <div id="itinerary-list" class="overflow-y-auto flex-grow pr-3 styled-scrollbar"></div>
-            </div>
 
-            <div class="lg:col-span-2 flex flex-col gap-8 lg:h-[85vh]">
-                
-                <div id="map-container" class="w-full mobile-content-area lg:flex-1" data-mobile-tab="map">
-                    <div id="map" class="w-full lg:h-full shadow-xl rounded-xl"></div>
-                </div>
-                
-                <div id="details-container" class="bg-white p-6 rounded-xl shadow-xl flex flex-col mobile-content-area lg:h-[40vh]" data-mobile-tab="details">
-                    <h2 id="details-title" class="text-2xl font-bold mb-4 text-slate-900 border-b pb-4">Detalles</h2>
-                    <div id="details-content" class="text-slate-700 space-y-4 flex-grow overflow-y-auto pr-3 styled-scrollbar">
-                        <p class="text-slate-500 italic mt-4">Selecciona un evento del itinerario para ver los detalles.</p>
+                <!-- Content Grid -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Itinerary List -->
+                    <div id="itinerary-list" class="lg:col-span-1 bg-white p-6 rounded-xl shadow-xl"></div>
+
+                    <!-- Map and Details Column -->
+                    <div class="lg:col-span-2 space-y-8">
+                         <!-- Map -->
+                        <div id="map-container" class="w-full h-96 lg:h-[60vh] bg-white rounded-xl shadow-xl">
+                             <div id="map" class="w-full h-full rounded-xl"></div>
+                        </div>
+                        <!-- POIs/Details -->
+                        <div id="details-container" class="bg-white p-6 rounded-xl shadow-xl"></div>
                     </div>
                 </div>
             </div>
         </main>
-    </div>
-
-    <div id="mobile-nav" class="lg:hidden fixed bottom-0 left-0 right-0 bg-white shadow-top-lg border-t border-slate-200 z-50" style="display: none;">
-        <div class="flex justify-around py-1">
-            <button class="mobile-nav-btn active" data-target="itinerary">
-                <span class="material-symbols-outlined">list_alt</span>
-                <span>Itinerario</span>
-            </button>
-            <button class="mobile-nav-btn" data-target="map">
-                <span class="material-symbols-outlined">map</span>
-                <span>Mapa</span>
-            </button>
-            <button class="mobile-nav-btn" data-target="details">
-                <span class="material-symbols-outlined">info</span>
-                <span>Detalles</span>
-            </button>
-        </div>
     </div>
 
     <script>
@@ -260,7 +240,6 @@
         let cityStays = {}; // Will be dynamically calculated
 
         // --- Configuration Constants ---
-        // Updated URLs
         const ITINERARY_URL = 'itinerary.json';
         const POI_URL = 'poi.json';
 
@@ -280,8 +259,7 @@
             business: `<span class="material-symbols-outlined">work</span>`,
         };
         
-        // Flags configuration using flag-icon-css library classes (fi fi-xx)
-        const countryFlags = {
+        const rawCountryFlags = {
             "Tokio": `<span class="fi fi-jp"></span>`,
             "Hakone": `<span class="fi fi-jp"></span>`,
             "Kioto": `<span class="fi fi-jp"></span>`,
@@ -291,104 +269,73 @@
             "Taipéi": `<span class="fi fi-tw"></span>`,
         };
 
+        // --- Helper Functions ---
+        function normalizeStr(str) {
+            if (typeof str !== 'string') return str;
+            return str.normalize('NFC').trim();
+        }
+
+        const countryFlags = Object.keys(rawCountryFlags).reduce((acc, key) => {
+            acc[normalizeStr(key)] = rawCountryFlags[key];
+            return acc;
+        }, {});
+
 
         // --- Initialization & Setup ---
+        const LG_BREAKPOINT = 1024;
+        let isMobile = window.innerWidth < LG_BREAKPOINT;
         
-        // Initialize the map with a default view immediately.
-        const map = L.map('map').setView([35.6895, 139.6917], 5); 
-        
-        // Using CartoDB Voyager tileset for a clean look
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', { attribution: '&copy; OpenStreetMap contributors &copy; CARTO', maxZoom: 19 }).addTo(map);
-
-        const itineraryList = document.getElementById('itinerary-list');
-        const detailsContent = document.getElementById('details-content');
-        const detailsTitle = document.getElementById('details-title');
-        const cityTimelineContainer = document.getElementById('city-timeline-container');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
         const loadingOverlay = document.getElementById('loading-overlay');
         const mainContent = document.getElementById('main-content');
-        const mobileNav = document.getElementById('mobile-nav');
-        // Reference needed for visibility checks
+        const itineraryList = document.getElementById('itinerary-list');
+        const detailsContainer = document.getElementById('details-container');
         const mapContainer = document.getElementById('map-container');
-
+        const prevDayBtn = document.getElementById('prev-day');
+        const nextDayBtn = document.getElementById('next-day');
+        const dateDisplay = document.getElementById('date-display');
+        const cityTimelineContainer = document.getElementById('city-timeline-container');
         
+        // --- State Variables ---
         let currentDayIndex = 0;
+        let cityPageIndex = 0;
+        let groupedByDay = [];
         let mainMarker = null;
-        let poiLayerGroup = L.layerGroup().addTo(map);
+        let map;
+        let poiLayerGroup;
 
         // --- COORDINATE PARSING LOGIC (FIXED) ---
-
-        // Helper to process a single coordinate string (e.g., "45.5017° N" or just a number string)
         function parseCoordinateString(coordStr) {
-            if (typeof coordStr === 'number') {
-                return coordStr;
-            }
-            if (typeof coordStr !== 'string' || coordStr.trim() === '') {
-                return null;
-            }
-
-            // 1. Try simple parseFloat first (handles standard signed decimal strings)
+            if (typeof coordStr === 'number') return coordStr;
+            if (typeof coordStr !== 'string' || coordStr.trim() === '') return null;
             const simpleFloat = parseFloat(coordStr);
-            // Check if the entire string (ignoring whitespace) was parsed as a number
-            if (!isNaN(simpleFloat) && /^[\s-]?\d+(\.\d+)?\s*$/.test(coordStr)) {
-                return simpleFloat;
-            }
-
-            // 2. Handle formats like "45.5017° N"
-            // Regex to capture the number part (allowing optional degrees symbol) and the direction (N, S, E, W)
+            if (!isNaN(simpleFloat) && /^[\s-]?\d+(\.\d+)?\s*$/.test(coordStr)) return simpleFloat;
             const regex = /([0-9.]+)\s*°?\s*([NSEW])/i;
             const match = coordStr.trim().match(regex);
-
             if (match) {
                 let value = parseFloat(match[1]);
                 const direction = match[2].toUpperCase();
-
-                if (isNaN(value)) {
-                    return null;
-                }
-
-                // Apply sign based on direction (South and West are negative)
-                if (direction === 'S' || direction === 'W') {
-                    value = -value;
-                }
+                if (isNaN(value)) return null;
+                if (direction === 'S' || direction === 'W') value = -value;
                 return value;
             }
-            
-            // 3. Fallback for formats without direction but with symbols (e.g. "45.5017°")
-             const finalFloat = parseFloat(coordStr);
-             if (!isNaN(finalFloat)) {
-                 return finalFloat;
-             }
-
-            return null;
+            const finalFloat = parseFloat(coordStr);
+            return isNaN(finalFloat) ? null : finalFloat;
         }
 
-        // Helper function to parse coordinates from various formats to signed decimal degrees.
         function parseCoords(coords) {
-            if (!coords || !Array.isArray(coords) || coords.length !== 2) {
-                return null;
-            }
-
+            if (!coords || !Array.isArray(coords) || coords.length !== 2) return null;
             const lat = parseCoordinateString(coords[0]);
             const lng = parseCoordinateString(coords[1]);
-
-            // Ensure both coordinates were successfully parsed and are valid numbers
-            if (lat !== null && lng !== null && !isNaN(lat) && !isNaN(lng)) {
-                // Validate geographical ranges
-                if (lat >= -90 && lat <= 90 && lng >= -180 && lng <= 180) {
-                    return [lat, lng];
-                }
+            if (lat !== null && lng !== null && !isNaN(lat) && !isNaN(lng) && lat >= -90 && lat <= 90 && lng >= -180 && lng <= 180) {
+                return [lat, lng];
             }
-
-            // If parsing failed or validation failed, return null
             return null;
         }
-
 
         // --- DATA FETCHING AND PROCESSING ---
         async function initializeTripData() {
             try {
+                initializeMap();
                 const [itineraryResponse, poiResponse] = await Promise.all([
                     fetch(ITINERARY_URL),
                     fetch(POI_URL)
@@ -400,173 +347,119 @@
                 const itineraryDataRaw = await itineraryResponse.json();
                 const poiDataRaw = await poiResponse.json();
 
-                // Process data (Parse Dates and Coordinates)
-                
-                // 1. Process itinerary data
                 itineraryData = itineraryDataRaw.map(item => ({
-                    ...item, 
+                    ...item,
                     datetime: new Date(item.datetime),
-                    coords: parseCoords(item.coords)
+                    coords: parseCoords(item.coords),
+                    location: normalizeStr(item.location)
                 }));
-                
-                // 2. Process POI data
+
                 pointsOfInterest = {};
                 for (const city in poiDataRaw) {
-                    pointsOfInterest[city] = poiDataRaw[city].map(poi => ({
+                    const normalizedCity = normalizeStr(city);
+                    pointsOfInterest[normalizedCity] = poiDataRaw[city].map(poi => ({
                         ...poi,
                         coords: parseCoords(poi.coords)
                     }));
                 }
 
-                // Sort data chronologically
                 sortedData = itineraryData.sort((a, b) => a.datetime - b.datetime);
 
-                // Dynamically calculate city stays using the robust logic
+                const byDate = sortedData.reduce((acc, item, index) => {
+                    const dateKey = item.datetime.toLocaleDateString('es-ES', { timeZone: 'UTC' });
+                    if (!acc[dateKey]) {
+                        acc[dateKey] = { date: item.datetime, events: [] };
+                    }
+                    acc[dateKey].events.push({ ...item, originalIndex: index });
+                    return acc;
+                }, {});
+                groupedByDay = Object.values(byDate);
+
                 cityStays = calculateCityStaysRobust(sortedData);
 
-                // Render the UI only if cityStays was calculated successfully
                 if (Object.keys(cityStays).length > 0) {
                     renderUI();
                 } else if (sortedData.length > 0) {
-                    // If data exists but no stays were calculated, something is unusual about the data structure.
-                    throw new Error("Itinerary data loaded, but no city stays could be determined. Check event types and locations.");
+                    throw new Error("Itinerary data loaded, but no city stays could be determined.");
                 }
-                
 
             } catch (error) {
                 console.error("Error initializing trip data:", error);
-                // Display error on the loading screen
-                 loadingOverlay.innerHTML = `<div class="text-red-500 p-8 bg-white rounded-lg shadow-xl">Error loading or processing data. <br> <small>${error.message}</small></div>`;
+                loadingOverlay.innerHTML = `<div class="text-red-500 p-8 bg-white rounded-lg shadow-xl">Error: ${error.message}</div>`;
             }
         }
 
         // --- DYNAMIC CITY STAY CALCULATION LOGIC (REFACTORED) ---
-
-        // Robustly calculates city stays based on event types, locations, and datetimes.
         function calculateCityStaysRobust(itinerary) {
             const segments = {};
             if (itinerary.length === 0) return {};
-
             const sleepEvents = itinerary.filter(e => e.type === 'sleep');
-            if (sleepEvents.length === 0) {
-                // No sleep events, cannot determine stays.
-                return {};
-            }
+            if (sleepEvents.length === 0) return {};
 
-            let currentSegment = {
-                city: null,
-                start: itinerary[0].datetime,
-                end: null,
-                transport: null
-            };
-
+            let currentSegment = { city: null, start: itinerary[0].datetime, end: null, transport: null };
             let lastSleepCity = null;
 
             itinerary.forEach((event, i) => {
                 if (event.type === 'sleep') {
-                    if (lastSleepCity === null) { // First sleep of the trip
+                    if (lastSleepCity === null) {
                         currentSegment.city = event.location;
                         lastSleepCity = event.location;
-
-                        // Find the actual start of the stay, which is the arrival.
                         for (let j = i; j >= 0; j--) {
                             const pastEvent = itinerary[j];
                             if (pastEvent.location === currentSegment.city && (pastEvent.type === 'flight_arrival' || pastEvent.type === 'transport' || pastEvent.type === 'activity')) {
-                                // This is a candidate for the start time. We want the earliest one associated with this city segment.
                                 currentSegment.start = pastEvent.datetime;
                             }
-                            // Heuristic to stop searching back further than necessary
-                            if(pastEvent.type === 'flight' && pastEvent.location !== currentSegment.city) {
-                                break;
-                            }
+                            if(pastEvent.type === 'flight' && pastEvent.location !== currentSegment.city) break;
                         }
-
                     } else if (event.location !== lastSleepCity) {
-                        // End of a segment, start of a new one.
                         let departureEvent = null;
-                        // Look back for the transport event that led to this change of city.
                         for (let j = i; j >= 0; j--) {
                              const prevEvent = itinerary[j];
-                             // A flight or transport to a *new* city marks the departure.
                              if ((prevEvent.type === 'flight' || prevEvent.type === 'transport') && prevEvent.location !== lastSleepCity) {
-                                 // Check if this transport event is what brought us to the *current* sleep city
-                                 // This is tricky. A simpler way is to find the last transport out of the *old* city.
-                                 // Let's stick to a simpler heuristic: the transport happened sometime before this new sleep.
                                  departureEvent = prevEvent;
                                  break;
                              }
                         }
-
                         currentSegment.end = departureEvent ? departureEvent.datetime : event.datetime;
                         currentSegment.transport = departureEvent ? (departureEvent.type === 'flight' ? 'flight_takeoff' : 'train') : 'commute';
-
                         let segmentName = currentSegment.city;
                         let count = 1;
                         while (segments[segmentName]) {
                             segmentName = `${currentSegment.city} (${count++})`;
                         }
-                        segments[segmentName] = {
-                            start: currentSegment.start,
-                            end: currentSegment.end,
-                            transport: currentSegment.transport,
-                            baseCity: currentSegment.city,
-                        };
-
-                        // Start the new segment.
-                        currentSegment = {
-                            city: event.location,
-                            start: departureEvent ? departureEvent.datetime : event.datetime,
-                            end: null,
-                            transport: null
-                        };
+                        segments[segmentName] = { ...currentSegment };
+                        currentSegment = { city: event.location, start: departureEvent ? departureEvent.datetime : event.datetime, end: null, transport: null };
                         lastSleepCity = event.location;
                     }
                 }
             });
 
-            // Add the final segment.
             if (currentSegment.city) {
                 currentSegment.end = itinerary[itinerary.length - 1].datetime;
                 const lastEvent = itinerary[itinerary.length - 1];
-                if (lastEvent.type === 'flight') {
-                    currentSegment.transport = 'flight_takeoff';
-                } else if (lastEvent.type === 'transport') {
-                    currentSegment.transport = 'train';
-                }
-
+                if (lastEvent.type === 'flight') currentSegment.transport = 'flight_takeoff';
+                else if (lastEvent.type === 'transport') currentSegment.transport = 'train';
                 let segmentName = currentSegment.city;
                 let count = 1;
                 while (segments[segmentName]) {
                     segmentName = `${currentSegment.city} (${count++})`;
                 }
-                segments[segmentName] = {
-                    start: currentSegment.start,
-                    end: currentSegment.end,
-                    transport: currentSegment.transport,
-                    baseCity: currentSegment.city,
-                };
+                segments[segmentName] = { ...currentSegment };
             }
 
-            // Handle cases where we visit the same city multiple times (e.g., Tokyo).
             const orderedSegments = Object.keys(segments).sort((a, b) => segments[a].start - segments[b].start);
-
             const finalSegments = {};
             const cityVisits = {};
-
             orderedSegments.forEach(name => {
-                const segment = segments[name];
-                const baseCity = segment.baseCity;
+                const baseCity = segments[name].baseCity;
                 cityVisits[baseCity] = (cityVisits[baseCity] || 0) + 1;
             });
-
             const multiVisitCities = Object.keys(cityVisits).filter(city => cityVisits[city] > 1);
             const cityCounters = {};
-
             orderedSegments.forEach(name => {
                 const segment = segments[name];
                 const baseCity = segment.baseCity;
                 let newName = baseCity;
-
                 if (multiVisitCities.includes(baseCity)) {
                     cityCounters[baseCity] = (cityCounters[baseCity] || 0) + 1;
                     newName = `${baseCity} (${cityCounters[baseCity]})`;
@@ -574,67 +467,40 @@
                 finalSegments[newName] = segment;
                 finalSegments[newName].flag = countryFlags[baseCity] || '';
             });
-
-
             return calculateDurations(finalSegments);
         }
 
-
-        // Applies the specific rules for counting days and nights (UTC based)
         function calculateDurations(segments) {
-             // ... (The duration calculation logic remains the same) ...
-            const THRESHOLD_1PM = 13 * 60; // 13:00 in minutes UTC
-            const THRESHOLD_6PM = 18 * 60; // 18:00 in minutes UTC
+            const THRESHOLD_1PM = 13 * 60;
+            const THRESHOLD_6PM = 18 * 60;
             const MS_IN_A_DAY = 24 * 60 * 60 * 1000;
-
             const results = {};
-
             const orderedSegmentNames = Object.keys(segments).sort((a, b) => segments[a].start - segments[b].start);
 
             for (const name of orderedSegmentNames) {
                 const segment = segments[name];
                 let days = 0;
-
                 const start = segment.start;
                 const end = segment.end;
-
                 const startTimeInMinutes = start.getUTCHours() * 60 + start.getUTCMinutes();
                 const endTimeInMinutes = end.getUTCHours() * 60 + end.getUTCMinutes();
-
                 const startDateUTC = new Date(Date.UTC(start.getUTCFullYear(), start.getUTCMonth(), start.getUTCDate()));
                 const endDateUTC = new Date(Date.UTC(end.getUTCFullYear(), end.getUTCMonth(), end.getUTCDate()));
-
                 let nights = Math.round((endDateUTC - startDateUTC) / MS_IN_A_DAY);
 
                 if (nights === 0) {
                     if (startTimeInMinutes < THRESHOLD_6PM) {
-                         if (startTimeInMinutes < THRESHOLD_1PM && endTimeInMinutes >= THRESHOLD_1PM) {
-                            days = 1;
-                         } else {
-                             if ((end.getTime() - start.getTime()) >= (3 * 60 * 60 * 1000)) {
-                                days = 0.5;
-                             }
-                         }
+                         if (startTimeInMinutes < THRESHOLD_1PM && endTimeInMinutes >= THRESHOLD_1PM) days = 1;
+                         else if ((end.getTime() - start.getTime()) >= (3 * 60 * 60 * 1000)) days = 0.5;
                     }
                 } else {
                     days = nights - 1;
-
-                    if (startTimeInMinutes < THRESHOLD_1PM) {
-                        days += 1;
-                    } else if (startTimeInMinutes < THRESHOLD_6PM) {
-                        days += 0.5;
-                    }
-
-                    if (endTimeInMinutes >= THRESHOLD_1PM) {
-                        days += 0.5; 
-                    }
+                    if (startTimeInMinutes < THRESHOLD_1PM) days += 1;
+                    else if (startTimeInMinutes < THRESHOLD_6PM) days += 0.5;
+                    if (endTimeInMinutes >= THRESHOLD_1PM) days += 0.5;
                 }
-
-
-                const formattedDays = String(days).replace('.5', '½');
-
                 results[name] = {
-                    days: formattedDays,
+                    days: String(days).replace('.5', '½'),
                     nights: String(nights),
                     transportToNext: segment.transport,
                     startTime: segment.start,
@@ -644,392 +510,240 @@
             return results;
         }
 
+        // --- MAP INITIALIZATION ---
+        function initializeMap() {
+            map = L.map('map').setView([35.6895, 139.6917], 5);
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+                attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
+                maxZoom: 19
+            }).addTo(map);
+            poiLayerGroup = L.layerGroup().addTo(map);
+        }
 
         // --- UI RENDERING ---
-
-        // Initialization sequence
         function renderUI() {
-            // 1. Render static components first
             renderCityTimeline();
-            renderItinerary();
-            
-            // 2. Show content and hide loader
+            renderDayView();
             mainContent.style.display = 'grid';
-            if (window.innerWidth < 1024) {
-                 mobileNav.style.display = 'block';
-            }
-            // Only hide if no error message was displayed during initialization
-            if (loadingOverlay.innerHTML.includes('Cargando itinerario')) {
-                loadingOverlay.classList.add('hidden');
-            }
-
-            // 3. Invalidate size so the map knows its dimensions now that it is visible.
-            // Note: On mobile, the map might still be hidden if the map tab is not active.
-            map.invalidateSize();
-            
-            // 4. Now update the view (which includes map movements/flyTo).
-            updateView();
+            loadingOverlay.classList.add('hidden');
         }
-
-
-        // --- RENDER FUNCTIONS ---
-
-        function renderItinerary() {
-            itineraryList.innerHTML = '';
-            // Group items by date
-            const groupedByDate = sortedData.reduce((acc, item, index) => {
-                // Use timeZone: 'UTC' to ensure the date grouping is based on the UTC date
-                const dateKey = item.datetime.toLocaleDateString('es-ES', { weekday: 'long', month: 'long', day: 'numeric', timeZone: 'UTC' });
-                if (!acc[dateKey]) { acc[dateKey] = []; }
-                acc[dateKey].push({ ...item, originalIndex: index });
-                return acc;
-            }, {});
-
-            for (const date in groupedByDate) {
-                const dayGroup = document.createElement('div');
-                const dayHeader = document.createElement('h3');
-                // Added sticky header for better navigation within the list
-                dayHeader.className = 'text-lg font-bold text-slate-900 mb-4 pt-5 sticky top-0 bg-white py-2 z-10 shadow-sm';
-                dayHeader.textContent = date.charAt(0).toUpperCase() + date.slice(1);
-                dayGroup.appendChild(dayHeader);
-
-                groupedByDate[date].forEach(item => {
-                    // Use timeZone: 'UTC' to ensure the time displayed is UTC
-                    const timeString = item.datetime.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', hour12: true, timeZone: 'UTC' });
-                    const container = document.createElement('div');
-                    container.className = 'timeline-item-container';
-                    container.dataset.index = item.originalIndex;
-                    
-                    // Refined HTML structure for the timeline item content
-                    container.innerHTML = `
-                        <div class="timeline-line"></div>
-                        <div class="timeline-icon">${icons[item.type] || icons.activity}</div>
-                        <div class="timeline-content">
-                            <p class="text-sm font-semibold text-slate-500">${timeString}</p>
-                            <p class="font-semibold text-lg text-slate-800 mt-1">${item.title}</p>
-                            <p class="text-sm text-slate-600 flex items-center gap-2 mt-1">
-                                <span class="material-symbols-outlined" style="font-size: 16px;">location_on</span>
-                                ${item.location}
-                            </p>
-                            ${item.duration ? `
-                                <div class="flex items-center text-sm text-slate-600 mt-1">
-                                    <span class="material-symbols-outlined" style="font-size: 16px; margin-right: 8px;">schedule</span>
-                                    <span>${item.duration}</span>
-                                </div>` : ''}
-                        </div>`;
-                    
-                    container.addEventListener('click', () => { 
-                        currentDayIndex = item.originalIndex; 
-                        updateView(); 
-                        // On mobile, automatically switch to the details tab when an item is clicked
-                        if (window.innerWidth < 1024) {
-                            // Don't force switch to details if the user is actively viewing the map
-                            const mapTabIsActive = document.querySelector('.mobile-nav-btn[data-target="map"]').classList.contains('active');
-                            if (!mapTabIsActive) {
-                                switchToMobileTab('details');
-                            }
-                        }
-                    });
-                    dayGroup.appendChild(container);
-                });
-                itineraryList.appendChild(dayGroup);
-            }
-        }
-        
 
         function renderCityTimeline() {
-            // The order is determined by the chronological calculation in calculateCityStaysRobust/calculateDurations.
-            const cityOrder = Object.keys(cityStays);
+            const allCities = Object.keys(cityStays);
+            const pageSize = 3;
+            const totalPages = Math.ceil(allCities.length / pageSize);
+
+            if (cityPageIndex >= totalPages) cityPageIndex = totalPages - 1;
+            if (cityPageIndex < 0) cityPageIndex = 0;
+
+            const start = cityPageIndex * pageSize;
+            const end = start + pageSize;
+            const citiesToShow = isMobile ? allCities.slice(start, end) : allCities;
 
             const timelineDiv = document.createElement('div');
             timelineDiv.className = 'city-timeline';
-            
-            cityOrder.forEach(city => {
+
+            citiesToShow.forEach(city => {
                 const itemDiv = document.createElement('div');
                 itemDiv.className = 'city-timeline-item';
                 itemDiv.dataset.city = city;
-                
-                // Get the dynamically calculated stay info
                 const stayInfo = cityStays[city];
-                
-                // HTML for stay info (days/nights)
-                let stayHtml = stayInfo ? `
-                    <div class="stay-info">
-                        <div class="stay-info-item" title="${stayInfo.days} Días">
-                            <span class="material-symbols-outlined">wb_sunny</span>
-                            <span class="${String(stayInfo.days).includes('½') ? 'half-day' : ''}">${stayInfo.days}</span>
-                        </div>
-                        <div class="stay-info-item" title="${stayInfo.nights} Noches">
-                            <span class="material-symbols-outlined">dark_mode</span>
-                            <span>${stayInfo.nights}</span>
-                        </div>
-                    </div>` : '';
-                
-                // HTML for transport icon between cities
-                let transportHtml = (stayInfo && stayInfo.transportToNext) ? `
-                    <div class="transport-icon">
-                        <span class="material-symbols-outlined">${stayInfo.transportToNext}</span>
-                    </div>` : '';
-                
-                // The countryFlags[city] inserts the <span> element required by the flag-icon-css library
-                // The keys in countryFlags are configured to match the visualization names generated.
-                itemDiv.innerHTML = `
-                    <div class="city-timeline-node">${stayInfo.flag || ''}</div>
-                    <div class="city-timeline-label">${city}</div>
-                    ${stayHtml}
-                    ${transportHtml}`;
+                let stayHtml = stayInfo ? `<div class="stay-info"><div class="stay-info-item" title="${stayInfo.days} Días"><span class="material-symbols-outlined">wb_sunny</span><span class="${String(stayInfo.days).includes('½') ? 'half-day' : ''}">${stayInfo.days}</span></div><div class="stay-info-item" title="${stayInfo.nights} Noches"><span class="material-symbols-outlined">dark_mode</span><span>${stayInfo.nights}</span></div></div>` : '';
+                let transportHtml = (stayInfo && stayInfo.transportToNext) ? `<div class="transport-icon"><span class="material-symbols-outlined">${stayInfo.transportToNext}</span></div>` : '';
+                itemDiv.innerHTML = `<div class="city-timeline-node">${stayInfo.flag || ''}</div><div class="city-timeline-label">${city}</div>${stayHtml}${transportHtml}`;
                 timelineDiv.appendChild(itemDiv);
             });
+
             cityTimelineContainer.innerHTML = '';
-            if (Object.keys(cityStays).length > 0) {
-                cityTimelineContainer.appendChild(timelineDiv);
+            cityTimelineContainer.appendChild(timelineDiv);
+
+            if (isMobile && totalPages > 1) {
+                const leftArrow = document.createElement('button');
+                leftArrow.className = 'scroll-arrow left';
+                leftArrow.innerHTML = `<span class="material-symbols-outlined">arrow_back_ios</span>`;
+                leftArrow.disabled = cityPageIndex === 0;
+                leftArrow.onclick = () => { cityPageIndex--; renderCityTimeline(); };
+
+                const rightArrow = document.createElement('button');
+                rightArrow.className = 'scroll-arrow right';
+                rightArrow.innerHTML = `<span class="material-symbols-outlined">arrow_forward_ios</span>`;
+                rightArrow.disabled = cityPageIndex >= totalPages - 1;
+                rightArrow.onclick = () => { cityPageIndex++; renderCityTimeline(); };
+
+                cityTimelineContainer.appendChild(leftArrow);
+                cityTimelineContainer.appendChild(rightArrow);
+            }
+            if (groupedByDay.length > 0) {
+                 const currentEventTime = groupedByDay[currentDayIndex].date;
+                 updateCityTimelineActiveState(currentEventTime);
             }
         }
 
-        // --- UPDATE VIEW LOGIC ---
+        function renderDayView() {
+            if (groupedByDay.length === 0) return;
+            const currentDayData = groupedByDay[currentDayIndex];
 
-        function updateView() {
-            if (sortedData.length === 0) return;
+            const date = currentDayData.date;
+            dateDisplay.innerHTML = `
+                <h3 class="text-lg font-bold text-slate-900">${date.toLocaleDateString('es-ES', { weekday: 'long', timeZone: 'UTC' })}</h3>
+                <p class="text-sm text-slate-500">${date.toLocaleDateString('es-ES', { month: 'long', day: 'numeric', timeZone: 'UTC' })}</p>`;
+            prevDayBtn.disabled = currentDayIndex === 0;
+            nextDayBtn.disabled = currentDayIndex === groupedByDay.length - 1;
 
-            const currentItem = sortedData[currentDayIndex];
-            
-            // 1. Update Itinerary List Active State
-            document.querySelectorAll('.timeline-item-container').forEach(el => el.classList.remove('active'));
-            const activeEl = document.querySelector(`.timeline-item-container[data-index="${currentDayIndex}"]`);
-            if (activeEl) {
-                activeEl.classList.add('active');
-                // Smooth scroll the active item into view
-                activeEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            itineraryList.innerHTML = '';
+            currentDayData.events.forEach(item => {
+                const timeString = item.datetime.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', hour12: true, timeZone: 'UTC' });
+                const container = document.createElement('div');
+                container.className = 'timeline-item-container';
+                container.innerHTML = `
+                    <div class="timeline-line"></div>
+                    <div class="timeline-icon">${icons[item.type] || icons.activity}</div>
+                    <div class="timeline-content">
+                        <p class="text-sm font-semibold text-slate-500">${timeString}</p>
+                        <p class="font-semibold text-lg text-slate-800 mt-1">${item.title}</p>
+                        <p class="text-sm text-slate-600 flex items-center gap-2 mt-1"><span class="material-symbols-outlined" style="font-size: 16px;">location_on</span>${item.location}</p>
+                        ${item.duration ? `<div class="flex items-center text-sm text-slate-600 mt-1"><span class="material-symbols-outlined" style="font-size: 16px; margin-right: 8px;">schedule</span><span>${item.duration}</span></div>` : ''}
+                    </div>`;
+                itineraryList.appendChild(container);
+            });
+            if (currentDayData.events.length === 0) {
+                 itineraryList.innerHTML = `<p class="text-slate-500 italic p-4">No hay eventos programados para este día.</p>`;
             }
-            
-            // 2. Clear Map Layers
-            poiLayerGroup.clearLayers();
-            if (mainMarker) map.removeLayer(mainMarker);
 
-            // 3. Determine Details Content (POI or Event Details)
+            renderDetails(currentDayData.events[0], detailsContainer);
+            updateMap(currentDayData.events);
+            updateCityTimelineActiveState(currentDayData.events[0].datetime);
+        }
+
+        function renderDetails(item, container) {
+            container.innerHTML = '';
+            if (!item) {
+                container.innerHTML = '<p class="text-slate-500 italic p-4">No hay detalles para mostrar.</p>';
+                return;
+            }
+
             const cityEventTypes = ['activity', 'sleep', 'day_trip', 'business', 'lodging'];
-            let displayLocation = currentItem.location;
+            const cityMap = { "Susono": "Hakone", "Narita": "Tokio", "Gyeongju": "Busán" };
+            let poiLookupLocation = cityMap[item.location] || item.location;
             
-            // Map specific sub-locations/day trips to major areas if needed for POI lookup.
-            // Keys must match the POI JSON keys (e.g., Kioto, Busán).
-            const cityMap = { 
-                "Susono": "Hakone", 
-                // "Nara": "Nara", 
-                "Gyeongju": "Busán", 
-            };
-            
-            let poiLookupLocation = displayLocation;
-            if (cityMap[displayLocation]) { 
-                poiLookupLocation = cityMap[displayLocation]; 
-            }
-            
-
-            if (cityEventTypes.includes(currentItem.type) && pointsOfInterest[poiLookupLocation]) {
-                // Show POIs for the city
-                detailsTitle.textContent = `Atracciones en ${currentItem.location}`;
+            let contentHtml = '';
+            if (cityEventTypes.includes(item.type) && pointsOfInterest[poiLookupLocation]) {
                 const cityPOIs = pointsOfInterest[poiLookupLocation];
-                
-                // Group POIs by category
                 const groupedPOIs = cityPOIs.reduce((acc, poi) => {
                     if (!acc[poi.category]) acc[poi.category] = [];
                     acc[poi.category].push(poi);
                     return acc;
                 }, {});
 
-                let poiHtml = '<div class="space-y-5 mt-2">';
-                
-                // Add a highlight box if accommodation needs booking
-                if (currentItem.details?.Alojamiento === "NEED TO BOOK") {
-                    poiHtml += `<div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50" role="alert">
-                                    <span class="font-medium">¡Atención!</span> Necesitas reservar alojamiento para esta noche.
-                                </div>`;
+                contentHtml += `<h2 class="text-2xl font-bold mb-4 text-slate-900 border-b pb-4">Atracciones en ${item.location}</h2><div class="space-y-5 mt-2">`;
+                if (item.details?.Alojamiento === "NEED TO BOOK") {
+                    contentHtml += `<div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50" role="alert"><span class="font-medium">¡Atención!</span> Necesitas reservar alojamiento para esta noche.</div>`;
                 }
 
                 for (const category in groupedPOIs) {
-                    // Get the count for the category
                     const count = groupedPOIs[category].length;
-
-                    // Render collapsible category headers
-                    poiHtml += `
+                    contentHtml += `
                         <div class="poi-category">
                             <h4 onclick="this.nextElementSibling.classList.toggle('open')">
-                                <span class="icon-left">
-                                    <span class="material-symbols-outlined">${poiIcons[category] || 'place'}</span>
-                                    ${category}
-                                    <span class="poi-count">(${count})</span>
-                                </span>
+                                <span class="icon-left"><span class="material-symbols-outlined">${poiIcons[category] || 'place'}</span>${category}<span class="poi-count">(${count})</span></span>
                                 <span class="material-symbols-outlined">expand_more</span>
                             </h4>
                             <div class="poi-list">`;
-                    
                     groupedPOIs[category].forEach(poi => {
-                        // Render POI details
-                        poiHtml += `
-                            <div class="poi-item">
-                                <p class="poi-name">${poi.name}</p>
-                                <p class="poi-desc">${poi.description}</p>
-                            </div>`;
-                        
-                        // Add POI markers to the map (robust check ensured by parseCoords)
+                        contentHtml += `<div class="poi-item"><p class="poi-name">${poi.name}</p><p class="poi-desc">${poi.description}</p></div>`;
+                    });
+                    contentHtml += `</div></div>`;
+                }
+                contentHtml += '</div>';
+            } else {
+                contentHtml += `<h2 class="text-2xl font-bold mb-4 text-slate-900 border-b pb-4">Detalles del Evento</h2><div class="mt-4 p-5 bg-slate-50 rounded-lg shadow-inner"><h3 class="text-xl font-bold text-slate-800 mb-4">${item.title}</h3><div class="space-y-3">`;
+                if (item.details) {
+                    for (const [key, value] of Object.entries(item.details)) { contentHtml += `<p><strong class="text-slate-600">${key}:</strong> ${value}</p>`; }
+                } else {
+                    contentHtml += `<p class="text-slate-500 italic">No hay detalles adicionales.</p>`;
+                }
+                contentHtml += '</div></div>';
+            }
+             container.innerHTML = contentHtml;
+        }
+
+        function updateMap(events) {
+            if (!map) return;
+            poiLayerGroup.clearLayers();
+            if (mainMarker) map.removeLayer(mainMarker);
+            
+            const eventCoords = events.map(e => e.coords).filter(c => c);
+            const bounds = L.latLngBounds(eventCoords);
+
+            events.forEach(item => {
+                if (item.coords) {
+                     const iconHtml = `<div style="background-color: var(--primary-color); color: white; border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border: 3px solid white; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">${icons[item.type] || icons.activity}</div>`;
+                     const mainIcon = L.divIcon({ className: '', html: iconHtml, iconSize: [36, 36], iconAnchor: [18, 18] });
+                     L.marker(item.coords, { icon: mainIcon }).addTo(map).bindPopup(`<b>${item.title}</b><br>${item.location}`);
+                }
+            });
+
+            const firstEvent = events[0];
+            if (firstEvent) {
+                const cityMap = { "Susono": "Hakone", "Narita": "Tokio", "Gyeongju": "Busán" };
+                let poiLookupLocation = cityMap[firstEvent.location] || firstEvent.location;
+                if (pointsOfInterest[poiLookupLocation]) {
+                     pointsOfInterest[poiLookupLocation].forEach(poi => {
                         if (poi.coords) {
+                            bounds.extend(poi.coords);
                             const iconHtml = `<span class="material-symbols-outlined">${poiIcons[poi.category] || 'place'}</span>`;
                             const divIcon = L.divIcon({ className: 'leaflet-div-icon', html: iconHtml, iconSize: [30, 30], iconAnchor: [15, 15] });
                             L.marker(poi.coords, { icon: divIcon }).addTo(poiLayerGroup).bindPopup(`<b>${poi.name}</b><br>${poi.category}`);
                         }
                     });
-                    poiHtml += `</div></div>`;
                 }
-                 detailsContent.innerHTML = poiHtml + '</div>' || '<p class="text-slate-500 italic mt-4">No hay puntos de interés para esta ciudad.</p>';
-            } else {
-                // Show specific event details (e.g., Flight Info)
-                detailsTitle.textContent = 'Detalles del Evento';
-                let detailsHtml = `<div class="mt-4 p-5 bg-slate-50 rounded-lg shadow-sm"><h3 class="text-xl font-bold text-slate-800 mb-4">${currentItem.title}</h3><div class="space-y-3">`;
-                if (currentItem.details) {
-                    for (const [key, value] of Object.entries(currentItem.details)) {
-                        detailsHtml += `<p><strong class="text-slate-600">${key}:</strong> ${value}</p>`;
-                    }
-                } else {
-                     // If no specific details, check if POIs were missing for an activity type
-                     if (cityEventTypes.includes(currentItem.type) && !pointsOfInterest[poiLookupLocation]) {
-                        detailsHtml += `<p class="text-slate-500 italic">No hay puntos de interés registrados para ${currentItem.location}.</p>`;
-                    } else {
-                        detailsHtml += `<p class="text-slate-500 italic">No hay detalles adicionales.</p>`;
-                    }
-                }
-                detailsContent.innerHTML = detailsHtml + '</div></div>';
             }
 
-            // 4. Update Map View and Main Marker
-            
-            // FIX: Check if the map container is currently visible (relevant for mobile tabs)
-            // Define the LG breakpoint (1024px) used in the CSS.
-            const LG_BREAKPOINT = 1024;
-            const mapIsVisible = window.innerWidth >= LG_BREAKPOINT || (window.innerWidth < LG_BREAKPOINT && mapContainer.classList.contains('active'));
-
-            // Improved logic to handle coordinates and fallbacks gracefully.
-            if (currentItem.coords && currentItem.location.toLowerCase() !== "en vuelo") {
-                // Case A: Event has valid coordinates.
-                
-                // Create a distinct marker for the main event
-                const mainIconHtml = `<div style="background-color: var(--primary-color); color: white; border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border: 3px solid white; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">${icons[currentItem.type] || icons.activity}</div>`;
-                const mainIcon = L.divIcon({ className: '', html: mainIconHtml, iconSize: [36, 36], iconAnchor: [18, 18] });
-
-                mainMarker = L.marker(currentItem.coords, { icon: mainIcon }).addTo(map).bindPopup(`<b>${currentItem.title}</b><br>${currentItem.location}`);
-                
-                // FIX: Use animation (flyTo) ONLY if the map is visible.
-                // If hidden, use setView immediately to avoid animation errors (NaN, NaN) with 0 dimensions.
-                if (mapIsVisible) {
-                    map.flyTo(currentItem.coords, 13, { animate: true, duration: 1.5 });
-                    mainMarker.openPopup();
-                } else {
-                    // Update the map center so when the user switches to the map tab, it's correct.
-                    map.setView(currentItem.coords, 13, { animate: false });
-                }
-               
-            } else if (currentItem.location.toLowerCase() !== "en vuelo") {
-                // Case B: Event does not have coordinates (but is not "en vuelo"). 
-                // Try to center based on the POIs that were just added to the poiLayerGroup.
-
-                if (poiLayerGroup.getLayers().length > 0) {
-                    const bounds = poiLayerGroup.getBounds();
-                    if (bounds.isValid()) {
-                         // Use animation (flyToBounds) ONLY if the map is visible.
-                        if (mapIsVisible) {
-                            map.flyToBounds(bounds, { animate: true, duration: 1.5, padding: [50, 50], maxZoom: 14 });
-                        } else {
-                            // Use fitBounds without animation if hidden.
-                            map.fitBounds(bounds, { animate: false, padding: [50, 50], maxZoom: 14 });
-                        }
-                    }
-                }
-                 // Case C: No event coords and no POIs. Do nothing, map stays centered on the previous location.
+            if (bounds.isValid()) {
+                map.invalidateSize();
+                map.flyToBounds(bounds, { animate: true, duration: 1, padding: [50, 50], maxZoom: 14 });
             }
-
-            // 5. Update City Timeline Active State
-            updateCityTimeline();
-            
-            // 6. Update Navigation Buttons State
-            prevBtn.disabled = currentDayIndex === 0;
-            nextBtn.disabled = currentDayIndex === sortedData.length - 1;
         }
 
-        // Determines the active city based on the current event's timestamp and the calculated segments.
-        function updateCityTimeline() {
+        function updateCityTimelineActiveState(currentTime) {
             document.querySelectorAll('.city-timeline-item').forEach(el => el.classList.remove('active'));
-            
-            if (sortedData.length === 0) return;
-
-            const currentTime = sortedData[currentDayIndex].datetime;
             let activeCity = null;
-
-            // Iterate through the calculated city stays (which are chronologically ordered).
             for (const cityName in cityStays) {
-                const stay = cityStays[cityName];
-                // Check if the current event time is greater than or equal to the segment start time.
-                // Since the iteration is chronological, the last segment that satisfies this condition is the active one.
-                if (currentTime >= stay.startTime) {
+                if (currentTime >= cityStays[cityName].startTime) {
                     activeCity = cityName;
                 }
             }
-            
-            if(activeCity) {
+            if (activeCity) {
                 const activeCityEl = document.querySelector(`.city-timeline-item[data-city="${activeCity}"]`);
                 if (activeCityEl) {
                     activeCityEl.classList.add('active');
-                    // Ensure the active city is visible in the horizontal scroll
-                    activeCityEl.scrollIntoView({ behavior: 'smooth', inline: 'center' });
                 }
             }
         }
 
         // --- Event Handlers ---
-        prevBtn.addEventListener('click', () => { if (currentDayIndex > 0) { currentDayIndex--; updateView(); } });
-        nextBtn.addEventListener('click', () => { if (currentDayIndex < sortedData.length - 1) { currentDayIndex++; updateView(); } });
-
-        // --- Mobile Navigation Logic ---
-        const mobileNavBtns = document.querySelectorAll('.mobile-nav-btn');
-        
-        // Define references to the containers using the data-mobile-tab attribute
-        const itineraryContainer = document.querySelector('[data-mobile-tab="itinerary"]');
-        // const mapContainer = document.querySelector('[data-mobile-tab="map"]'); // Already defined globally
-        const detailsContainer = document.querySelector('[data-mobile-tab="details"]');
-
-        const mobileContainers = {
-            'itinerary': itineraryContainer,
-            'map': mapContainer,
-            'details': detailsContainer
-        };
-
-        function switchToMobileTab(target) {
-            // Update button active state
-            mobileNavBtns.forEach(b => b.classList.remove('active'));
-            const activeBtn = document.querySelector(`.mobile-nav-btn[data-target="${target}"]`);
-            if (activeBtn) activeBtn.classList.add('active');
-
-            // Update content area visibility
-            for (const key in mobileContainers) {
-                if (key === target) {
-                    mobileContainers[key].classList.add('active');
-                } else {
-                    mobileContainers[key].classList.remove('active');
-                }
+        prevDayBtn.addEventListener('click', () => {
+            if (currentDayIndex > 0) {
+                currentDayIndex--;
+                renderDayView();
             }
-
-            // Specific action for map tab: invalidate size and potentially update view
-            if (target === 'map') {
-                // Use a slight delay to ensure the container is visible before invalidating size
-                setTimeout(() => {
-                    map.invalidateSize();
-                    // Re-run updateView when switching to map tab to ensure flyTo/flyToBounds animation runs now that the map is visible
-                    updateView(); 
-                }, 10);
-            }
-        }
-
-        mobileNavBtns.forEach(btn => {
-            btn.addEventListener('click', () => switchToMobileTab(btn.dataset.target));
         });
 
+        nextDayBtn.addEventListener('click', () => {
+            if (currentDayIndex < groupedByDay.length - 1) {
+                currentDayIndex++;
+                renderDayView();
+            }
+        });
+
+        window.addEventListener('resize', () => {
+            const newIsMobile = window.innerWidth < LG_BREAKPOINT;
+            if (newIsMobile !== isMobile) {
+                isMobile = newIsMobile;
+                // Re-render the city timeline to add/remove arrows and adjust layout
+                renderCityTimeline();
+            }
+        });
 
         // --- Start the Application ---
         initializeTripData();
