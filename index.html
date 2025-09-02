@@ -714,7 +714,11 @@
                             const iconHtml = `<span class="material-symbols-outlined">${poiIcons[poi.category] || 'place'}</span>`;
                             const divIcon = L.divIcon({ className: 'leaflet-div-icon', html: iconHtml, iconSize: [30, 30], iconAnchor: [15, 15] });
                             try {
-                                L.marker(poi.coords, { icon: divIcon }).addTo(poiLayerGroup).bindPopup(`<b>${poi.name}</b><br>${poi.category}`);
+                                let popupContent = `<b>${poi.name}</b><br>${poi.category}`;
+                                if (poi.maps_url) {
+                                    popupContent += `<br><a href="${poi.maps_url}" target="_blank" rel="noopener noreferrer">Ver en Google Maps</a>`;
+                                }
+                                L.marker(poi.coords, { icon: divIcon }).addTo(poiLayerGroup).bindPopup(popupContent);
                             } catch (err) {
                                 console.error('Failed to create POI marker for', poi, err);
                             }
@@ -849,7 +853,11 @@
                             </summary>
                             <div class="poi-list-modal p-3 space-y-3">`;
                     groupedPOIs[category].forEach(poi => {
-                        contentHtml += `<div class="poi-item-modal border-l-2 border-slate-200 pl-4"><p class="font-semibold text-slate-800">${poi.name}</p><p class="text-sm text-slate-600">${poi.description}</p></div>`;
+                        let mapsLink = '';
+                        if (poi.maps_url) {
+                            mapsLink = `<a href="${poi.maps_url}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-sm text-emerald-600 hover:text-emerald-800 font-semibold mt-1">Ver en Google Maps <span class="material-symbols-outlined" style="font-size: 16px;">open_in_new</span></a>`;
+                        }
+                        contentHtml += `<div class="poi-item-modal border-l-2 border-slate-200 pl-4 py-2"><p class="font-semibold text-slate-800">${poi.name}</p><p class="text-sm text-slate-600">${poi.description}</p>${mapsLink}</div>`;
                     });
                     contentHtml += `</div></details>`;
                 }
