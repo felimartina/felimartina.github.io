@@ -276,6 +276,10 @@
             return str.normalize('NFC').trim();
         }
 
+        function capitalizeFirstLetter(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
+
         // Normalize the keys of the flags object for robust matching
         const countryFlags = Object.keys(rawCountryFlags).reduce((acc, key) => {
             acc[normalizeStr(key)] = rawCountryFlags[key];
@@ -607,8 +611,9 @@
             const currentDayData = groupedByDay[currentDayIndex];
 
             const date = currentDayData.date;
+            const dayName = date.toLocaleDateString('es-ES', { weekday: 'long', timeZone: 'UTC' });
             dateDisplay.innerHTML = `
-                <h3 class="text-lg font-bold text-slate-900">${date.toLocaleDateString('es-ES', { weekday: 'long', timeZone: 'UTC' })}</h3>
+                <h3 class="text-lg font-bold text-slate-900">${capitalizeFirstLetter(dayName)}</h3>
                 <p class="text-sm text-slate-500">${date.toLocaleDateString('es-ES', { month: 'long', day: 'numeric', timeZone: 'UTC' })}</p>`;
             prevDayBtn.disabled = currentDayIndex === 0;
             nextDayBtn.disabled = currentDayIndex === groupedByDay.length - 1;
