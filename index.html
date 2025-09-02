@@ -481,20 +481,18 @@
             let currentBaseCity = null;
             let segmentStart = null;
 
+            // Maps standardized data names (from JSON) to the desired display names for the UI timeline.
+            // This allows for localization or different display conventions (e.g., with accents).
             const visualizationBaseNames = {
-                "Kioto": "Kyoto",
-                "Busán": "Busan",
+                "Tokyo": "Tokio",
+                "Kyoto": "Kyoto",
+                "Busan": "Busan",
                 "Seoul": "Seúl",
                 "Taipei": "Taipéi",
-                "Susono": "Hakone",
-                "Narita": "Tokio",
-                "Tokio": "Tokio",
-                "Osaka": "Osaka",
                 "Hakone": "Hakone",
-                "Seúl": "Seúl",
-                "Taipéi": "Taipéi",
-                "Busan": "Busan",
-                "Kyoto": "Kyoto",
+                "Osaka": "Osaka",
+                "Narita": "Tokio",
+                "Susono": "Hakone"
             };
 
             const getVisualizationName = (city) => {
@@ -859,17 +857,14 @@
             let displayLocation = currentItem.location;
             
             // Map specific sub-locations/day trips to major areas if needed for POI lookup.
-            // Keys must match the POI JSON keys (e.g., Kioto, Busán).
-            const cityMap = { 
-                "Susono": "Hakone", 
-                // "Nara": "Nara", 
-                "Gyeongju": "Busán", 
+            const cityMap = {
+                "Susono": "Hakone",
+                "Narita": "Tokyo",
+                "Gyeongju": "Busan"
             };
             
-            let poiLookupLocation = displayLocation;
-            if (cityMap[displayLocation]) { 
-                poiLookupLocation = cityMap[displayLocation]; 
-            }
+            // Normalize the location name using the map. If not in map, use the original name.
+            let poiLookupLocation = cityMap[displayLocation] || displayLocation;
             
 
             if (cityEventTypes.includes(currentItem.type) && pointsOfInterest[poiLookupLocation]) {
