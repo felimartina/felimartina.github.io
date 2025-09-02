@@ -281,7 +281,7 @@
         };
         
         // Flags configuration using flag-icon-css library classes (fi fi-xx)
-        const countryFlags = {
+        const rawCountryFlags = {
             "Tokio": `<span class="fi fi-jp"></span>`,
             "Hakone": `<span class="fi fi-jp"></span>`,
             "Kioto": `<span class="fi fi-jp"></span>`,
@@ -290,6 +290,18 @@
             "Seúl": `<span class="fi fi-kr"></span>`,
             "Taipéi": `<span class="fi fi-tw"></span>`,
         };
+
+        // --- Helper Functions ---
+        function normalizeStr(str) {
+            if (typeof str !== 'string') return str;
+            return str.normalize('NFC').trim();
+        }
+
+        // Normalize the keys of the flags object for robust matching
+        const countryFlags = Object.keys(rawCountryFlags).reduce((acc, key) => {
+            acc[normalizeStr(key)] = rawCountryFlags[key];
+            return acc;
+        }, {});
 
 
         // --- Initialization & Setup ---
@@ -406,13 +418,15 @@
                 itineraryData = itineraryDataRaw.map(item => ({
                     ...item, 
                     datetime: new Date(item.datetime),
-                    coords: parseCoords(item.coords)
+                    coords: parseCoords(item.coords),
+                    location: normalizeStr(item.location) // Normalize location names on ingestion
                 }));
                 
                 // 2. Process POI data
                 pointsOfInterest = {};
                 for (const city in poiDataRaw) {
-                    pointsOfInterest[city] = poiDataRaw[city].map(poi => ({
+                    const normalizedCity = normalizeStr(city);
+                    pointsOfInterest[normalizedCity] = poiDataRaw[city].map(poi => ({
                         ...poi,
                         coords: parseCoords(poi.coords)
                     }));
@@ -465,7 +479,7 @@
             itinerary.forEach((event, i) => {
                 if (event.type === 'sleep') {
                     if (lastSleepCity === null) { // First sleep of the trip
-                        currentSegment.city = event.location;
+                        currentSegment.city = event.location; // Already normalized
                         lastSleepCity = event.location;
 
                         // Find the actual start of the stay, which is the arrival.
@@ -514,7 +528,7 @@
 
                         // Start the new segment.
                         currentSegment = {
-                            city: event.location,
+                            city: event.location, // Already normalized
                             start: departureEvent ? departureEvent.datetime : event.datetime,
                             end: null,
                             transport: null
@@ -555,7 +569,7 @@
 
             orderedSegments.forEach(name => {
                 const segment = segments[name];
-                const baseCity = segment.baseCity;
+                const baseCity = segment.baseCity; // baseCity is already normalized
                 cityVisits[baseCity] = (cityVisits[baseCity] || 0) + 1;
             });
 
