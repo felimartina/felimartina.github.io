@@ -437,14 +437,15 @@
             const cityVisits = {};
             orderedSegments.forEach(name => {
                 const segment = segments[name];
-                const baseCity = segment.baseCity;
+                const baseCity = segment.city;
                 cityVisits[baseCity] = (cityVisits[baseCity] || 0) + 1;
             });
+
             const multiVisitCities = Object.keys(cityVisits).filter(city => cityVisits[city] > 1);
             const cityCounters = {};
             orderedSegments.forEach(name => {
                 const segment = segments[name];
-                const baseCity = segment.baseCity;
+                const baseCity = segment.city;
                 let newName = baseCity;
                 if (multiVisitCities.includes(baseCity)) {
                     cityCounters[baseCity] = (cityCounters[baseCity] || 0) + 1;
