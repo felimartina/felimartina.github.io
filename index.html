@@ -546,8 +546,8 @@
         // --- UI RENDERING ---
         function renderUI() {
             renderCityTimeline();
-            renderDayView();
             mainContent.style.display = 'grid';
+            renderDayView();
             loadingOverlay.classList.add('hidden');
         }
 
@@ -748,19 +748,19 @@
                     const bounds = L.latLngBounds(uniqueCoords);
                     map.invalidateSize();
                     if (bounds.isValid && bounds.getNorthWest && bounds.getSouthEast) {
-                        map.flyToBounds(bounds, { padding: [50, 50], maxZoom: 14 });
+                        map.fitBounds(bounds, { padding: [50, 50], maxZoom: 14 });
                     } else {
-                        console.warn('Computed bounds are invalid, skipping flyToBounds', bounds);
+                        console.warn('Computed bounds are invalid, skipping fitBounds', bounds);
                     }
                 } catch (err) {
-                    console.error('Error when calling flyToBounds with coords:', uniqueCoords, err);
+                    console.error('Error when calling fitBounds with coords:', uniqueCoords, err);
                 }
             } else if (uniqueCoords.length === 1) { // If only one point, fly to it
                 try {
                     map.invalidateSize();
-                    map.flyTo(uniqueCoords[0], 14);
+                    map.setView(uniqueCoords[0], 14);
                 } catch (err) {
-                    console.error('Error when calling flyTo with coord:', uniqueCoords[0], err);
+                    console.error('Error when calling setView with coord:', uniqueCoords[0], err);
                 }
             } else {
                 // No valid coords to fit map to - optionally center to a fallback
