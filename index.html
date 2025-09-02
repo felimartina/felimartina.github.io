@@ -99,6 +99,10 @@
             line-height: 1em;
             /* Removed explicit width/height to allow natural aspect ratio inside the circle */
         }
+        /* Specific fix for rectangular flags like Taiwan's to fill the circle */
+        .city-timeline-node .fi-tw {
+            transform: scale(1.4);
+        }
 
         .city-timeline-item.active .city-timeline-node {
             border-color: var(--primary-color);
@@ -278,15 +282,11 @@
         
         // Flags configuration using flag-icon-css library classes (fi fi-xx)
         const countryFlags = {
-            "Tokio (Inicio)": `<span class="fi fi-jp"></span>`,
-            "Tokio (Fin)": `<span class="fi fi-jp"></span>`,
             "Tokio": `<span class="fi fi-jp"></span>`,
             "Hakone": `<span class="fi fi-jp"></span>`,
-            "Kyoto (+ Nara)": `<span class="fi fi-jp"></span>`,
-            "Kyoto": `<span class="fi fi-jp"></span>`,
+            "Kioto": `<span class="fi fi-jp"></span>`,
             "Osaka": `<span class="fi fi-jp"></span>`,
-            "Busan (+ Gyeongju)": `<span class="fi fi-kr"></span>`,
-            "Busan": `<span class="fi fi-kr"></span>`,
+            "Busán": `<span class="fi fi-kr"></span>`,
             "Seúl": `<span class="fi fi-kr"></span>`,
             "Taipéi": `<span class="fi fi-tw"></span>`,
         };
@@ -572,6 +572,7 @@
                     newName = `${baseCity} (${cityCounters[baseCity]})`;
                 }
                 finalSegments[newName] = segment;
+                finalSegments[newName].flag = countryFlags[baseCity] || '';
             });
 
 
@@ -636,7 +637,8 @@
                     days: formattedDays,
                     nights: String(nights),
                     transportToNext: segment.transport,
-                    startTime: segment.start
+                    startTime: segment.start,
+                    flag: segment.flag
                 };
             }
             return results;
@@ -772,7 +774,7 @@
                 // The countryFlags[city] inserts the <span> element required by the flag-icon-css library
                 // The keys in countryFlags are configured to match the visualization names generated.
                 itemDiv.innerHTML = `
-                    <div class="city-timeline-node">${countryFlags[city] || ''}</div>
+                    <div class="city-timeline-node">${stayInfo.flag || ''}</div>
                     <div class="city-timeline-label">${city}</div>
                     ${stayHtml}
                     ${transportHtml}`;
