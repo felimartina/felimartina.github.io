@@ -1,0 +1,830 @@
+[
+  {
+    "datetime": "2025-09-27T21:10:00.000Z",
+    "type": "flight",
+    "title": "Vuelo a Montreal (escala)",
+    "location": "Fort Lauderdale",
+    "coords": [
+      26.0726,
+      -80.1528
+    ],
+    "duration": "~3h 50m",
+    "details": {
+      "Reserva": "AY2GE4",
+      "Aerolínea": "Air Canada",
+      "Sale de": "Fort Lauderdale (FLL)",
+      "Llega a": "Montreal (YUL)"
+    }
+  },
+  {
+    "datetime": "2025-09-28T01:30:00.000Z",
+    "type": "lodging",
+    "title": "DoubleTree by Hilton Montreal Airport",
+    "location": "Montreal",
+    "coords": [
+      45.4706,
+      -73.7408
+    ],
+    "details": {
+      "Confirmación": "257-4614967",
+      "Dirección": "705 Avenue Michel-Jasmin Dorval QC H9P 1B8 CA",
+      "Check-out": "12:00 PM"
+    }
+  },
+  {
+    "datetime": "2025-09-28T13:45:00.000Z",
+    "type": "flight",
+    "title": "Vuelo a Tokio",
+    "location": "Montreal",
+    "coords": [
+      45.4706,
+      -73.7408
+    ],
+    "duration": "~14h",
+    "details": {
+      "Reserva": "AY2GE4",
+      "Aerolínea": "Air Canada",
+      "Sale de": "Montreal (YUL)",
+      "Llega a": "Tokio (NRT)"
+    }
+  },
+  {
+    "datetime": "2025-09-29T15:25:00.000Z",
+    "type": "flight_arrival",
+    "title": "Llegada a Tokio",
+    "location": "Tokio",
+    "coords": [
+      35.772,
+      140.3863
+    ],
+    "details": {
+      "Transporte Sugerido": "Narita Express (N'EX) a Shinjuku/Tokyo Station."
+    }
+  },
+  {
+    "datetime": "2025-09-29T23:00:00.000Z",
+    "type": "sleep",
+    "title": "Noche en Tokio",
+    "location": "Tokio",
+    "coords": [
+      35.6895,
+      139.6917
+    ],
+    "details": {
+      "Alojamiento": "NEED TO BOOK"
+    }
+  },
+  {
+    "datetime": "2025-09-30T09:00:00.000Z",
+    "type": "activity",
+    "title": "Día en Tokio",
+    "location": "Tokio",
+    "coords": [
+      35.6895,
+      139.6917
+    ],
+    "details": {
+      "Plan": "Explorar la zona de Shibuya y Harajuku."
+    }
+  },
+  {
+    "datetime": "2025-09-30T23:00:00.000Z",
+    "type": "sleep",
+    "title": "Noche en Tokio",
+    "location": "Tokio",
+    "coords": [
+      35.6895,
+      139.6917
+    ],
+    "details": {
+      "Alojamiento": "NEED TO BOOK"
+    }
+  },
+  {
+    "datetime": "2025-10-01T09:00:00.000Z",
+    "type": "activity",
+    "title": "Día en Tokio",
+    "location": "Tokio",
+    "coords": [
+      35.6895,
+      139.6917
+    ],
+    "details": {
+      "Plan": "Explorar la zona de Asakusa y Ueno."
+    }
+  },
+  {
+    "datetime": "2025-10-01T23:00:00.000Z",
+    "type": "sleep",
+    "title": "Noche en Tokio",
+    "location": "Tokio",
+    "coords": [
+      35.6895,
+      139.6917
+    ],
+    "details": {
+      "Alojamiento": "NEED TO BOOK"
+    }
+  },
+  {
+    "datetime": "2025-10-02T09:00:00.000Z",
+    "type": "activity",
+    "title": "Día en Tokio",
+    "location": "Tokio",
+    "coords": [
+      35.6895,
+      139.6917
+    ],
+    "details": {
+      "Plan": "Visitar el mercado de Tsukiji y los jardines del Palacio Imperial."
+    }
+  },
+  {
+    "datetime": "2025-10-02T23:00:00.000Z",
+    "type": "sleep",
+    "title": "Noche en Tokio",
+    "location": "Tokio",
+    "coords": [
+      35.6895,
+      139.6917
+    ],
+    "details": {
+      "Alojamiento": "NEED TO BOOK"
+    }
+  },
+  {
+    "datetime": "2025-10-03T09:00:00.000Z",
+    "type": "business",
+    "title": "Visita a Google Office",
+    "location": "Tokio",
+    "coords": [
+      35.658,
+      139.7016
+    ],
+    "details": {
+      "Dirección": "Shibuya Stream, 3-21-3 Shibuya"
+    }
+  },
+  {
+    "datetime": "2025-10-03T13:00:00.000Z",
+    "type": "activity",
+    "title": "Tarde en Tokio",
+    "location": "Tokio",
+    "coords": [
+      35.6895,
+      139.6917
+    ],
+    "details": {
+      "Plan": "Tiempo libre para explorar Shibuya y visitar el Festival Moon Art Night en Shimokitazawa."
+    }
+  },
+  {
+    "datetime": "2025-10-03T23:00:00.000Z",
+    "type": "sleep",
+    "title": "Noche en Tokio",
+    "location": "Tokio",
+    "coords": [
+      35.6895,
+      139.6917
+    ],
+    "details": {
+      "Alojamiento": "NEED TO BOOK"
+    }
+  },
+  {
+    "datetime": "2025-10-04T09:00:00.000Z",
+    "type": "activity",
+    "title": "Día en Tokio",
+    "location": "Tokio",
+    "coords": [
+      35.6895,
+      139.6917
+    ],
+    "details": {
+      "Plan": "Día libre para explorar o compras."
+    }
+  },
+  {
+    "datetime": "2025-10-04T23:00:00.000Z",
+    "type": "sleep",
+    "title": "Noche en Tokio",
+    "location": "Tokio",
+    "coords": [
+      35.6895,
+      139.6917
+    ],
+    "details": {
+      "Alojamiento": "NEED TO BOOK"
+    }
+  },
+  {
+    "datetime": "2025-10-05T09:00:00.000Z",
+    "type": "transport",
+    "title": "Tren a Narita",
+    "location": "Narita",
+    "coords": [
+      35.772,
+      140.3863
+    ],
+    "duration": "~1h",
+    "details": {
+      "Transporte": "Narita Express (N'EX) to Narita Airport (NRT)."
+    }
+  },
+  {
+    "datetime": "2025-10-05T10:30:00.000Z",
+    "type": "flight",
+    "title": "Vuelo a Busán",
+    "location": "Busán",
+    "coords": [
+      35.1796,
+      129.0756
+    ],
+    "duration": "~2h 30m",
+    "details": {
+      "Aerolínea": "Jeju Air",
+      "Aeropuerto Salida": "Narita (NRT)",
+      "Aeropuerto Llegada": "Gimhae International Airport (PUS)",
+      "Cost": "343 USD for 4 people"
+    }
+  },
+  {
+    "datetime": "2025-10-05T13:00:00.000Z",
+    "type": "activity",
+    "title": "Día en Busán",
+    "location": "Busán",
+    "coords": [
+      35.1796,
+      129.0756
+    ],
+    "details": {
+      "Plan": "Explorar la zona de la playa Haeundae."
+    }
+  },
+  {
+    "datetime": "2025-10-05T23:00:00.000Z",
+    "type": "sleep",
+    "title": "Noche en Busán",
+    "location": "Busán",
+    "coords": [
+      35.1796,
+      129.0756
+    ],
+    "details": {
+      "Alojamiento": "NEED TO BOOK"
+    }
+  },
+  {
+    "datetime": "2025-10-06T09:00:00.000Z",
+    "type": "transport",
+    "title": "Tren a Gyeongju",
+    "location": "Gyeongju",
+    "coords": [
+      35.8562,
+      129.2247
+    ],
+    "duration": "~30m",
+    "details": {
+      "Transporte": "Tren de alta velocidad KTX."
+    }
+  },
+  {
+    "datetime": "2025-10-06T10:00:00.000Z",
+    "type": "day_trip",
+    "title": "Día en Gyeongju",
+    "location": "Gyeongju",
+    "coords": [
+      35.8562,
+      129.2247
+    ],
+    "details": {
+      "Plan": "Explorar la capital del antiguo reino de Silla."
+    }
+  },
+  {
+    "datetime": "2025-10-06T22:00:00.000Z",
+    "type": "transport",
+    "title": "Tren a Seúl",
+    "location": "Seúl",
+    "coords": [
+      37.5665,
+      126.978
+    ],
+    "duration": "~2h 15m",
+    "details": {
+      "Transporte": "Tren KTX nocturno desde Gyeongju."
+    }
+  },
+  {
+    "datetime": "2025-10-06T23:59:00.000Z",
+    "type": "sleep",
+    "title": "Noche en Seúl",
+    "location": "Seúl",
+    "coords": [
+      37.5665,
+      126.978
+    ],
+    "details": {
+      "Alojamiento": "NEED TO BOOK"
+    }
+  },
+  {
+    "datetime": "2025-10-07T09:00:00.000Z",
+    "type": "business",
+    "title": "Visita a Google Office",
+    "location": "Seúl",
+    "coords": [
+      37.5063,
+      127.035
+    ],
+    "details": {
+      "Dirección": "Gangnam Finance Center"
+    }
+  },
+  {
+    "datetime": "2025-10-07T13:00:00.000Z",
+    "type": "activity",
+    "title": "Tarde en Seúl",
+    "location": "Seúl",
+    "coords": [
+      37.5665,
+      126.978
+    ],
+    "details": {
+      "Plan": "Explorar la zona de Gangnam y visitar el Festival Seoul Light Hangang Bitseom."
+    }
+  },
+  {
+    "datetime": "2025-10-07T23:59:00.000Z",
+    "type": "sleep",
+    "title": "Noche en Seúl",
+    "location": "Seúl",
+    "coords": [
+      37.5665,
+      126.978
+    ],
+    "details": {
+      "Alojamiento": "NEED TO BOOK"
+    }
+  },
+  {
+    "datetime": "2025-10-08T09:00:00.000Z",
+    "type": "activity",
+    "title": "Día en Seúl",
+    "location": "Seúl",
+    "coords": [
+      37.5665,
+      126.978
+    ],
+    "details": {
+      "Plan": "Visitar el palacio Gyeongbokgung y Bukchon Hanok Village."
+    }
+  },
+  {
+    "datetime": "2025-10-08T23:00:00.000Z",
+    "type": "sleep",
+    "title": "Noche en Seúl",
+    "location": "Seúl",
+    "coords": [
+      37.5665,
+      126.978
+    ],
+    "details": {
+      "Alojamiento": "NEED TO BOOK"
+    }
+  },
+  {
+    "datetime": "2025-10-09T09:00:00.000Z",
+    "type": "activity",
+    "title": "Día en Seúl",
+    "location": "Seúl",
+    "coords": [
+      37.5665,
+      126.978
+    ],
+    "details": {
+      "Plan": "Explorar la zona de Myeongdong e Insadong."
+    }
+  },
+  {
+    "datetime": "2025-10-09T23:00:00.000Z",
+    "type": "sleep",
+    "title": "Noche en Seúl",
+    "location": "Seúl",
+    "coords": [
+      37.5665,
+      126.978
+    ],
+    "details": {
+      "Alojamiento": "NEED TO BOOK"
+    }
+  },
+  {
+    "datetime": "2025-10-10T09:05:00.000Z",
+    "type": "flight",
+    "title": "Vuelo a Taipéi",
+    "location": "Taipéi",
+    "coords": [
+      25.033,
+      121.5654
+    ],
+    "duration": "~2h 45m",
+    "details": {
+      "Aerolínea": "Jeju Air",
+      "Aeropuerto Salida": "Seúl (ICN)",
+      "Aeropuerto Llegada": "Taipéi (TPE)",
+      "Cost": "394 USD for 4 people"
+    }
+  },
+  {
+    "datetime": "2025-10-10T14:30:00.000Z",
+    "type": "activity",
+    "title": "Tarde en Taipéi",
+    "location": "Taipéi",
+    "coords": [
+      25.033,
+      121.5654
+    ],
+    "details": {
+      "Plan": "Tiempo libre para explorar. Visita el Taipei International Beef Noodle Festival."
+    }
+  },
+  {
+    "datetime": "2025-10-10T23:00:00.000Z",
+    "type": "sleep",
+    "title": "Noche en Taipéi",
+    "location": "Taipéi",
+    "coords": [
+      25.033,
+      121.5654
+    ],
+    "details": {
+      "Alojamiento": "NEED TO BOOK"
+    }
+  },
+  {
+    "datetime": "2025-10-11T10:00:00.000Z",
+    "type": "activity",
+    "title": "Día en Taipéi",
+    "location": "Taipéi",
+    "coords": [
+      25.033,
+      121.5654
+    ],
+    "details": {
+      "Plan": "Visitar el memorial de Chiang Kai-shek y mercado nocturno."
+    }
+  },
+  {
+    "datetime": "2025-10-11T23:00:00.000Z",
+    "type": "sleep",
+    "title": "Noche en Taipéi",
+    "location": "Taipéi",
+    "coords": [
+      25.033,
+      121.5654
+    ],
+    "details": {
+      "Alojamiento": "NEED TO BOOK"
+    }
+  },
+  {
+    "datetime": "2025-10-12T09:00:00.000Z",
+    "type": "day_trip",
+    "title": "Excursión a Jiufen y Shifen",
+    "location": "Taipéi",
+    "coords": [
+      25.1092,
+      121.8449
+    ],
+    "details": {
+      "Sugerencia": "Contratar conductor para el día."
+    }
+  },
+  {
+    "datetime": "2025-10-12T23:00:00.000Z",
+    "type": "sleep",
+    "title": "Noche en Taipéi",
+    "location": "Taipéi",
+    "coords": [
+      25.033,
+      121.5654
+    ],
+    "details": {
+      "Alojamiento": "NEED TO BOOK"
+    }
+  },
+  {
+    "datetime": "2025-10-13T09:00:00.000Z",
+    "type": "business",
+    "title": "Visita a Google Office",
+    "location": "Taipéi",
+    "coords": [
+      25.0338,
+      121.5645
+    ],
+    "details": {
+      "Dirección": "Taipei 101 Tower"
+    }
+  },
+  {
+    "datetime": "2025-10-13T13:00:00.000Z",
+    "type": "activity",
+    "title": "Tarde en Taipéi",
+    "location": "Taipéi",
+    "coords": [
+      25.033,
+      121.5654
+    ],
+    "details": {
+      "Plan": "Visitar Taipei 101."
+    }
+  },
+  {
+    "datetime": "2025-10-13T23:00:00.000Z",
+    "type": "sleep",
+    "title": "Noche en Taipéi",
+    "location": "Taipéi",
+    "coords": [
+      25.033,
+      121.5654
+    ],
+    "details": {
+      "Alojamiento": "NEED TO BOOK"
+    }
+  },
+  {
+    "datetime": "2025-10-14T07:45:00.000Z",
+    "type": "flight",
+    "title": "Vuelo a Osaka",
+    "location": "Osaka",
+    "coords": [
+      34.6937,
+      135.5023
+    ],
+    "duration": "~2h 45m",
+    "details": {
+      "Aerolínea": "Thai Vietjet Air",
+      "Aeropuerto Salida": "Taipéi (TPE)",
+      "Aeropuerto Llegada": "Osaka (KIX)",
+      "Cost": "435 USD for 4 people"
+    }
+  },
+  {
+    "datetime": "2025-10-14T12:00:00.000Z",
+    "type": "activity",
+    "title": "Día en Osaka",
+    "location": "Osaka",
+    "coords": [
+      34.6937,
+      135.5023
+    ],
+    "details": {
+      "Plan": "Tiempo libre para explorar."
+    }
+  },
+  {
+    "datetime": "2025-10-14T23:00:00.000Z",
+    "type": "sleep",
+    "title": "Noche en Osaka",
+    "location": "Osaka",
+    "coords": [
+      34.6937,
+      135.5023
+    ],
+    "details": {
+      "Alojamiento": "NEED TO BOOK"
+    }
+  },
+  {
+    "datetime": "2025-10-15T09:00:00.000Z",
+    "type": "activity",
+    "title": "Día en Osaka",
+    "location": "Osaka",
+    "coords": [
+      34.6937,
+      135.5023
+    ],
+    "details": {
+      "Plan": "Día extra para explorar Osaka."
+    }
+  },
+  {
+    "datetime": "2025-10-15T23:00:00.000Z",
+    "type": "sleep",
+    "title": "Noche en Osaka",
+    "location": "Osaka",
+    "coords": [
+      34.6937,
+      135.5023
+    ],
+    "details": {
+      "Alojamiento": "NEED TO BOOK"
+    }
+  },
+  {
+    "datetime": "2025-10-16T09:00:00.000Z",
+    "type": "transport",
+    "title": "Tren a Kioto",
+    "location": "Kioto",
+    "coords": [
+      35.0116,
+      135.7681
+    ],
+    "duration": "~30m",
+    "details": {
+      "Ruta": "Tren local."
+    }
+  },
+  {
+    "datetime": "2025-10-16T10:00:00.000Z",
+    "type": "activity",
+    "title": "Día en Kioto",
+    "location": "Kioto",
+    "coords": [
+      35.0116,
+      135.7681
+    ],
+    "details": {
+      "Plan": "Explorar la zona de Gion y Higashiyama."
+    }
+  },
+  {
+    "datetime": "2025-10-16T23:00:00.000Z",
+    "type": "sleep",
+    "title": "Noche en Kioto",
+    "location": "Kioto",
+    "coords": [
+      35.0116,
+      135.7681
+    ],
+    "details": {
+      "Alojamiento": "NEED TO BOOK"
+    }
+  },
+  {
+    "datetime": "2025-10-17T09:00:00.000Z",
+    "type": "transport",
+    "title": "Tren a Nara",
+    "location": "Nara",
+    "coords": [
+      34.6851,
+      135.8048
+    ],
+    "duration": "~45m",
+    "details": {
+      "Transporte": "Tren local JR."
+    }
+  },
+  {
+    "datetime": "2025-10-17T10:00:00.000Z",
+    "type": "day_trip",
+    "title": "Excursión a Nara",
+    "location": "Nara",
+    "coords": [
+      34.6851,
+      135.8048
+    ],
+    "details": {
+      "Plan": "Visitar el Templo Tōdai-ji y el parque de los ciervos."
+    }
+  },
+  {
+    "datetime": "2025-10-17T17:30:00.000Z",
+    "type": "transport",
+    "title": "Tren de regreso a Kioto",
+    "location": "Kioto",
+    "coords": [
+      35.0116,
+      135.7681
+    ],
+    "duration": "~45m",
+    "details": {
+      "Transporte": "Tren local JR."
+    }
+  },
+  {
+    "datetime": "2025-10-17T23:00:00.000Z",
+    "type": "sleep",
+    "title": "Noche en Kioto",
+    "location": "Kioto",
+    "coords": [
+      35.0116,
+      135.7681
+    ],
+    "details": {
+      "Alojamiento": "NEED TO BOOK"
+    }
+  },
+  {
+    "datetime": "2025-10-18T09:00:00.000Z",
+    "type": "activity",
+    "title": "Día en Kioto",
+    "location": "Kioto",
+    "coords": [
+      35.0116,
+      135.7681
+    ],
+    "details": {
+      "Plan": "Visitar el Pabellón Dorado y Arashiyama."
+    }
+  },
+  {
+    "datetime": "2025-10-18T23:00:00.000Z",
+    "type": "sleep",
+    "title": "Noche en Kioto",
+    "location": "Kioto",
+    "coords": [
+      35.0116,
+      135.7681
+    ],
+    "details": {
+      "Alojamiento": "NEED TO BOOK"
+    }
+  },
+  {
+    "datetime": "2025-10-19T09:00:00.000Z",
+    "type": "transport",
+    "title": "Tren a Hakone",
+    "location": "Hakone",
+    "coords": [
+      35.2333,
+      139.1
+    ],
+    "duration": "~2h 30m",
+    "details": {
+      "Ruta": "Shinkansen a Odawara, luego tren local."
+    }
+  },
+  {
+    "datetime": "2025-10-19T13:00:00.000Z",
+    "type": "day_trip",
+    "title": "Visita a Woven City",
+    "location": "Susono",
+    "coords": [
+      35.17,
+      138.9
+    ],
+    "details": {
+      "Plan": "Excursión a la ciudad prototipo de Toyota.",
+      "Nota": "Se debe verificar el acceso al público."
+    }
+  },
+  {
+    "datetime": "2025-10-19T16:00:00.000Z",
+    "type": "activity",
+    "title": "Vistas del Monte Fuji",
+    "location": "Hakone",
+    "coords": [
+      35.2333,
+      139.1
+    ],
+    "details": {
+      "Plan": "Paseo en barco por el Lago Ashi."
+    }
+  },
+  {
+    "datetime": "2025-10-19T23:00:00.000Z",
+    "type": "sleep",
+    "title": "Noche en Hakone",
+    "location": "Hakone",
+    "coords": [
+      35.2333,
+      139.1
+    ],
+    "details": {
+      "Alojamiento": "NEED TO BOOK"
+    }
+  },
+  {
+    "datetime": "2025-10-20T09:00:00.000Z",
+    "type": "transport",
+    "title": "Tren a Narita",
+    "location": "Narita",
+    "coords": [
+      35.772,
+      140.3863
+    ],
+    "duration": "~2h 30m",
+    "details": {
+      "Transporte": "Tren local de Hakone a Odawara, luego Shinkansen a Tokio y Narita Express a NRT."
+    }
+  },
+  {
+    "datetime": "2025-10-20T16:55:00.000Z",
+    "type": "flight",
+    "title": "Vuelo desde Narita",
+    "location": "Fort Lauderdale",
+    "coords": [
+      26.0726,
+      -80.1528
+    ],
+    "duration": "~12h 15m",
+    "details": {
+      "Reserva": "AY2GE4",
+      "Aerolínea": "Air Canada",
+      "Sale de": "Narita (NRT)",
+      "Llega a": "Fort Lauderdale (FLL) a las 11:10 PM"
+    }
+  }
+]
