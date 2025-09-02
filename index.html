@@ -259,6 +259,7 @@
             business: `<span class="material-symbols-outlined">work</span>`,
         };
         
+        // Flags configuration using flag-icon-css library classes (fi fi-xx)
         const rawCountryFlags = {
             "Tokio": `<span class="fi fi-jp"></span>`,
             "Hakone": `<span class="fi fi-jp"></span>`,
@@ -275,6 +276,7 @@
             return str.normalize('NFC').trim();
         }
 
+        // Normalize the keys of the flags object for robust matching
         const countryFlags = Object.keys(rawCountryFlags).reduce((acc, key) => {
             acc[normalizeStr(key)] = rawCountryFlags[key];
             return acc;
@@ -401,7 +403,7 @@
 
             itinerary.forEach((event, i) => {
                 if (event.type === 'sleep') {
-                    if (lastSleepCity === null) {
+                    if (lastSleepCity === null) { // First sleep of the trip
                         currentSegment.city = event.location;
                         lastSleepCity = event.location;
                         for (let j = i; j >= 0; j--) {
@@ -427,6 +429,7 @@
                         while (segments[segmentName]) {
                             segmentName = `${currentSegment.city} (${count++})`;
                         }
+
                         segments[segmentName] = { ...currentSegment };
                         currentSegment = { city: event.location, start: departureEvent ? departureEvent.datetime : event.datetime, end: null, transport: null };
                         lastSleepCity = event.location;
@@ -451,7 +454,8 @@
             const finalSegments = {};
             const cityVisits = {};
             orderedSegments.forEach(name => {
-                const baseCity = segments[name].baseCity;
+                const segment = segments[name];
+                const baseCity = segment.baseCity;
                 cityVisits[baseCity] = (cityVisits[baseCity] || 0) + 1;
             });
             const multiVisitCities = Object.keys(cityVisits).filter(city => cityVisits[city] > 1);
