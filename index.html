@@ -305,15 +305,51 @@
         let map;
         let poiLayerGroup;
 
-        // --- COORDINATE PARSING LOGIC (SIMPLIFIED) ---
+        // --- COORDINATE PARSING & VALIDATION (ROBUST) ---
+        // Accepts:
+        //  - [lat, lng] (numbers or numeric strings)
+        //  - {lat: x, lng: y} or {latitude: x, longitude: y}
+        // Returns [latNumber, lngNumber] or null
         function parseCoords(coords) {
-            if (Array.isArray(coords) && coords.length === 2 && typeof coords[0] === 'number' && typeof coords[1] === 'number') {
-                const [lat, lng] = coords;
-                if (lat >= -90 && lat <= 90 && lng >= -180 && lng <= 180) {
-                    return coords;
+            if (!coords) return null;
+
+            // If object with lat/lng keys
+            if (typeof coords === 'object' && !Array.isArray(coords)) {
+                const lat = coords.lat ?? coords.latitude ?? coords.Lat ?? coords.Latitude;
+                const lng = coords.lng ?? coords.longitude ?? coords.Lng ?? coords.Longitude;
+                const latN = Number(lat);
+                const lngN = Number(lng);
+                if (isFinite(latN) && isFinite(lngN) && latN >= -90 && latN <= 90 && lngN >= -180 && lngN <= 180) {
+                    return [latN, lngN];
+                }
+                return null;
+            }
+
+            // If array-like [lat, lng] possibly with strings
+            if (Array.isArray(coords) && coords.length >= 2) {
+                const latN = Number(coords[0]);
+                const lngN = Number(coords[1]);
+                if (isFinite(latN) && isFinite(lngN) && latN >= -90 && latN <= 90 && lngN >= -180 && lngN <= 180) {
+                    return [latN, lngN];
                 }
             }
             return null;
+        }
+
+        // validation helper for lat/lng arrays or objects
+        function isValidLatLng(point) {
+            if (!point) return false;
+            if (Array.isArray(point) && point.length >= 2) {
+                const lat = Number(point[0]);
+                const lng = Number(point[1]);
+                return isFinite(lat) && isFinite(lng) && lat >= -90 && lat <= 90 && lng >= -180 && lng <= 180;
+            }
+            if (typeof point === 'object') {
+                const lat = Number(point.lat ?? point.latitude);
+                const lng = Number(point.lng ?? point.longitude);
+                return isFinite(lat) && isFinite(lng) && lat >= -90 && lat <= 90 && lng >= -180 && lng <= 180;
+            }
+            return false;
         }
 
         // --- DATA FETCHING AND PROCESSING ---
@@ -657,16 +693,25 @@
         function updateMap(events) {
             if (!map) return;
             poiLayerGroup.clearLayers();
-            if (mainMarker) map.removeLayer(mainMarker);
-            
+            if (mainMarker) {
+                try { map.removeLayer(mainMarker); } catch (e) { /* ignore */ }
+                mainMarker = null;
+            }
+
             const allCoords = [];
 
             events.forEach(item => {
-                if (item.coords) {
+                if (isValidLatLng(item.coords)) {
                     allCoords.push(item.coords);
-                     const iconHtml = `<div style="background-color: var(--primary-color); color: white; border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border: 3px solid white; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">${icons[item.type] || icons.activity}</div>`;
-                     const mainIcon = L.divIcon({ className: '', html: iconHtml, iconSize: [36, 36], iconAnchor: [18, 18] });
-                     L.marker(item.coords, { icon: mainIcon }).addTo(map).bindPopup(`<b>${item.title}</b><br>${item.location}`);
+                    const iconHtml = `<div style="background-color: var(--primary-color); color: white; border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;"><span class="material-symbols-outlined">place</span></div>`;
+                    const mainIcon = L.divIcon({ className: '', html: iconHtml, iconSize: [36, 36], iconAnchor: [18, 18] });
+                    try {
+                        L.marker(item.coords, { icon: mainIcon }).addTo(map).bindPopup(`<b>${item.title}</b><br>${item.location}`);
+                    } catch (err) {
+                        console.error('Failed to create marker for item with coords', item.coords, err);
+                    }
+                } else if (item.coords) {
+                    console.warn('Skipping invalid itinerary coords for item:', item, 'parsed coords:', item.coords);
                 }
             });
 
@@ -676,20 +721,50 @@
                 let poiLookupLocation = cityMap[firstEvent.location] || firstEvent.location;
                 if (pointsOfInterest[poiLookupLocation]) {
                      pointsOfInterest[poiLookupLocation].forEach(poi => {
-                        if (poi.coords) {
+                        if (isValidLatLng(poi.coords)) {
                             allCoords.push(poi.coords);
                             const iconHtml = `<span class="material-symbols-outlined">${poiIcons[poi.category] || 'place'}</span>`;
                             const divIcon = L.divIcon({ className: 'leaflet-div-icon', html: iconHtml, iconSize: [30, 30], iconAnchor: [15, 15] });
-                            L.marker(poi.coords, { icon: divIcon }).addTo(poiLayerGroup).bindPopup(`<b>${poi.name}</b><br>${poi.category}`);
+                            try {
+                                L.marker(poi.coords, { icon: divIcon }).addTo(poiLayerGroup).bindPopup(`<b>${poi.name}</b><br>${poi.category}`);
+                            } catch (err) {
+                                console.error('Failed to create POI marker for', poi, err);
+                            }
+                        } else if (poi.coords) {
+                            console.warn('Skipping invalid POI coords:', poi);
                         }
                     });
                 }
             }
 
-            if (allCoords.length > 0) {
-                const bounds = L.latLngBounds(allCoords);
-                map.invalidateSize();
-                map.flyToBounds(bounds, { animate: true, duration: 1, padding: [50, 50], maxZoom: 14 });
+            // Filter duplicates and invalid points robustly
+            const uniqueCoords = allCoords
+                .filter(isValidLatLng)
+                .map(pt => [Number(pt[0]), Number(pt[1])])
+                .filter((pt, idx, arr) => !arr.slice(0, idx).some(other => other[0] === pt[0] && other[1] === pt[1]));
+
+            if (uniqueCoords.length > 1) { // If more than one point, use bounds
+                try {
+                    const bounds = L.latLngBounds(uniqueCoords);
+                    map.invalidateSize();
+                    if (bounds.isValid && bounds.getNorthWest && bounds.getSouthEast) {
+                        map.flyToBounds(bounds, { padding: [50, 50], maxZoom: 14 });
+                    } else {
+                        console.warn('Computed bounds are invalid, skipping flyToBounds', bounds);
+                    }
+                } catch (err) {
+                    console.error('Error when calling flyToBounds with coords:', uniqueCoords, err);
+                }
+            } else if (uniqueCoords.length === 1) { // If only one point, fly to it
+                try {
+                    map.invalidateSize();
+                    map.flyTo(uniqueCoords[0], 14);
+                } catch (err) {
+                    console.error('Error when calling flyTo with coord:', uniqueCoords[0], err);
+                }
+            } else {
+                // No valid coords to fit map to - optionally center to a fallback
+                console.info('No valid coords to fit map, keeping previous view.');
             }
         }
 
