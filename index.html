@@ -99,6 +99,10 @@
             line-height: 1em;
             /* Removed explicit width/height to allow natural aspect ratio inside the circle */
         }
+        /* Specific fix for rectangular flags like Taiwan's to fill the circle */
+        .city-timeline-node .fi-tw {
+            transform: scale(1.4);
+        }
 
         .city-timeline-item.active .city-timeline-node {
             border-color: var(--primary-color);
@@ -278,15 +282,11 @@
         
         // Flags configuration using flag-icon-css library classes (fi fi-xx)
         const countryFlags = {
-            "Tokio (Inicio)": `<span class="fi fi-jp"></span>`,
-            "Tokio (Fin)": `<span class="fi fi-jp"></span>`,
             "Tokio": `<span class="fi fi-jp"></span>`,
             "Hakone": `<span class="fi fi-jp"></span>`,
-            "Kyoto (+ Nara)": `<span class="fi fi-jp"></span>`,
-            "Kyoto": `<span class="fi fi-jp"></span>`,
+            "Kioto": `<span class="fi fi-jp"></span>`,
             "Osaka": `<span class="fi fi-jp"></span>`,
-            "Busan (+ Gyeongju)": `<span class="fi fi-kr"></span>`,
-            "Busan": `<span class="fi fi-kr"></span>`,
+            "Busán": `<span class="fi fi-kr"></span>`,
             "Seúl": `<span class="fi fi-kr"></span>`,
             "Taipéi": `<span class="fi fi-tw"></span>`,
         };
@@ -442,190 +442,141 @@
 
         // --- DYNAMIC CITY STAY CALCULATION LOGIC (REFACTORED) ---
 
-        // Helper to calculate arrival time from duration string (Handles formats like "~2h 30m" or "~14h")
-        function calculateArrivalTime(startTime, durationString) {
-            if (!durationString) return startTime;
-
-            let durationMs = 0;
-            // Simplified regex to capture hours and minutes, ignoring the '~'
-            const regex = /(\d+)\s*h|(\d+)\s*m/g;
-            let match;
-
-            while ((match = regex.exec(durationString)) !== null) {
-                if (match[1]) { // Hours
-                    durationMs += parseInt(match[1]) * 60 * 60 * 1000;
-                }
-                if (match[2]) { // Minutes
-                    durationMs += parseInt(match[2]) * 60 * 1000;
-                }
-            }
-            
-            // If regex failed but we have a simple hour format (e.g., "~14h")
-            if (durationMs === 0) {
-                const simpleHourMatch = durationString.match(/(\d+)\s*h/i);
-                if (simpleHourMatch && simpleHourMatch[1]) {
-                    durationMs += parseInt(simpleHourMatch[1]) * 60 * 60 * 1000;
-                }
-            }
-
-            if (durationMs > 0) {
-                return new Date(startTime.getTime() + durationMs);
-            }
-            return startTime;
-        }
-
-        // Robustly calculates city stays based on event types, locations, and datetimes, independent of event titles.
+        // Robustly calculates city stays based on event types, locations, and datetimes.
         function calculateCityStaysRobust(itinerary) {
-            // ... (The robust calculation logic remains the same as the previous response) ...
             const segments = {};
-            let currentBaseCity = null;
-            let segmentStart = null;
+            if (itinerary.length === 0) return {};
 
-            const visualizationBaseNames = {
-                "Kioto": "Kyoto",
-                "Busán": "Busan",
-                "Seoul": "Seúl",
-                "Taipei": "Taipéi",
-                "Susono": "Hakone",
-                "Narita": "Tokio",
-                "Tokio": "Tokio",
-                "Osaka": "Osaka",
-                "Hakone": "Hakone",
-                "Seúl": "Seúl",
-                "Taipéi": "Taipéi",
-                "Busan": "Busan",
-                "Kyoto": "Kyoto",
+            const sleepEvents = itinerary.filter(e => e.type === 'sleep');
+            if (sleepEvents.length === 0) {
+                // No sleep events, cannot determine stays.
+                return {};
+            }
+
+            let currentSegment = {
+                city: null,
+                start: itinerary[0].datetime,
+                end: null,
+                transport: null
             };
 
-            const getVisualizationName = (city) => {
-                return visualizationBaseNames[city] || city;
-            };
+            let lastSleepCity = null;
 
-            const finalizeSegment = (endTime, transportType) => {
-                if (currentBaseCity && segmentStart) {
-                    const baseName = getVisualizationName(currentBaseCity);
-                    let segmentName = baseName;
+            itinerary.forEach((event, i) => {
+                if (event.type === 'sleep') {
+                    if (lastSleepCity === null) { // First sleep of the trip
+                        currentSegment.city = event.location;
+                        lastSleepCity = event.location;
 
-                    if (baseName === "Kyoto") {
-                        const visitedNara = itinerary.some(e => e.location === "Nara" && e.datetime >= segmentStart && e.datetime < endTime);
-                        if (visitedNara) {
-                            segmentName = "Kyoto (+ Nara)";
-                        }
-                    }
-                    if (baseName === "Busan") {
-                         const visitedGyeongju = itinerary.some(e => e.location === "Gyeongju" && e.datetime >= segmentStart && e.datetime < endTime);
-                        if (visitedGyeongju) {
-                            segmentName = "Busan (+ Gyeongju)";
-                        }
-                    }
-
-                    let uniqueName = segmentName;
-
-                    if (baseName === "Tokio") {
-                        if (!segments.hasOwnProperty("Tokio (Inicio)") && !segments.hasOwnProperty("Tokio (Fin)") && !segments.hasOwnProperty("Tokio")) {
-                            uniqueName = "Tokio (Inicio)";
-                        } else {
-                            uniqueName = "Tokio (Fin)";
-                            let count = 3;
-                            while (segments.hasOwnProperty(uniqueName)) {
-                                uniqueName = `Tokio (${count++})`;
+                        // Find the actual start of the stay, which is the arrival.
+                        for (let j = i; j >= 0; j--) {
+                            const pastEvent = itinerary[j];
+                            if (pastEvent.location === currentSegment.city && (pastEvent.type === 'flight_arrival' || pastEvent.type === 'transport' || pastEvent.type === 'activity')) {
+                                // This is a candidate for the start time. We want the earliest one associated with this city segment.
+                                currentSegment.start = pastEvent.datetime;
                             }
-                        }
-                    } else {
-                        let count = 1;
-                        let tempName = segmentName;
-                        while (segments.hasOwnProperty(tempName)) {
-                            count++;
-                            tempName = `${segmentName} (${count})`;
-                        }
-                        uniqueName = tempName;
-                    }
-                    
-
-                    segments[uniqueName] = {
-                        start: segmentStart,
-                        end: endTime,
-                        transport: transportType,
-                        baseCity: currentBaseCity, 
-                    };
-                }
-                currentBaseCity = null;
-                segmentStart = null;
-            };
-
-
-            for (let i = 0; i < itinerary.length; i++) {
-                const event = itinerary[i];
-                const location = event.location;
-
-                if (!currentBaseCity) {
-                    const significantStartTypes = ['flight_arrival', 'lodging', 'sleep', 'activity', 'business', 'day_trip'];
-                    if (significantStartTypes.includes(event.type) && location && location.toLowerCase() !== 'en vuelo') {
-                        currentBaseCity = location;
-                        segmentStart = event.datetime;
-                    }
-                    continue;
-                }
-
-                if (event.type === 'flight' || event.type === 'transport') {
-                    const arrivalTime = calculateArrivalTime(event.datetime, event.duration);
-                    let destinationCity = null;
-
-                    for (let j = i + 1; j < itinerary.length; j++) {
-                        const subsequentEvent = itinerary[j];
-                        if (subsequentEvent.datetime >= arrivalTime || (Math.abs(subsequentEvent.datetime - arrivalTime) < (2*60*60*1000))) { // 2h tolerance
-                            const nextLocation = subsequentEvent.location;
-                            if (nextLocation && nextLocation.toLowerCase() !== 'en vuelo') {
-                                destinationCity = nextLocation;
+                            // Heuristic to stop searching back further than necessary
+                            if(pastEvent.type === 'flight' && pastEvent.location !== currentSegment.city) {
                                 break;
                             }
                         }
-                    }
 
-                    const normalizedCurrent = getVisualizationName(currentBaseCity);
-                    const normalizedDestination = destinationCity ? getVisualizationName(destinationCity) : null;
-
-                    if (normalizedDestination && normalizedDestination !== normalizedCurrent) {
-
-                        const transportIcon = event.type === 'flight' ? 'flight_takeoff' : 'train';
-                        finalizeSegment(event.datetime, transportIcon);
-
-                        currentBaseCity = destinationCity;
-                        segmentStart = arrivalTime;
-                        continue;
-                    }
-                }
-
-                if (event.type === 'lodging' || event.type === 'sleep') {
-                    const normalizedCurrent = getVisualizationName(currentBaseCity);
-                    const normalizedLocation = location ? getVisualizationName(location) : null;
-
-                    if (normalizedLocation && normalizedLocation !== normalizedCurrent) {
-                        finalizeSegment(event.datetime, 'commute'); 
-                        currentBaseCity = location;
-                        segmentStart = event.datetime;
-                        continue;
-                    }
-                }
-
-                 if (i === itinerary.length - 1) {
-                    if (currentBaseCity) {
-                        let finalTransportIcon = 'flight_takeoff';
-                        if (event.type === 'transport') {
-                            finalTransportIcon = 'train';
+                    } else if (event.location !== lastSleepCity) {
+                        // End of a segment, start of a new one.
+                        let departureEvent = null;
+                        // Look back for the transport event that led to this change of city.
+                        for (let j = i; j >= 0; j--) {
+                             const prevEvent = itinerary[j];
+                             // A flight or transport to a *new* city marks the departure.
+                             if ((prevEvent.type === 'flight' || prevEvent.type === 'transport') && prevEvent.location !== lastSleepCity) {
+                                 // Check if this transport event is what brought us to the *current* sleep city
+                                 // This is tricky. A simpler way is to find the last transport out of the *old* city.
+                                 // Let's stick to a simpler heuristic: the transport happened sometime before this new sleep.
+                                 departureEvent = prevEvent;
+                                 break;
+                             }
                         }
-                        
-                        finalizeSegment(event.datetime, finalTransportIcon);
+
+                        currentSegment.end = departureEvent ? departureEvent.datetime : event.datetime;
+                        currentSegment.transport = departureEvent ? (departureEvent.type === 'flight' ? 'flight_takeoff' : 'train') : 'commute';
+
+                        let segmentName = currentSegment.city;
+                        let count = 1;
+                        while (segments[segmentName]) {
+                            segmentName = `${currentSegment.city} (${count++})`;
+                        }
+                        segments[segmentName] = {
+                            start: currentSegment.start,
+                            end: currentSegment.end,
+                            transport: currentSegment.transport,
+                            baseCity: currentSegment.city,
+                        };
+
+                        // Start the new segment.
+                        currentSegment = {
+                            city: event.location,
+                            start: departureEvent ? departureEvent.datetime : event.datetime,
+                            end: null,
+                            transport: null
+                        };
+                        lastSleepCity = event.location;
                     }
                 }
-            }
-            
-            if (segments.hasOwnProperty("Tokio (Inicio)") && !segments.hasOwnProperty("Tokio (Fin)")) {
-                segments["Tokio"] = segments["Tokio (Inicio)"];
-                delete segments["Tokio (Inicio)"];
+            });
+
+            // Add the final segment.
+            if (currentSegment.city) {
+                currentSegment.end = itinerary[itinerary.length - 1].datetime;
+                const lastEvent = itinerary[itinerary.length - 1];
+                if (lastEvent.type === 'flight') {
+                    currentSegment.transport = 'flight_takeoff';
+                } else if (lastEvent.type === 'transport') {
+                    currentSegment.transport = 'train';
+                }
+
+                let segmentName = currentSegment.city;
+                let count = 1;
+                while (segments[segmentName]) {
+                    segmentName = `${currentSegment.city} (${count++})`;
+                }
+                segments[segmentName] = {
+                    start: currentSegment.start,
+                    end: currentSegment.end,
+                    transport: currentSegment.transport,
+                    baseCity: currentSegment.city,
+                };
             }
 
-            return calculateDurations(segments);
+            // Handle cases where we visit the same city multiple times (e.g., Tokyo).
+            const orderedSegments = Object.keys(segments).sort((a, b) => segments[a].start - segments[b].start);
+
+            const finalSegments = {};
+            const cityVisits = {};
+
+            orderedSegments.forEach(name => {
+                const segment = segments[name];
+                const baseCity = segment.baseCity;
+                cityVisits[baseCity] = (cityVisits[baseCity] || 0) + 1;
+            });
+
+            const multiVisitCities = Object.keys(cityVisits).filter(city => cityVisits[city] > 1);
+            const cityCounters = {};
+
+            orderedSegments.forEach(name => {
+                const segment = segments[name];
+                const baseCity = segment.baseCity;
+                let newName = baseCity;
+
+                if (multiVisitCities.includes(baseCity)) {
+                    cityCounters[baseCity] = (cityCounters[baseCity] || 0) + 1;
+                    newName = `${baseCity} (${cityCounters[baseCity]})`;
+                }
+                finalSegments[newName] = segment;
+                finalSegments[newName].flag = countryFlags[baseCity] || '';
+            });
+
+
+            return calculateDurations(finalSegments);
         }
 
 
@@ -686,7 +637,8 @@
                     days: formattedDays,
                     nights: String(nights),
                     transportToNext: segment.transport,
-                    startTime: segment.start
+                    startTime: segment.start,
+                    flag: segment.flag
                 };
             }
             return results;
@@ -822,7 +774,7 @@
                 // The countryFlags[city] inserts the <span> element required by the flag-icon-css library
                 // The keys in countryFlags are configured to match the visualization names generated.
                 itemDiv.innerHTML = `
-                    <div class="city-timeline-node">${countryFlags[city] || ''}</div>
+                    <div class="city-timeline-node">${stayInfo.flag || ''}</div>
                     <div class="city-timeline-label">${city}</div>
                     ${stayHtml}
                     ${transportHtml}`;
@@ -859,17 +811,14 @@
             let displayLocation = currentItem.location;
             
             // Map specific sub-locations/day trips to major areas if needed for POI lookup.
-            // Keys must match the POI JSON keys (e.g., Kioto, Busán).
-            const cityMap = { 
-                "Susono": "Hakone", 
-                // "Nara": "Nara", 
-                "Gyeongju": "Busán", 
+            const cityMap = {
+                "Susono": "Hakone",
+                "Narita": "Tokyo",
+                "Gyeongju": "Busan"
             };
             
-            let poiLookupLocation = displayLocation;
-            if (cityMap[displayLocation]) { 
-                poiLookupLocation = cityMap[displayLocation]; 
-            }
+            // Normalize the location name using the map. If not in map, use the original name.
+            let poiLookupLocation = cityMap[displayLocation] || displayLocation;
             
 
             if (cityEventTypes.includes(currentItem.type) && pointsOfInterest[poiLookupLocation]) {
