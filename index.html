@@ -305,31 +305,13 @@
         let map;
         let poiLayerGroup;
 
-        // --- COORDINATE PARSING LOGIC (FIXED) ---
-        function parseCoordinateString(coordStr) {
-            if (typeof coordStr === 'number') return coordStr;
-            if (typeof coordStr !== 'string' || coordStr.trim() === '') return null;
-            const simpleFloat = parseFloat(coordStr);
-            if (!isNaN(simpleFloat) && /^[\s-]?\d+(\.\d+)?\s*$/.test(coordStr)) return simpleFloat;
-            const regex = /([0-9.]+)\s*°?\s*([NSEW])/i;
-            const match = coordStr.trim().match(regex);
-            if (match) {
-                let value = parseFloat(match[1]);
-                const direction = match[2].toUpperCase();
-                if (isNaN(value)) return null;
-                if (direction === 'S' || direction === 'W') value = -value;
-                return value;
-            }
-            const finalFloat = parseFloat(coordStr);
-            return isNaN(finalFloat) ? null : finalFloat;
-        }
-
+        // --- COORDINATE PARSING LOGIC (SIMPLIFIED) ---
         function parseCoords(coords) {
-            if (!coords || !Array.isArray(coords) || coords.length !== 2) return null;
-            const lat = parseCoordinateString(coords[0]);
-            const lng = parseCoordinateString(coords[1]);
-            if (lat !== null && lng !== null && !isNaN(lat) && !isNaN(lng) && lat >= -90 && lat <= 90 && lng >= -180 && lng <= 180) {
-                return [lat, lng];
+            if (Array.isArray(coords) && coords.length === 2 && typeof coords[0] === 'number' && typeof coords[1] === 'number') {
+                const [lat, lng] = coords;
+                if (lat >= -90 && lat <= 90 && lng >= -180 && lng <= 180) {
+                    return coords;
+                }
             }
             return null;
         }
@@ -676,11 +658,11 @@
             poiLayerGroup.clearLayers();
             if (mainMarker) map.removeLayer(mainMarker);
             
-            const eventCoords = events.map(e => e.coords).filter(c => c);
-            const bounds = L.latLngBounds(eventCoords);
+            const allCoords = [];
 
             events.forEach(item => {
                 if (item.coords) {
+                    allCoords.push(item.coords);
                      const iconHtml = `<div style="background-color: var(--primary-color); color: white; border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border: 3px solid white; box-shadow: 0 4px 8px rgba(0,0,0,0.3);">${icons[item.type] || icons.activity}</div>`;
                      const mainIcon = L.divIcon({ className: '', html: iconHtml, iconSize: [36, 36], iconAnchor: [18, 18] });
                      L.marker(item.coords, { icon: mainIcon }).addTo(map).bindPopup(`<b>${item.title}</b><br>${item.location}`);
@@ -694,7 +676,7 @@
                 if (pointsOfInterest[poiLookupLocation]) {
                      pointsOfInterest[poiLookupLocation].forEach(poi => {
                         if (poi.coords) {
-                            bounds.extend(poi.coords);
+                            allCoords.push(poi.coords);
                             const iconHtml = `<span class="material-symbols-outlined">${poiIcons[poi.category] || 'place'}</span>`;
                             const divIcon = L.divIcon({ className: 'leaflet-div-icon', html: iconHtml, iconSize: [30, 30], iconAnchor: [15, 15] });
                             L.marker(poi.coords, { icon: divIcon }).addTo(poiLayerGroup).bindPopup(`<b>${poi.name}</b><br>${poi.category}`);
@@ -703,7 +685,8 @@
                 }
             }
 
-            if (bounds.isValid()) {
+            if (allCoords.length > 0) {
+                const bounds = L.latLngBounds(allCoords);
                 map.invalidateSize();
                 map.flyToBounds(bounds, { animate: true, duration: 1, padding: [50, 50], maxZoom: 14 });
             }
