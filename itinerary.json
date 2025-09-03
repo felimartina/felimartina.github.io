@@ -234,63 +234,7 @@
   {
     "datetime": "2025-10-05T18:00:00.000Z",
     "type": "flight",
-    "title": "Vuelo a Busán",
-    "location": "Busán",
-    "coords": [
-      35.1796,
-      129.0756
-    ],
-    "duration": "~2h 30m",
-    "details": {
-      "Aerolínea": "Jeju Air",
-      "Aeropuerto Salida": "Narita (NRT)",
-      "Aeropuerto Llegada": "Gimhae International Airport (PUS)",
-      "Cost": "343 USD for 4 people"
-    }
-  },
-  {
-    "datetime": "2025-10-05T23:00:00.000Z",
-    "type": "sleep",
-    "title": "Noche en Busán",
-    "location": "Busán",
-    "coords": [
-      35.1796,
-      129.0756
-    ],
-    "details": {
-      "Alojamiento": "NEED TO BOOK"
-    }
-  },
-  {
-    "datetime": "2025-10-06T09:00:00.000Z",
-    "type": "activity",
-    "title": "Día en Busán",
-    "location": "Busán",
-    "coords": [
-      35.1796,
-      129.0756
-    ],
-    "details": {
-      "Plan": "Explorar la zona de la playa Haeundae."
-    }
-  },
-  {
-    "datetime": "2025-10-06T23:00:00.000Z",
-    "type": "sleep",
-    "title": "Noche en Busán",
-    "location": "Busán",
-    "coords": [
-      35.1796,
-      129.0756
-    ],
-    "details": {
-      "Alojamiento": "NEED TO BOOK"
-    }
-  },
-  {
-    "datetime": "2025-10-07T09:00:00.000Z",
-    "type": "transport",
-    "title": "Tren a Seúl",
+    "title": "Vuelo a Seúl",
     "location": "Seúl",
     "coords": [
       37.5665,
@@ -298,11 +242,40 @@
     ],
     "duration": "~2h 30m",
     "details": {
-      "Transporte": "Tren de alta velocidad KTX."
+      "Aerolínea": "Jeju Air",
+      "Aeropuerto Salida": "Narita (NRT)",
+      "Aeropuerto Llegada": "Incheon International Airport (ICN)",
+      "Cost": "343 USD for 4 people"
     }
   },
   {
-    "datetime": "2025-10-07T12:00:00.000Z",
+    "datetime": "2025-10-05T23:00:00.000Z",
+    "type": "sleep",
+    "title": "Noche en Seúl",
+    "location": "Seúl",
+    "coords": [
+      37.5665,
+      126.978
+    ],
+    "details": {
+      "Alojamiento": "NEED TO BOOK"
+    }
+  },
+  {
+    "datetime": "2025-10-06T09:00:00.000Z",
+    "type": "business",
+    "title": "Visita a Google Office",
+    "location": "Seúl",
+    "coords": [
+      37.5063,
+      127.035
+    ],
+    "details": {
+      "Dirección": "Gangnam Finance Center"
+    }
+  },
+  {
+    "datetime": "2025-10-06T13:00:00.000Z",
     "type": "activity",
     "title": "Tarde en Seúl",
     "location": "Seúl",
@@ -311,11 +284,37 @@
       126.978
     ],
     "details": {
-      "Plan": "Llegada y tiempo libre para explorar. Visitar el Festival Seoul Light Hangang Bitseom."
+      "Plan": "Explorar la zona de Gangnam y visitar el Festival Seoul Light Hangang Bitseom."
     }
   },
   {
-    "datetime": "2025-10-07T23:59:00.000Z",
+    "datetime": "2025-10-06T23:59:00.000Z",
+    "type": "sleep",
+    "title": "Noche en Seúl",
+    "location": "Seúl",
+    "coords": [
+      37.5665,
+      126.978
+    ],
+    "details": {
+      "Alojamiento": "NEED TO BOOK"
+    }
+  },
+  {
+    "datetime": "2025-10-07T09:00:00.000Z",
+    "type": "activity",
+    "title": "Día en Seúl",
+    "location": "Seúl",
+    "coords": [
+      37.5665,
+      126.978
+    ],
+    "details": {
+      "Plan": "Visitar el palacio Gyeongbokgung y Bukchon Hanok Village."
+    }
+  },
+  {
+    "datetime": "2025-10-07T23:00:00.000Z",
     "type": "sleep",
     "title": "Noche en Seúl",
     "location": "Seúl",
@@ -329,28 +328,15 @@
   },
   {
     "datetime": "2025-10-08T09:00:00.000Z",
-    "type": "business",
-    "title": "Visita a Google Office",
-    "location": "Seúl",
-    "coords": [
-      37.5063,
-      127.035
-    ],
-    "details": {
-      "Dirección": "Gangnam Finance Center"
-    }
-  },
-  {
-    "datetime": "2025-10-08T13:00:00.000Z",
     "type": "activity",
-    "title": "Tarde en Seúl",
+    "title": "Día en Seúl",
     "location": "Seúl",
     "coords": [
       37.5665,
       126.978
     ],
     "details": {
-      "Plan": "Explorar la zona de Gangnam."
+      "Plan": "Explorar la zona de Myeongdong e Insadong."
     }
   },
   {
@@ -368,25 +354,39 @@
   },
   {
     "datetime": "2025-10-09T09:00:00.000Z",
-    "type": "activity",
-    "title": "Día en Seúl",
-    "location": "Seúl",
+    "type": "transport",
+    "title": "Tren a Busán",
+    "location": "Busán",
     "coords": [
-      37.5665,
-      126.978
+      35.1796,
+      129.0756
+    ],
+    "duration": "~2h 30m",
+    "details": {
+      "Transporte": "Tren de alta velocidad KTX."
+    }
+  },
+  {
+    "datetime": "2025-10-09T12:00:00.000Z",
+    "type": "activity",
+    "title": "Tarde en Busán",
+    "location": "Busán",
+    "coords": [
+      35.1796,
+      129.0756
     ],
     "details": {
-      "Plan": "Visitar el palacio Gyeongbokgung y Bukchon Hanok Village."
+      "Plan": "Llegada y tiempo libre para explorar."
     }
   },
   {
     "datetime": "2025-10-09T23:00:00.000Z",
     "type": "sleep",
-    "title": "Noche en Seúl",
-    "location": "Seúl",
+    "title": "Noche en Busán",
+    "location": "Busán",
     "coords": [
-      37.5665,
-      126.978
+      35.1796,
+      129.0756
     ],
     "details": {
       "Alojamiento": "NEED TO BOOK"
@@ -394,25 +394,53 @@
   },
   {
     "datetime": "2025-10-10T09:00:00.000Z",
-    "type": "activity",
-    "title": "Día en Seúl",
-    "location": "Seúl",
+    "type": "transport",
+    "title": "Tren a Gyeongju",
+    "location": "Gyeongju",
     "coords": [
-      37.5665,
-      126.978
+      35.8562,
+      129.2247
+    ],
+    "duration": "~30m",
+    "details": {
+      "Transporte": "Tren de alta velocidad KTX."
+    }
+  },
+  {
+    "datetime": "2025-10-10T10:00:00.000Z",
+    "type": "day_trip",
+    "title": "Día en Gyeongju",
+    "location": "Gyeongju",
+    "coords": [
+      35.8562,
+      129.2247
     ],
     "details": {
-      "Plan": "Explorar la zona de Myeongdong e Insadong."
+      "Plan": "Explorar la capital del antiguo reino de Silla."
+    }
+  },
+  {
+    "datetime": "2025-10-10T22:00:00.000Z",
+    "type": "transport",
+    "title": "Tren de regreso a Busán",
+    "location": "Busán",
+    "coords": [
+      35.1796,
+      129.0756
+    ],
+    "duration": "~30m",
+    "details": {
+      "Transporte": "Tren de alta velocidad KTX."
     }
   },
   {
     "datetime": "2025-10-10T23:00:00.000Z",
     "type": "sleep",
-    "title": "Noche en Seúl",
-    "location": "Seúl",
+    "title": "Noche en Busán",
+    "location": "Busán",
     "coords": [
-      37.5665,
-      126.978
+      35.1796,
+      129.0756
     ],
     "details": {
       "Alojamiento": "NEED TO BOOK"
@@ -430,7 +458,7 @@
     "duration": "~2h 45m",
     "details": {
       "Aerolínea": "Jeju Air",
-      "Aeropuerto Salida": "Seúl (ICN)",
+      "Aeropuerto Salida": "Busán (PUS)",
       "Aeropuerto Llegada": "Taipéi (TPE)",
       "Cost": "394 USD for 4 people"
     }
@@ -566,7 +594,7 @@
       135.5023
     ],
     "details": {
-      "Plan": "Día extra para explorar Osaka."
+      "Plan": "Explorar la ciudad."
     }
   },
   {
