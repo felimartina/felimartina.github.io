@@ -1,818 +1,1927 @@
-[
-  {
-    "datetime": "2025-09-27T21:10:00.000Z",
-    "type": "flight",
-    "title": "Vuelo a Montreal (escala)",
-    "location": "Fort Lauderdale",
-    "coords": [
-      26.0726,
-      -80.1528
-    ],
-    "duration": "~3h 50m",
-    "details": {
-      "Reserva": "AY2GE4",
-      "Aerolínea": "Air Canada",
-      "Sale de": "Fort Lauderdale (FLL)",
-      "Llega a": "Montreal (YUL)"
+{
+  "Tokyo": [
+    {
+      "name": "Shinjuku Gyoen National Garden",
+      "category": "Parque",
+      "description": "Uno de los parques más grandes y populares de Tokio, con jardines de estilo inglés, francés y japonés.",
+      "coords": [
+        35.6852,
+        139.71
+      ]
+    },
+    {
+      "name": "Omoide Yokocho",
+      "category": "Atracción",
+      "description": "Conocido como \"Piss Alley\", es un callejón estrecho lleno de pequeños bares y restaurantes de yakitori.",
+      "coords": [
+        35.6931,
+        139.7001
+      ]
+    },
+    {
+      "name": "Kabukicho",
+      "category": "Atracción",
+      "description": "El distrito de entretenimiento más grande de Japón, lleno de bares, restaurantes y vida nocturna.",
+      "coords": [
+        35.6944,
+        139.7032
+      ]
+    },
+    {
+      "name": "Tokyo Metropolitan Government Building (Tocho)",
+      "category": "Mirador",
+      "description": "Ofrece vistas panorámicas gratuitas de la ciudad desde sus dos observatorios a 202 metros de altura.",
+      "coords": [
+        35.6896,
+        139.6917
+      ]
+    },
+    {
+      "name": "Santuario Meiji Jingu",
+      "category": "Templo",
+      "description": "Santuario sintoísta dedicado a los espíritus deificados del Emperador Meiji y su esposa.",
+      "coords": [
+        35.6764,
+        139.6993
+      ]
+    },
+    {
+      "name": "Takeshita Street",
+      "category": "Compras",
+      "description": "El epicentro de la cultura adolescente y la moda de Harajuku, famosa por sus tiendas y crepes.",
+      "coords": [
+        35.6701,
+        139.7061
+      ]
+    },
+    {
+      "name": "Cruce de Shibuya",
+      "category": "Atracción",
+      "description": "El cruce peatonal más transitado del mundo, un espectáculo de luces de neón y multitudes.",
+      "coords": [
+        35.6595,
+        139.7005
+      ]
+    },
+    {
+      "name": "Estatua de Hachiko",
+      "category": "Atracción",
+      "description": "Famosa estatua de bronce que conmemora al leal perro Akita, Hachiko. Punto de encuentro popular.",
+      "coords": [
+        35.6591,
+        139.7006
+      ]
+    },
+    {
+      "name": "Templo Senso-ji",
+      "category": "Templo",
+      "description": "El templo más antiguo de Tokio, en Asakusa, con su icónica linterna roja gigante.",
+      "coords": [
+        35.7148,
+        139.7967
+      ]
+    },
+    {
+      "name": "Kaminarimon (Puerta del Trueno)",
+      "category": "Atracción",
+      "description": "La imponente puerta de entrada al Templo Senso-ji, un símbolo de Asakusa.",
+      "coords": [
+        35.7117,
+        139.7965
+      ]
+    },
+    {
+      "name": "Parque Ueno",
+      "category": "Parque",
+      "description": "Gran parque público que alberga museos, templos y un zoológico.",
+      "coords": [
+        35.7142,
+        139.7742
+      ]
+    },
+    {
+      "name": "Mercado Ameya Yokocho (Ameyoko)",
+      "category": "Mercado",
+      "description": "Animado mercado al aire libre que vende de todo, desde mariscos hasta ropa.",
+      "coords": [
+        35.7099,
+        139.7745
+      ]
+    },
+    {
+      "name": "Estación de Tokio",
+      "category": "Atracción",
+      "description": "Hito arquitectónico con una hermosa fachada de ladrillo rojo, principal centro de trenes de Japón.",
+      "coords": [
+        35.6812,
+        139.7671
+      ]
+    },
+    {
+      "name": "Templo Gotokuji",
+      "category": "Templo",
+      "description": "Famoso por ser el origen del Maneki-neko (gato de la suerte), con miles de estatuillas de gatos.",
+      "coords": [
+        35.6483,
+        139.6469
+      ]
+    },
+    {
+      "name": "Tokyo Skytree",
+      "category": "Mirador",
+      "description": "La estructura más alta de Japón, con vistas espectaculares desde sus observatorios.",
+      "coords": [
+        35.7101,
+        139.8107
+      ]
+    },
+    {
+      "name": "Palacio Imperial",
+      "category": "Atracción",
+      "description": "La residencia principal del Emperador de Japón, rodeada de grandes jardines y fosos.",
+      "coords": [
+        35.6852,
+        139.7528
+      ]
+    },
+    {
+      "name": "3Coins+plus",
+      "category": "Tienda",
+      "description": "Tienda popular con artículos para el hogar y accesorios, la mayoría por menos de ¥300.",
+      "coords": [
+        35.6939,
+        139.7023
+      ]
+    },
+    {
+      "name": "Alinamin Night Recover",
+      "category": "Tip",
+      "description": "Bebida de recuperación en 7-Eleven, útil para el jet lag.",
+      "coords": null
+    },
+    {
+      "name": "Nikkō",
+      "category": "Atracción",
+      "description": "A city in the mountains of Tochigi Prefecture, Nikko is a popular day trip from Tokyo known for its ornate shrines and temples. (Note: A day trip is recommended due to the distance from Tokyo)",
+      "coords": [
+        36.7297,
+        139.6105
+      ],
+      "maps_url": "https://maps.google.com/?cid=8021591820030824896&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNl"
+    },
+    {
+      "name": "Kawagoe",
+      "category": "Atracción",
+      "description": "A city near Tokyo known for its well-preserved Edo-period architecture. (Note: This is a good option for a day trip from Tokyo)",
+      "coords": [
+        35.9189,
+        139.4851
+      ],
+      "maps_url": "https://maps.google.com/?cid=16129034427962077086&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNl"
+    },
+    {
+      "name": "Kamakura",
+      "category": "Atracción",
+      "description": "A coastal city south of Tokyo with numerous Buddhist temples and Shinto shrines.",
+      "coords": [
+        35.3183,
+        139.5508
+      ],
+      "maps_url": "https://maps.google.com/?cid=6269138749601293570&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Yokohama",
+      "category": "Atracción",
+      "description": "A major city south of Tokyo known for its modern architecture and scenic waterfront.",
+      "coords": [
+        35.4437,
+        139.638
+      ],
+      "maps_url": "https://maps.google.com/?cid=474711904932615168&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Enoshima",
+      "category": "Atracción",
+      "description": "A small island with hot springs, English-style gardens, a sacred sanctuary, caves, and a lighthouse.",
+      "coords": [
+        35.3028,
+        139.4856
+      ],
+      "maps_url": "https://maps.google.com/?cid=359823462250470124&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Templo Kotoku-in",
+      "category": "Templo",
+      "description": "A serene temple famous for its large outdoor bronze statue of a seated Buddha.",
+      "coords": [
+        35.3168,
+        139.535
+      ],
+      "maps_url": "https://maps.google.com/?cid=2216777826481991500&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Engaku-ji",
+      "category": "Templo",
+      "description": "A Zen Buddhist complex, founded in 1282, with gates, temples, a giant bell, and a Buddha relic.",
+      "coords": [
+        35.3343,
+        139.5492
+      ],
+      "maps_url": "https://maps.google.com/?cid=1207615279475647791&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Templo Hokoku-ji",
+      "category": "Templo",
+      "description": "An old temple with a lush bamboo garden and a teahouse serving matcha to visitors.",
+      "coords": [
+        35.3149,
+        139.5606
+      ],
+      "maps_url": "https://maps.google.com/?cid=8247336738641620727&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Zeniarai Benten Shrine",
+      "category": "Templo",
+      "description": "A cozy, 11th-century Shinto shrine with a spring for ritual money-washing believed to increase wealth.",
+      "coords": [
+        35.3216,
+        139.5463
+      ],
+      "maps_url": "https://maps.google.com/?cid=12489868518793832213&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Templo Gōtokuji",
+      "category": "Templo",
+      "description": "Edo period Buddhist temple with a large collection of lucky beckoning cat statues.",
+      "coords": [
+        35.6483,
+        139.6469
+      ],
+      "maps_url": "https://maps.google.com/?cid=482142090738683052&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Starbucks Reserve® Roastery Tokyo",
+      "category": "Restaurante",
+      "description": "A Seattle-based cafe known for its specialty coffees and snacks, with Wi-Fi.",
+      "coords": [
+        35.6469,
+        139.7042
+      ],
+      "maps_url": "https://maps.google.com/?cid=2392264685855697580&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Nintendo Tokio",
+      "category": "Tienda",
+      "description": "The official Nintendo store in Tokyo.",
+      "coords": [
+        35.6603,
+        139.7001
+      ],
+      "maps_url": "https://maps.google.com/?cid=14598527675868167682&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "RURU SHIBUYA",
+      "category": "Restaurante",
+      "description": "A restaurant in the Shibuya area.",
+      "coords": [
+        35.6558,
+        139.6994
+      ],
+      "maps_url": "https://maps.google.com/?cid=17194959624729823643&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Shibuya",
+      "category": "Atracción",
+      "description": "A famous commercial and entertainment district in Tokyo.",
+      "coords": [
+        35.6595,
+        139.7005
+      ],
+      "maps_url": "https://maps.google.com/?cid=17374000821978228343&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Meiji Park",
+      "category": "Parque",
+      "description": "A large public park in Tokyo.",
+      "coords": [
+        35.6806,
+        139.7121
+      ],
+      "maps_url": "https://maps.google.com/?cid=10831281790253738246&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Templo Zojoji",
+      "category": "Templo",
+      "description": "A temple complex with the main temple of the Jodo-shu Buddhist school and ornate 17th-century buildings.",
+      "coords": [
+        35.6565,
+        139.749
+      ],
+      "maps_url": "https://maps.google.com/?cid=9846179875119807780&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Tsukiji Outer Market",
+      "category": "Mercado",
+      "description": "An extensive fish market with a variety of seafood and areas to watch the famous tuna auction.",
+      "coords": [
+        35.6644,
+        139.7709
+      ],
+      "maps_url": "https://maps.google.com/?cid=11704332758705177180&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Ginza",
+      "category": "Atracción",
+      "description": "An upscale shopping, dining, and entertainment district in Tokyo.",
+      "coords": [
+        35.6713,
+        139.7667
+      ],
+      "maps_url": "https://maps.google.com/?cid=6937379280052131921&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Santuario Hie",
+      "category": "Templo",
+      "description": "A complex of Shinto shrines and gardens that hosts several annual festivals and events.",
+      "coords": [
+        35.6766,
+        139.7402
+      ],
+      "maps_url": "https://maps.google.com/?cid=17240653475158981775&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Ayuntamiento de Tokio",
+      "category": "Atracción",
+      "description": "A government complex with observation decks that offer some of the highest views in the city.",
+      "coords": [
+        35.6896,
+        139.6917
+      ],
+      "maps_url": "https://maps.google.com/?cid=17394692006143746536&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "SHARI Tokyu Kabukicho Tower",
+      "category": "Restaurante",
+      "description": "A restaurant located in the Tokyu Kabukicho Tower.",
+      "coords": [
+        35.6946,
+        139.7042
+      ],
+      "maps_url": "https://maps.google.com/?cid=15334284271613988988&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Omoide Yokochō- Callejón de los Recuerdos",
+      "category": "Atracción",
+      "description": "An iconic alley with a selection of simple food stalls and alcoholic beverages.",
+      "coords": [
+        35.6931,
+        139.7001
+      ],
+      "maps_url": "https://maps.google.com/?cid=10416638554535967955&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Shinjuku",
+      "category": "Atracción",
+      "description": "A major commercial and administrative center in Tokyo.",
+      "coords": [
+        35.6908,
+        139.7003
+      ],
+      "maps_url": "https://maps.google.com/?cid=17033113586969538514&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Hotel Chinzanso Tokyo",
+      "category": "Alojamiento",
+      "description": "A refined hotel with several restaurants, lush gardens, a spa, and an indoor pool.",
+      "coords": [
+        35.7107,
+        139.7335
+      ],
+      "maps_url": "https://maps.google.com/?cid=9255802524611101007&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Akihabara",
+      "category": "Atracción",
+      "description": "A commercial district famous for its electronics, toys, and manga, as well as its maid cafes.",
+      "coords": [
+        35.7022,
+        139.774
+      ],
+      "maps_url": "https://maps.google.com/?cid=6825752676372865507&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Benitsuru Pancake",
+      "category": "Restaurante",
+      "description": "A selection of sweet & savory pancakes are offered at this easygoing restaurant with counter seats.",
+      "coords": [
+        35.7142,
+        139.7891
+      ],
+      "maps_url": "https://maps.google.com/?cid=6236813020373834353&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Asakusa",
+      "category": "Atracción",
+      "description": "A traditional district with an ancient Buddhist temple, street food stalls, artisan shops, and more.",
+      "coords": [
+        35.7101,
+        139.7963
+      ],
+      "maps_url": "https://maps.google.com/?cid=8972574776766185575&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Sensō-ji",
+      "category": "Templo",
+      "description": "Tokyo's oldest temple, completed in the year 645, in honor of Kannon, goddess of mercy.",
+      "coords": [
+        35.7147,
+        139.7967
+      ],
+      "maps_url": "https://maps.google.com/?cid=7785923974874169613&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Parque de Ueno",
+      "category": "Parque",
+      "description": "An urban park with wide walking paths, a lake with boat rentals, a zoo, and museums.",
+      "coords": [
+        35.7142,
+        139.7742
+      ],
+      "maps_url": "https://maps.google.com/?cid=12811393089244390490&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
     }
-  },
-  {
-    "datetime": "2025-09-28T01:30:00.000Z",
-    "type": "lodging",
-    "title": "DoubleTree by Hilton Montreal Airport",
-    "location": "Montreal",
-    "coords": [
-      45.4706,
-      -73.7408
-    ],
-    "details": {
-      "Confirmación": "257-4614967",
-      "Dirección": "705 Avenue Michel-Jasmin Dorval QC H9P 1B8 CA",
-      "Check-out": "12:00 PM"
+  ],
+  "Kyoto": [
+    {
+      "name": "Kiyomizu-dera",
+      "category": "Templo",
+      "description": "Famoso por su terraza de madera que sobresale de la ladera, con vistas impresionantes.",
+      "coords": [
+        34.9949,
+        135.785
+      ]
+    },
+    {
+      "name": "Otagi Nenbutsu-ji",
+      "category": "Templo",
+      "description": "Templo encantador famoso por sus 1,200 estatuas de Rakan con expresiones diferentes.",
+      "coords": [
+        35.0315,
+        135.6669
+      ]
+    },
+    {
+      "name": "Kinkaku-ji (Pabellón Dorado)",
+      "category": "Templo",
+      "description": "Impresionante templo Zen cuyas dos plantas superiores están cubiertas de pan de oro.",
+      "coords": [
+        35.0394,
+        135.7292
+      ]
+    },
+    {
+      "name": "Ginkaku-ji (Pabellón de Plata)",
+      "category": "Templo",
+      "description": "Elegante templo Zen con hermosos jardines de arena y musgo.",
+      "coords": [
+        35.027,
+        135.7984
+      ]
+    },
+    {
+      "name": "Palacio Imperial de Kioto",
+      "category": "Atracción",
+      "description": "Antigua residencia de la Familia Imperial, ubicada en un extenso parque.",
+      "coords": [
+        35.0253,
+        135.7621
+      ]
+    },
+    {
+      "name": "Torre de Kioto",
+      "category": "Mirador",
+      "description": "La estructura de acero más alta de Kioto, con vistas de 360 grados.",
+      "coords": [
+        34.9876,
+        135.7592
+      ]
+    },
+    {
+      "name": "Fushimi Inari-taisha",
+      "category": "Templo",
+      "description": "Famoso por sus miles de puertas torii de color bermellón en un sendero montañoso.",
+      "coords": [
+        34.9671,
+        135.7726
+      ]
+    },
+    {
+      "name": "Barrio de Gion",
+      "category": "Atracción",
+      "description": "El famoso distrito de geishas de Kioto, con casas de té y calles bien conservadas.",
+      "coords": [
+        35.0036,
+        135.7784
+      ]
+    },
+    {
+      "name": "Mercado Nishiki",
+      "category": "Mercado",
+      "description": "Estrecha calle comercial con tiendas y restaurantes que venden especialidades locales.",
+      "coords": [
+        35.005,
+        135.7651
+      ]
+    },
+    {
+      "name": "Adashino Nenbutsuji Temple",
+      "category": "Templo",
+      "description": "Serene hilltop Buddhist temple featuring thousands of carved stone memorial statues.",
+      "coords": [
+        35.0163,
+        135.6631
+      ],
+      "maps_url": "https://maps.google.com/?cid=4099780517568707868&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Arashiyama Bamboo Forest",
+      "category": "Atracción",
+      "description": "A popular sightseeing path runs uphill through this forest of towering bamboo stalks.",
+      "coords": [
+        35.0189,
+        135.6706
+      ],
+      "maps_url": "https://maps.google.com/?cid=18131488233213033693&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Tenryu-ji",
+      "category": "Templo",
+      "description": "This venerable Zen temple at the foot of mountains features teahouses & serene, expansive gardens.",
+      "coords": [
+        35.0163,
+        135.6738
+      ],
+      "maps_url": "https://maps.google.com/?cid=14815785984447432896&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Arashiyama Monkey Park Iwatayama",
+      "category": "Parque",
+      "description": "Popular area atop Mt. Arashiyama for viewing wild macaque monkeys & sweeping city views.",
+      "coords": [
+        35.0117,
+        135.6749
+      ],
+      "maps_url": "https://maps.google.com/?cid=1960354123061081266&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Ryōan-ji",
+      "category": "Templo",
+      "description": "On the scenic grounds of this 15th-century temple is a famous Zen rock garden & a yudofu restaurant.",
+      "coords": [
+        35.0351,
+        135.7289
+      ],
+      "maps_url": "https://maps.google.com/?cid=16261116435795248450&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Kinkaku-ji",
+      "category": "Templo",
+      "description": "Historic, tranquil temple with a gold-leaf facade set amid landscaped gardens & a reflecting pond.",
+      "coords": [
+        35.0394,
+        135.7292
+      ],
+      "maps_url": "https://maps.google.com/?cid=1073025677330113631&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Pontocho Park",
+      "category": "Parque",
+      "description": "A small park in the Pontocho alley, a famous district with traditional teahouses and restaurants.",
+      "coords": [
+        35.0068,
+        135.7686
+      ],
+      "maps_url": "https://maps.google.com/?cid=1180424619502544092&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Yasaka Shrine",
+      "category": "Templo",
+      "description": "A Shinto shrine erected in 656 A.D. & home to one of the most famous festivals in Japan.",
+      "coords": [
+        35.0039,
+        135.7801
+      ],
+      "maps_url": "https://maps.google.com/?cid=14374021738854095593&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Gion Misen",
+      "category": "Alojamiento",
+      "description": "Relaxed hotel in a townhouse featuring streamlined rooms, artwork & complimentary Wi-Fi.",
+      "coords": [
+        35.0049,
+        135.7744
+      ],
+      "maps_url": "https://maps.google.com/?cid=2786338106766236133&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Sannenzaka",
+      "category": "Atracción",
+      "description": "Bustling pedestrian street on a hill lined with souvenir stalls & traditional Japanese architecture.",
+      "coords": [
+        34.9987,
+        135.7806
+      ],
+      "maps_url": "https://maps.google.com/?cid=11767990651930696711&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Kiyomizu-dera",
+      "category": "Templo",
+      "description": "Iconic Buddhist temple on Mount Otowa known for the scenic views afforded from its sizable veranda.",
+      "coords": [
+        34.9949,
+        135.785
+      ],
+      "maps_url": "https://maps.google.com/?cid=7111013964196361402&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Sanjūsangendō Temple",
+      "category": "Templo",
+      "description": "This iconic Buddhist temple is known for its 1,001 life-sized wooden statues of the goddess Kannon.",
+      "coords": [
+        34.9897,
+        135.7728
+      ],
+      "maps_url": "https://maps.google.com/?cid=12261896522956084872&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Ginkaku-ji",
+      "category": "Templo",
+      "description": "This 15th-century Zen temple features picturesque gardens & a sand mound shaped like Mount Fuji.",
+      "coords": [
+        35.027,
+        135.7984
+      ],
+      "maps_url": "https://maps.google.com/?cid=2705196751698570185&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Kibune River",
+      "category": "Atracción",
+      "description": "The Kibune River is famous for its Kibune Kawadoko restaurants, where visitors can enjoy meals on platforms built over the river.",
+      "coords": [
+        35.1066,
+        135.7661
+      ],
+      "maps_url": "https://maps.google.com/?cid=92482203388546198&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Hirobun",
+      "category": "Restaurante",
+      "description": "Delicately presented banquet menus at a charming spot with tatami flooring & overlooking a weir.",
+      "coords": [
+        35.1066,
+        135.7661
+      ],
+      "maps_url": "https://maps.google.com/?cid=17628666595486907277&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
     }
-  },
-  {
-    "datetime": "2025-09-28T13:45:00.000Z",
-    "type": "flight",
-    "title": "Vuelo a Tokio",
-    "location": "Montreal",
-    "coords": [
-      45.4706,
-      -73.7408
-    ],
-    "duration": "~14h",
-    "details": {
-      "Reserva": "AY2GE4",
-      "Aerolínea": "Air Canada",
-      "Sale de": "Montreal (YUL)",
-      "Llega a": "Tokio (NRT)"
+  ],
+  "Osaka": [
+    {
+      "name": "Mercado Kuromon",
+      "category": "Mercado",
+      "description": "Mercado cubierto conocido por su marisco fresco, carne y productos locales.",
+      "coords": [
+        34.6659,
+        135.5069
+      ]
+    },
+    {
+      "name": "Castillo de Osaka",
+      "category": "Atracción",
+      "description": "Uno de los castillos más famosos de Japón, con museo y mirador.",
+      "coords": [
+        34.6873,
+        135.5259
+      ]
+    },
+    {
+      "name": "Shinsekai",
+      "category": "Atracción",
+      "description": "Distrito con aire retro, famoso por la Torre Tsutenkaku y la comida kushikatsu.",
+      "coords": [
+        34.6525,
+        135.5063
+      ]
+    },
+    {
+      "name": "Dotonbori",
+      "category": "Atracción",
+      "description": "El corazón de la vida nocturna de Osaka, con luces de neón y restaurantes.",
+      "coords": [
+        34.6687,
+        135.5015
+      ]
+    },
+    {
+      "name": "Umeda Sky Building",
+      "category": "Mirador",
+      "description": "Espectacular rascacielos con un observatorio al aire libre que conecta sus dos torres.",
+      "coords": [
+        34.7055,
+        135.49
+      ]
+    },
+    {
+      "name": "Noria Hep Five",
+      "category": "Atracción",
+      "description": "Gran noria roja en un centro comercial, con excelentes vistas.",
+      "coords": [
+        34.7032,
+        135.4996
+      ]
+    },
+    {
+      "name": "Barco Santa María",
+      "category": "Atracción",
+      "description": "Réplica del barco de Colón que ofrece cruceros por la bahía de Osaka.",
+      "coords": [
+        34.6558,
+        135.4312
+      ]
+    },
+    {
+      "name": "Namba",
+      "category": "Atracción",
+      "description": "Principal centro de entretenimiento y compras del sur de Osaka.",
+      "coords": [
+        34.6644,
+        135.5003
+      ]
+    },
+    {
+      "name": "Katsuoji",
+      "category": "Templo",
+      "description": "Centuries-old Buddhist temple & gardens known for fall colors & thousands of red Daruma dolls.",
+      "coords": [
+        34.862,
+        135.485
+      ],
+      "maps_url": "https://maps.google.com/?cid=963425562183482676&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Osaka Castle",
+      "category": "Atracción",
+      "description": "Revered castle dating to 1597 & since rebuilt, featuring gardens & a museum with varied exhibits.",
+      "coords": [
+        34.6873,
+        135.5259
+      ],
+      "maps_url": "https://maps.google.com/?cid=1081374622389182017&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Dekasan",
+      "category": "Restaurante",
+      "description": "Dekasan specializes in delicious udon and soba noodles.",
+      "coords": [
+        34.6669,
+        135.5036
+      ],
+      "maps_url": "https://maps.google.com/?cid=6568950670422497395&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Doutonbori Street",
+      "category": "Atracción",
+      "description": "A popular street in the Dotonbori area, known for its vibrant nightlife and food scene.",
+      "coords": [
+        34.6687,
+        135.5015
+      ],
+      "maps_url": "https://maps.google.com/?cid=16412558064175448496&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Kuromon Market",
+      "category": "Mercado",
+      "description": "A covered market known for its fresh seafood, meat and local produce.",
+      "coords": [
+        34.6659,
+        135.5069
+      ],
+      "maps_url": "https://maps.google.com/?cid=17175959656016792249&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Nipponbashi",
+      "category": "Atracción",
+      "description": "Popular urban stretch of alleys & arcades with shops specializing in various discount electronics.",
+      "coords": [
+        34.6575,
+        135.5063
+      ],
+      "maps_url": "https://maps.google.com/?cid=10075790927696291588&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Shitennoji Ishinotorii",
+      "category": "Atracción",
+      "description": "Stone torii gate located at the Shitennoji temple complex.",
+      "coords": [
+        34.654,
+        135.515
+      ],
+      "maps_url": "https://maps.google.com/?cid=14753376222719587646&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Magic Cafe & Bar Shinsekai",
+      "category": "Restaurante",
+      "description": "A cafe and bar in the Shinsekai district known for its magic shows.",
+      "coords": [
+        34.6525,
+        135.5063
+      ],
+      "maps_url": "https://maps.google.com/?cid=9290898958369899818&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Sumiyoshi Taisha",
+      "category": "Templo",
+      "description": "Shinto shrine with a peaceful garden, plus structures rebuilt repeatedly since the 3rd century.",
+      "coords": [
+        34.621,
+        135.504
+      ],
+      "maps_url": "https://maps.google.com/?cid=12102612551678828418&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
     }
-  },
-  {
-    "datetime": "2025-09-29T15:25:00.000Z",
-    "type": "flight_arrival",
-    "title": "Llegada a Tokio",
-    "location": "Tokio",
-    "coords": [
-      35.772,
-      140.3863
-    ],
-    "details": {
-      "Transporte Sugerido": "Narita Express (N'EX) a Shinjuku/Tokyo Station."
+  ],
+  "Nara": [
+    {
+      "name": "Parque de los Ciervos de Nara",
+      "category": "Parque",
+      "description": "Gran parque con cientos de ciervos sika que deambulan libremente.",
+      "coords": [
+        34.6851,
+        135.8433
+      ]
+    },
+    {
+      "name": "Tōdai-ji",
+      "category": "Templo",
+      "description": "Impresionante templo que alberga una de las estatuas de Buda de bronce más grandes del mundo.",
+      "coords": [
+        34.689,
+        135.8398
+      ]
+    },
+    {
+      "name": "Nakatani-dou",
+      "category": "Restaurante",
+      "description": "Famosa tienda de mochi donde se puede ver el tradicional y rápido machacado del arroz.",
+      "coords": [
+        34.6836,
+        135.8285
+      ]
+    },
+    {
+      "name": "Barrio de Naramachi",
+      "category": "Atracción",
+      "description": "Antiguo barrio de comerciantes de Nara, con casas tradicionales y tiendas.",
+      "coords": [
+        34.6781,
+        135.8285
+      ]
+    },
+    {
+      "name": "Kōfuku-ji",
+      "category": "Templo",
+      "description": "Complejo de templos con una impresionante pagoda de cinco pisos, la segunda más alta de Japón.",
+      "coords": [
+        34.683,
+        135.83
+      ]
+    },
+    {
+      "name": "Horyu-ji",
+      "category": "Templo",
+      "description": "Buddhist temple with frescoes, statues & the world's oldest wooden buildings on its grounds.",
+      "coords": [
+        34.614,
+        135.733
+      ],
+      "maps_url": "https://maps.google.com/?cid=16810985189321923580&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Yakushi-ji",
+      "category": "Templo",
+      "description": "Originally built in 680, this Buddhist landmark was once one of the Seven Great Temples in Nara.",
+      "coords": [
+        34.671,
+        135.787
+      ],
+      "maps_url": "https://maps.google.com/?cid=9732035778812445991&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Nara Park",
+      "category": "Parque",
+      "description": "Landscaped, public park with ancient temples & the Nara National Museum of art, plus tame deer.",
+      "coords": [
+        34.6851,
+        135.8433
+      ],
+      "maps_url": "https://maps.google.com/?cid=17972930374069941334&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Kasugataisha Shrine",
+      "category": "Templo",
+      "description": "Bright vermillion columns support the roof of this Shinto shrine originally established in 768 A.D..",
+      "coords": [
+        34.682,
+        135.848
+      ],
+      "maps_url": "https://maps.google.com/?cid=5519134420388517270&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Isuien Garden and Neiraku Museum",
+      "category": "Jardín",
+      "description": "Sizable collection of ancient Chinese bronze wares, mirrors & seals, along with Korean pottery.",
+      "coords": [
+        34.687,
+        135.836
+      ],
+      "maps_url": "https://maps.google.com/?cid=6490064857812221347&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Hasedera Temple",
+      "category": "Templo",
+      "description": "This rebuilt 8th-century temple serves as the primary temple for the Buzan sect of Shingon Buddhism.",
+      "coords": [
+        34.542,
+        135.917
+      ],
+      "maps_url": "https://maps.google.com/?cid=7997806481598591280&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Ryuo-ga-buchi",
+      "category": "Atracción",
+      "description": "A tranquil lake known for its beautiful reflections, especially during the autumn season.",
+      "coords": [
+        34.469,
+        136.002
+      ],
+      "maps_url": "https://maps.google.com/?cid=2752793691080947162&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Murou-ji",
+      "category": "Templo",
+      "description": "This Buddhist temple dates back some 1400 years & unusually for its time, has always admitted women.",
+      "coords": [
+        34.551,
+        136.002
+      ],
+      "maps_url": "https://maps.google.com/?cid=15336888371290931005&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Tsubosaka-dera",
+      "category": "Templo",
+      "description": "Temple from 717 AD with Japanese & Indian influences & a large Buddha statue amidst cherry trees.",
+      "coords": [
+        34.436,
+        135.798
+      ],
+      "maps_url": "https://maps.google.com/?cid=14242329116301323468&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
     }
-  },
-  {
-    "datetime": "2025-09-29T23:00:00.000Z",
-    "type": "sleep",
-    "title": "Noche en Tokio",
-    "location": "Tokio",
-    "coords": [
-      35.6895,
-      139.6917
-    ],
-    "details": {
-      "Alojamiento": "NEED TO BOOK"
+  ],
+  "Hakone": [
+    {
+      "name": "Chureito Pagoda",
+      "category": "Mirador",
+      "description": "Pagoda con vistas icónicas del Monte Fuji. Se encuentra cerca de la región de Hakone.",
+      "coords": [
+        35.4988,
+        138.8005
+      ]
+    },
+    {
+      "name": "Fujikawaguchiko",
+      "category": "Atracción",
+      "description": "A town located on the north shore of Lake Kawaguchi, offering stunning views of Mount Fuji.",
+      "coords": [
+        35.4952,
+        138.769
+      ],
+      "maps_url": "https://maps.google.com/?cid=6661763332175585862&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Chureito Pagoda",
+      "category": "Templo",
+      "description": "Iconic pagoda on a hilltop facing Mt. Fuji in Arakurayama Sengen Park, reached via 398 steps. (This is a duplicate and will be ignored)",
+      "coords": [
+        35.4988,
+        138.8005
+      ],
+      "maps_url": "https://maps.google.com/?cid=15733293726462568345&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Fuji Five Lakes",
+      "category": "Atracción",
+      "description": "A collection of five lakes at the base of Mount Fuji, offering picturesque views and various recreational activities.",
+      "coords": [
+        35.4411,
+        138.7735
+      ],
+      "maps_url": "https://maps.google.com/?cid=1926789287134743974&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Oshino Hakkai",
+      "category": "Atracción",
+      "description": "A small and picturesque village with eight ponds, views of Mount Fuji, and food and souvenir vendors.",
+      "coords": [
+        35.4497,
+        138.8258
+      ],
+      "maps_url": "https://maps.google.com/?cid=1601773399916388209&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Owakudani",
+      "category": "Atracción",
+      "description": "A volcanic valley with active sulfur vents and hot springs.",
+      "coords": [
+        35.2427,
+        139.022
+      ],
+      "maps_url": "https://maps.google.com/?cid=15008591917083050291&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Woven City Construction Office",
+      "category": "Atracción",
+      "description": "The construction office for Woven City, a prototype smart city by Toyota.",
+      "coords": [
+        35.17,
+        138.9
+      ],
+      "maps_url": "https://maps.google.com/?cid=4004353108474666881&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
     }
-  },
-  {
-    "datetime": "2025-09-30T09:00:00.000Z",
-    "type": "activity",
-    "title": "Día en Tokio",
-    "location": "Tokio",
-    "coords": [
-      35.6895,
-      139.6917
-    ],
-    "details": {
-      "Plan": "Explorar la zona de Shibuya y Harajuku."
+  ],
+  "General": [
+    {
+      "name": "Tren Spacia X",
+      "category": "Tip",
+      "description": "Tren que conecta Tokio y Nikko en ~2 horas. Costo: ~$15 por tramo."
+    },
+    {
+      "name": "Tren Saphir Odoriko",
+      "category": "Tip",
+      "description": "Tren de lujo y panorámico que recorre la península de Izu desde Tokio. Costo: ~$50."
+    },
+    {
+      "name": "Tren Aoniyoshi",
+      "category": "Tip",
+      "description": "Tren turístico que conecta Osaka, Nara y Kioto. Costo: ~$5."
     }
-  },
-  {
-    "datetime": "2025-09-30T23:00:00.000Z",
-    "type": "sleep",
-    "title": "Noche en Tokio",
-    "location": "Tokio",
-    "coords": [
-      35.6895,
-      139.6917
-    ],
-    "details": {
-      "Alojamiento": "NEED TO BOOK"
+  ],
+  "Gyeongju": [
+    {
+      "name": "Daereungwon Tomb Complex",
+      "category": "Atracción",
+      "coords": [
+        35.834,
+        129.208
+      ]
+    },
+    {
+      "name": "Cheomseongdae Observatory",
+      "category": "Atracción",
+      "coords": [
+        35.834,
+        129.213
+      ]
+    },
+    {
+      "name": "Woljeonggyo Bridge",
+      "category": "Atracción",
+      "coords": [
+        35.828,
+        129.213
+      ]
+    },
+    {
+      "name": "Donggung Palace & Wolji Pond",
+      "category": "Atracción",
+      "coords": [
+        35.836,
+        129.221
+      ]
+    },
+    {
+      "name": "Gyeongju National Museum",
+      "category": "Museo",
+      "coords": [
+        35.83,
+        129.226
+      ]
+    },
+    {
+      "name": "Gyeongju Folk Craft Village",
+      "category": "Atracción",
+      "coords": [
+        35.811,
+        129.289
+      ]
+    },
+    {
+      "name": "Bulguksa Temple",
+      "category": "Templo",
+      "coords": [
+        35.79,
+        129.29
+      ]
+    },
+    {
+      "name": "Seokguram Grotto",
+      "category": "Atracción",
+      "coords": [
+        35.795,
+        129.3
+      ]
+    },
+    {
+      "name": "Bulguksa Temple",
+      "category": "Templo",
+      "description": "Completed in 774, this Buddhist temple complex on the slopes of Mount Toham features 2 pagodas.",
+      "coords": [
+        35.7901,
+        129.2872
+      ],
+      "maps_url": "https://maps.google.com/?cid=12437728283282331615&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Seokguram Grotto",
+      "category": "Atracción",
+      "description": "This famous, historical hermitage features acclaimed Buddhist sculptures & sea views.",
+      "coords": [
+        35.7952,
+        129.3005
+      ],
+      "maps_url": "https://maps.google.com/?cid=14971987049258150098&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Daereungwon Tomb Complex",
+      "category": "Atracción",
+      "description": "Excavated in 1973, this ancient burial tomb of an unknown king contained 11,000+ artifacts.",
+      "coords": [
+        35.8351,
+        129.2081
+      ],
+      "maps_url": "https://maps.google.com/?cid=14699789675987716613&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Yangdong Folk Village",
+      "category": "Atracción",
+      "description": "Old-fashioned village with many historic structures, including traditional thatch-roofed huts.",
+      "coords": [
+        35.9602,
+        129.253
+      ],
+      "maps_url": "https://maps.google.com/?cid=7634449484111934690&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
     }
-  },
-  {
-    "datetime": "2025-10-01T09:00:00.000Z",
-    "type": "activity",
-    "title": "Día en Tokio",
-    "location": "Tokio",
-    "coords": [
-      35.6895,
-      139.6917
-    ],
-    "details": {
-      "Plan": "Explorar la zona de Asakusa y Ueno."
+  ],
+  "Busan": [
+    {
+      "name": "Jeonpo Cafe Street",
+      "category": "Atracción",
+      "description": "Fashionable street lined with hip coffee roasters & arty themed cafes, especially popular for dates.",
+      "coords": [
+        35.1585,
+        129.0625
+      ],
+      "maps_url": "https://maps.google.com/?cid=9967300453178756857&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Haeundae Traditional Market",
+      "category": "Mercado",
+      "description": "A traditional market in the Haeundae area with various shops and eateries.",
+      "coords": [
+        35.163,
+        129.1607
+      ],
+      "maps_url": "https://maps.google.com/?cid=15417742290736329149&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Haeundae Beach",
+      "category": "Atracción",
+      "description": "This busy 1.5km-long beach features fishing, swimming, various festivals & skyline views.",
+      "coords": [
+        35.1587,
+        129.1627
+      ],
+      "maps_url": "https://maps.google.com/?cid=11052873442128014488&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Jeoryeong Coastal Walk",
+      "category": "Atracción",
+      "description": "A coastal walking path with scenic views of the sea and cliffs.",
+      "coords": [
+        35.0805,
+        129.0435
+      ],
+      "maps_url": "https://maps.google.com/?cid=8066288726443685955&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Huinnyeoul Culture Village",
+      "category": "Atracción",
+      "description": "Arty, regenerated cultural village with narrow alleys, street murals & a waterside walking path.",
+      "coords": [
+        35.0784,
+        129.0415
+      ],
+      "maps_url": "https://maps.google.com/?cid=3504597675723064970&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Songdo Bay Station (Songdo Cable Car)",
+      "category": "Atracción",
+      "description": "Stalwart aerial tram, now with glass-bottom cars for views of the surrounding sea & mountains.",
+      "coords": [
+        35.084,
+        129.0189
+      ],
+      "maps_url": "https://maps.google.com/?cid=10851715231874527315&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Gamcheon Culture Village",
+      "category": "Atracción",
+      "description": "Picturesque attraction featuring a village of colorful houses, painted murals, shops & cafes.",
+      "coords": [
+        35.0935,
+        129.0101
+      ],
+      "maps_url": "https://maps.google.com/?cid=10916164570297726627&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Jagalchi Market",
+      "category": "Mercado",
+      "description": "World famous market for fresh fish & seafood to take away or eat at the informal stalls.",
+      "coords": [
+        35.0945,
+        129.0275
+      ],
+      "maps_url": "https://maps.google.com/?cid=5166631765211852909&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Gukje Market",
+      "category": "Mercado",
+      "description": "Lively, sprawling marketplace with vendors selling street food, home goods & souvenirs.",
+      "coords": [
+        35.0998,
+        129.0246
+      ],
+      "maps_url": "https://maps.google.com/?cid=17353590159296253974&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Busan Tower",
+      "category": "Mirador",
+      "description": "Sweeping views are the highlight atop this 118-m. tower with an observation deck & cafe.",
+      "coords": [
+        35.1018,
+        129.0304
+      ],
+      "maps_url": "https://maps.google.com/?cid=15157451260028976974&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
     }
-  },
-  {
-    "datetime": "2025-10-01T23:00:00.000Z",
-    "type": "sleep",
-    "title": "Noche en Tokio",
-    "location": "Tokio",
-    "coords": [
-      35.6895,
-      139.6917
-    ],
-    "details": {
-      "Alojamiento": "NEED TO BOOK"
+  ],
+  "Seoul": [
+    {
+      "name": "DMZ zone",
+      "category": "Atracción",
+      "description": "The Demilitarized Zone is a strip of land running across the Korean Peninsula that serves as a buffer zone between North and South Korea.",
+      "coords": [
+        38.3188,
+        127.1352
+      ],
+      "maps_url": "https://maps.google.com/?cid=18442469273128290226&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Forest Outings",
+      "category": "Café",
+      "description": "A cafe with a forest-like interior design, offering a unique dining experience.",
+      "coords": [
+        37.6698,
+        126.8378
+      ],
+      "maps_url": "https://maps.google.com/?cid=2673064718481752306&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Starfield Goyang",
+      "category": "Compras",
+      "description": "A large shopping mall in Goyang, near Seoul.",
+      "coords": [
+        37.6436,
+        126.8732
+      ],
+      "maps_url": "https://maps.google.com/?cid=3734957916903775032&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Irin Iljan",
+      "category": "Restaurante",
+      "description": "A restaurant in the Eunpyeong District of Seoul.",
+      "coords": [
+        37.632,
+        126.9298
+      ],
+      "maps_url": "https://maps.google.com/?cid=14358675819603870617&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Cafe Pokpo",
+      "category": "Café",
+      "description": "A popular cafe in Seoul.",
+      "coords": [
+        37.5684,
+        126.9377
+      ],
+      "maps_url": "https://maps.google.com/?cid=6929730700861676716&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Gyeongbokgung Palace",
+      "category": "Atracción",
+      "description": "Free guided tours are offered of this large 14th-century royal palace with a museum & gardens.",
+      "coords": [
+        37.5796,
+        126.977
+      ],
+      "maps_url": "https://maps.google.com/?cid=10029593693201569270&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Bukchon Hanok Village",
+      "category": "Atracción",
+      "description": "Village dating to the 14th century filled with narrow streets lined with restored traditional homes.",
+      "coords": [
+        37.5828,
+        126.9839
+      ],
+      "maps_url": "https://maps.google.com/?cid=14824929312700491162&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Greem Cafe",
+      "category": "Café",
+      "description": "A unique cafe known for its cartoon-like 2D interior design.",
+      "coords": [
+        37.5619,
+        126.9142
+      ],
+      "maps_url": "https://maps.google.com/?cid=7421441523096761247&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Hongdae Street",
+      "category": "Atracción",
+      "description": "Cool hangout known for its neon-lit bars & clubs, murals, fashion stores & street performers.",
+      "coords": [
+        37.555,
+        126.9248
+      ],
+      "maps_url": "https://maps.google.com/?cid=15404190558517498938&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Hotteok Namdaemun Vegetable",
+      "category": "Restaurante",
+      "description": "A famous stall for Hotteok (Korean pancake) in Namdaemun Market.",
+      "coords": [
+        37.5599,
+        126.9754
+      ],
+      "maps_url": "https://maps.google.com/?cid=11141241153077739219&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "N Seoul Tower",
+      "category": "Mirador",
+      "description": "Opened in 1980, this iconic tower offers panoramic views of the city & a revolving restaurant.",
+      "coords": [
+        37.5512,
+        126.9882
+      ],
+      "maps_url": "https://maps.google.com/?cid=6699200636580889253&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Myeong-dong",
+      "category": "Atracción",
+      "description": "Many high-end international stores & restaurants draw crowds to this bustling retail district.",
+      "coords": [
+        37.5613,
+        126.9846
+      ],
+      "maps_url": "https://maps.google.com/?cid=4270375483740491276&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Myeongdong Shopping Street",
+      "category": "Compras",
+      "description": "A popular shopping street within Myeong-dong.",
+      "coords": [
+        37.5636,
+        126.9829
+      ],
+      "maps_url": "https://maps.google.com/?cid=5824659766126274338&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Soha Salt Pond Ikseon-dong",
+      "category": "Restaurante",
+      "description": "A popular restaurant in the Ikseon-dong Hanok Village.",
+      "coords": [
+        37.573,
+        126.9922
+      ],
+      "maps_url": "https://maps.google.com/?cid=15181684957908534294&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Cheongsudang Bakery",
+      "category": "Restaurante",
+      "description": "A popular bakery in Ikseon-dong.",
+      "coords": [
+        37.5752,
+        126.9928
+      ],
+      "maps_url": "https://maps.google.com/?cid=6866984292403809692&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Oncheonjip",
+      "category": "Restaurante",
+      "description": "A restaurant in Ikseon-dong specializing in Japanese hot pots.",
+      "coords": [
+        37.5746,
+        126.993
+      ],
+      "maps_url": "https://maps.google.com/?cid=12315846191878170788&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Grandmother's Recipe",
+      "category": "Restaurante",
+      "description": "A traditional Korean restaurant in Seongsu-dong.",
+      "coords": [
+        37.5447,
+        127.0426
+      ],
+      "maps_url": "https://maps.google.com/?cid=496188655814551911&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Kyochon Pilbang",
+      "category": "Restaurante",
+      "description": "A restaurant in the Yongsan District.",
+      "coords": [
+        37.5348,
+        126.9877
+      ],
+      "maps_url": "https://maps.google.com/?cid=1287755977691684631&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Starfield Library",
+      "category": "Atracción",
+      "description": "Futuristic library & cultural event space on 2 levels of a mall with floor-to-ceiling bookshelves.",
+      "coords": [
+        37.5113,
+        127.0592
+      ],
+      "maps_url": "https://maps.google.com/?cid=3143025846765073303&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Anapji Pond",
+      "category": "Atracción",
+      "description": "A pond known for its beautiful night views, originally part of the Silla royal palace complex in Gyeongju.",
+      "coords": [
+        35.836,
+        129.2195
+      ],
+      "maps_url": "https://maps.google.com/?cid=8306003735821517935&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Dodang Neighborhood Park",
+      "category": "Parque",
+      "description": "A park in Bucheon known for its large rose garden.",
+      "coords": [
+        37.5028,
+        126.7909
+      ],
+      "maps_url": "https://maps.google.com/?cid=14110347303122642972&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Hwadamsup",
+      "category": "Jardín",
+      "description": "Peaceful paths with views of spring flowers & fall leaves in a botanic garden surrounded by forest.",
+      "coords": [
+        37.3871,
+        127.3218
+      ],
+      "maps_url": "https://maps.google.com/?cid=17315185302649857481&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Gapyeong Begonia Bird Park",
+      "category": "Parque",
+      "description": "A bird park in Gapyeong with various species of birds and begonias.",
+      "coords": [
+        37.7479,
+        127.5358
+      ],
+      "maps_url": "https://maps.google.com/?cid=15037770542239027226&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Ginkgo Tree in Bangye-ri",
+      "category": "Atracción",
+      "description": "A large, ancient ginkgo tree that is a natural monument in South Korea.",
+      "coords": [
+        37.242,
+        127.766
+      ],
+      "maps_url": "https://maps.google.com/?cid=11590020228833235000&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
     }
-  },
-  {
-    "datetime": "2025-10-02T09:00:00.000Z",
-    "type": "activity",
-    "title": "Día en Tokio",
-    "location": "Tokio",
-    "coords": [
-      35.6895,
-      139.6917
-    ],
-    "details": {
-      "Plan": "Visitar el mercado de Tsukiji y los jardines del Palacio Imperial."
+  ],
+  "Kyoto": [
+    {
+      "name": "Kiyomizu-dera",
+      "category": "Templo",
+      "description": "Famoso por su terraza de madera que sobresale de la ladera, con vistas impresionantes.",
+      "coords": [
+        34.9949,
+        135.785
+      ]
+    },
+    {
+      "name": "Otagi Nenbutsu-ji",
+      "category": "Templo",
+      "description": "Templo encantador famoso por sus 1,200 estatuas de Rakan con expresiones diferentes.",
+      "coords": [
+        35.0315,
+        135.6669
+      ]
+    },
+    {
+      "name": "Kinkaku-ji (Pabellón Dorado)",
+      "category": "Templo",
+      "description": "Impresionante templo Zen cuyas dos plantas superiores están cubiertas de pan de oro.",
+      "coords": [
+        35.0394,
+        135.7292
+      ]
+    },
+    {
+      "name": "Ginkaku-ji (Pabellón de Plata)",
+      "category": "Templo",
+      "description": "Elegante templo Zen con hermosos jardines de arena y musgo.",
+      "coords": [
+        35.027,
+        135.7984
+      ]
+    },
+    {
+      "name": "Palacio Imperial de Kioto",
+      "category": "Atracción",
+      "description": "Antigua residencia de la Familia Imperial, ubicada en un extenso parque.",
+      "coords": [
+        35.0253,
+        135.7621
+      ]
+    },
+    {
+      "name": "Torre de Kioto",
+      "category": "Mirador",
+      "description": "La estructura de acero más alta de Kioto, con vistas de 360 grados.",
+      "coords": [
+        34.9876,
+        135.7592
+      ]
+    },
+    {
+      "name": "Fushimi Inari-taisha",
+      "category": "Templo",
+      "description": "Famoso por sus miles de puertas torii de color bermellón en un sendero montañoso.",
+      "coords": [
+        34.9671,
+        135.7726
+      ]
+    },
+    {
+      "name": "Barrio de Gion",
+      "category": "Atracción",
+      "description": "El famoso distrito de geishas de Kioto, con casas de té y calles bien conservadas.",
+      "coords": [
+        35.0036,
+        135.7784
+      ]
+    },
+    {
+      "name": "Mercado Nishiki",
+      "category": "Mercado",
+      "description": "Estrecha calle comercial con tiendas y restaurantes que venden especialidades locales.",
+      "coords": [
+        35.005,
+        135.7651
+      ]
+    },
+    {
+      "name": "Adashino Nenbutsuji Temple",
+      "category": "Templo",
+      "description": "Serene hilltop Buddhist temple featuring thousands of carved stone memorial statues.",
+      "coords": [
+        35.0163,
+        135.6631
+      ],
+      "maps_url": "https://maps.google.com/?cid=4099780517568707868&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Arashiyama Bamboo Forest",
+      "category": "Atracción",
+      "description": "A popular sightseeing path runs uphill through this forest of towering bamboo stalks.",
+      "coords": [
+        35.0189,
+        135.6706
+      ],
+      "maps_url": "https://maps.google.com/?cid=18131488233213033693&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Tenryu-ji",
+      "category": "Templo",
+      "description": "This venerable Zen temple at the foot of mountains features teahouses & serene, expansive gardens.",
+      "coords": [
+        35.0163,
+        135.6738
+      ],
+      "maps_url": "https://maps.google.com/?cid=14815785984447432896&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Arashiyama Monkey Park Iwatayama",
+      "category": "Parque",
+      "description": "Popular area atop Mt. Arashiyama for viewing wild macaque monkeys & sweeping city views.",
+      "coords": [
+        35.0117,
+        135.6749
+      ],
+      "maps_url": "https://maps.google.com/?cid=1960354123061081266&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Ryōan-ji",
+      "category": "Templo",
+      "description": "On the scenic grounds of this 15th-century temple is a famous Zen rock garden & a yudofu restaurant.",
+      "coords": [
+        35.0351,
+        135.7289
+      ],
+      "maps_url": "https://maps.google.com/?cid=16261116435795248450&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Kinkaku-ji",
+      "category": "Templo",
+      "description": "Historic, tranquil temple with a gold-leaf facade set amid landscaped gardens & a reflecting pond.",
+      "coords": [
+        35.0394,
+        135.7292
+      ],
+      "maps_url": "https://maps.google.com/?cid=1073025677330113631&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Pontocho Park",
+      "category": "Parque",
+      "description": "A small park in the Pontocho alley, a famous district with traditional teahouses and restaurants.",
+      "coords": [
+        35.0068,
+        135.7686
+      ],
+      "maps_url": "https://maps.google.com/?cid=1180424619502544092&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Yasaka Shrine",
+      "category": "Templo",
+      "description": "A Shinto shrine erected in 656 A.D. & home to one of the most famous festivals in Japan.",
+      "coords": [
+        35.0039,
+        135.7801
+      ],
+      "maps_url": "https://maps.google.com/?cid=14374021738854095593&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Gion Misen",
+      "category": "Alojamiento",
+      "description": "Relaxed hotel in a townhouse featuring streamlined rooms, artwork & complimentary Wi-Fi.",
+      "coords": [
+        35.0049,
+        135.7744
+      ],
+      "maps_url": "https://maps.google.com/?cid=2786338106766236133&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Sannenzaka",
+      "category": "Atracción",
+      "description": "Bustling pedestrian street on a hill lined with souvenir stalls & traditional Japanese architecture.",
+      "coords": [
+        34.9987,
+        135.7806
+      ],
+      "maps_url": "https://maps.google.com/?cid=11767990651930696711&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Kiyomizu-dera",
+      "category": "Templo",
+      "description": "Iconic Buddhist temple on Mount Otowa known for the scenic views afforded from its sizable veranda.",
+      "coords": [
+        34.9949,
+        135.785
+      ],
+      "maps_url": "https://maps.google.com/?cid=7111013964196361402&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Sanjūsangendō Temple",
+      "category": "Templo",
+      "description": "This iconic Buddhist temple is known for its 1,001 life-sized wooden statues of the goddess Kannon.",
+      "coords": [
+        34.9897,
+        135.7728
+      ],
+      "maps_url": "https://maps.google.com/?cid=12261896522956084872&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Ginkaku-ji",
+      "category": "Templo",
+      "description": "This 15th-century Zen temple features picturesque gardens & a sand mound shaped like Mount Fuji.",
+      "coords": [
+        35.027,
+        135.7984
+      ],
+      "maps_url": "https://maps.google.com/?cid=2705196751698570185&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Kibune River",
+      "category": "Atracción",
+      "description": "The Kibune River is famous for its Kibune Kawadoko restaurants, where visitors can enjoy meals on platforms built over the river.",
+      "coords": [
+        35.1066,
+        135.7661
+      ],
+      "maps_url": "https://maps.google.com/?cid=92482203388546198&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Hirobun",
+      "category": "Restaurante",
+      "description": "Delicately presented banquet menus at a charming spot with tatami flooring & overlooking a weir.",
+      "coords": [
+        35.1066,
+        135.7661
+      ],
+      "maps_url": "https://maps.google.com/?cid=17628666595486907277&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
     }
-  },
-  {
-    "datetime": "2025-10-02T23:00:00.000Z",
-    "type": "sleep",
-    "title": "Noche en Tokio",
-    "location": "Tokio",
-    "coords": [
-      35.6895,
-      139.6917
-    ],
-    "details": {
-      "Alojamiento": "NEED TO BOOK"
+  ],
+  "Osaka": [
+    {
+      "name": "Mercado Kuromon",
+      "category": "Mercado",
+      "description": "Mercado cubierto conocido por su marisco fresco, carne y productos locales.",
+      "coords": [
+        34.6659,
+        135.5069
+      ]
+    },
+    {
+      "name": "Castillo de Osaka",
+      "category": "Atracción",
+      "description": "Uno de los castillos más famosos de Japón, con museo y mirador.",
+      "coords": [
+        34.6873,
+        135.5259
+      ]
+    },
+    {
+      "name": "Shinsekai",
+      "category": "Atracción",
+      "description": "Distrito con aire retro, famoso por la Torre Tsutenkaku y la comida kushikatsu.",
+      "coords": [
+        34.6525,
+        135.5063
+      ]
+    },
+    {
+      "name": "Dotonbori",
+      "category": "Atracción",
+      "description": "El corazón de la vida nocturna de Osaka, con luces de neón y restaurantes.",
+      "coords": [
+        34.6687,
+        135.5015
+      ]
+    },
+    {
+      "name": "Umeda Sky Building",
+      "category": "Mirador",
+      "description": "Espectacular rascacielos con un observatorio al aire libre que conecta sus dos torres.",
+      "coords": [
+        34.7055,
+        135.49
+      ]
+    },
+    {
+      "name": "Noria Hep Five",
+      "category": "Atracción",
+      "description": "Gran noria roja en un centro comercial, con excelentes vistas.",
+      "coords": [
+        34.7032,
+        135.4996
+      ]
+    },
+    {
+      "name": "Barco Santa María",
+      "category": "Atracción",
+      "description": "Réplica del barco de Colón que ofrece cruceros por la bahía de Osaka.",
+      "coords": [
+        34.6558,
+        135.4312
+      ]
+    },
+    {
+      "name": "Namba",
+      "category": "Atracción",
+      "description": "Principal centro de entretenimiento y compras del sur de Osaka.",
+      "coords": [
+        34.6644,
+        135.5003
+      ]
+    },
+    {
+      "name": "Katsuoji",
+      "category": "Templo",
+      "description": "Centuries-old Buddhist temple & gardens known for fall colors & thousands of red Daruma dolls.",
+      "coords": [
+        34.862,
+        135.485
+      ],
+      "maps_url": "https://maps.google.com/?cid=963425562183482676&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Osaka Castle",
+      "category": "Atracción",
+      "description": "Revered castle dating to 1597 & since rebuilt, featuring gardens & a museum with varied exhibits.",
+      "coords": [
+        34.6873,
+        135.5259
+      ],
+      "maps_url": "https://maps.google.com/?cid=1081374622389182017&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Dekasan",
+      "category": "Restaurante",
+      "description": "Dekasan specializes in delicious udon and soba noodles.",
+      "coords": [
+        34.6669,
+        135.5036
+      ],
+      "maps_url": "https://maps.google.com/?cid=6568950670422497395&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Doutonbori Street",
+      "category": "Atracción",
+      "description": "A popular street in the Dotonbori area, known for its vibrant nightlife and food scene.",
+      "coords": [
+        34.6687,
+        135.5015
+      ],
+      "maps_url": "https://maps.google.com/?cid=16412558064175448496&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Kuromon Market",
+      "category": "Mercado",
+      "description": "A covered market known for its fresh seafood, meat and local produce.",
+      "coords": [
+        34.6659,
+        135.5069
+      ],
+      "maps_url": "https://maps.google.com/?cid=17175959656016792249&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Nipponbashi",
+      "category": "Atracción",
+      "description": "Popular urban stretch of alleys & arcades with shops specializing in various discount electronics.",
+      "coords": [
+        34.6575,
+        135.5063
+      ],
+      "maps_url": "https://maps.google.com/?cid=10075790927696291588&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Shitennoji Ishinotorii",
+      "category": "Atracción",
+      "description": "Stone torii gate located at the Shitennoji temple complex.",
+      "coords": [
+        34.654,
+        135.515
+      ],
+      "maps_url": "https://maps.google.com/?cid=14753376222719587646&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Magic Cafe & Bar Shinsekai",
+      "category": "Restaurante",
+      "description": "A cafe and bar in the Shinsekai district known for its magic shows.",
+      "coords": [
+        34.6525,
+        135.5063
+      ],
+      "maps_url": "https://maps.google.com/?cid=9290898958369899818&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
+    },
+    {
+      "name": "Sumiyoshi Taisha",
+      "category": "Templo",
+      "description": "Shinto shrine with a peaceful garden, plus structures rebuilt repeatedly since the 3rd century.",
+      "coords": [
+        34.621,
+        135.504
+      ],
+      "maps_url": "https://maps.google.com/?cid=12102612551678828418&g_mp=CiVnb29nbGUubWFwcy.plazas.v1.Places.GetPlace"
     }
-  },
-  {
-    "datetime": "2025-10-03T09:00:00.000Z",
-    "type": "business",
-    "title": "Visita a Google Office",
-    "location": "Tokio",
-    "coords": [
-      35.658,
-      139.7016
-    ],
-    "details": {
-      "Dirección": "Shibuya Stream, 3-21-3 Shibuya"
-    }
-  },
-  {
-    "datetime": "2025-10-03T13:00:00.000Z",
-    "type": "activity",
-    "title": "Tarde en Tokio",
-    "location": "Tokio",
-    "coords": [
-      35.6895,
-      139.6917
-    ],
-    "details": {
-      "Plan": "Tiempo libre para explorar Shibuya y visitar el Festival Moon Art Night en Shimokitazawa."
-    }
-  },
-  {
-    "datetime": "2025-10-03T23:00:00.000Z",
-    "type": "sleep",
-    "title": "Noche en Tokio",
-    "location": "Tokio",
-    "coords": [
-      35.6895,
-      139.6917
-    ],
-    "details": {
-      "Alojamiento": "NEED TO BOOK"
-    }
-  },
-  {
-    "datetime": "2025-10-04T09:00:00.000Z",
-    "type": "activity",
-    "title": "Día en Tokio",
-    "location": "Tokio",
-    "coords": [
-      35.6895,
-      139.6917
-    ],
-    "details": {
-      "Plan": "Día libre para explorar o compras."
-    }
-  },
-  {
-    "datetime": "2025-10-04T23:00:00.000Z",
-    "type": "sleep",
-    "title": "Noche en Tokio",
-    "location": "Tokio",
-    "coords": [
-      35.6895,
-      139.6917
-    ],
-    "details": {
-      "Alojamiento": "NEED TO BOOK"
-    }
-  },
-  {
-    "datetime": "2025-10-05T15:00:00.000Z",
-    "type": "transport",
-    "title": "Tren a Narita",
-    "location": "Narita",
-    "coords": [
-      35.772,
-      140.3863
-    ],
-    "duration": "~1h",
-    "details": {
-      "Transporte": "Narita Express (N'EX) to Narita Airport (NRT)."
-    }
-  },
-  {
-    "datetime": "2025-10-05T18:00:00.000Z",
-    "type": "flight",
-    "title": "Vuelo a Seúl",
-    "location": "Seúl",
-    "coords": [
-      37.5665,
-      126.978
-    ],
-    "duration": "~2h 30m",
-    "details": {
-      "Aerolínea": "Jeju Air",
-      "Aeropuerto Salida": "Narita (NRT)",
-      "Aeropuerto Llegada": "Incheon International Airport (ICN)",
-      "Cost": "343 USD for 4 people"
-    }
-  },
-  {
-    "datetime": "2025-10-05T23:00:00.000Z",
-    "type": "sleep",
-    "title": "Noche en Seúl",
-    "location": "Seúl",
-    "coords": [
-      37.5665,
-      126.978
-    ],
-    "details": {
-      "Alojamiento": "NEED TO BOOK"
-    }
-  },
-  {
-    "datetime": "2025-10-06T09:00:00.000Z",
-    "type": "business",
-    "title": "Visita a Google Office",
-    "location": "Seúl",
-    "coords": [
-      37.5063,
-      127.035
-    ],
-    "details": {
-      "Dirección": "Gangnam Finance Center"
-    }
-  },
-  {
-    "datetime": "2025-10-06T13:00:00.000Z",
-    "type": "activity",
-    "title": "Tarde en Seúl",
-    "location": "Seúl",
-    "coords": [
-      37.5665,
-      126.978
-    ],
-    "details": {
-      "Plan": "Explorar la zona de Gangnam y visitar el Festival Seoul Light Hangang Bitseom."
-    }
-  },
-  {
-    "datetime": "2025-10-06T23:59:00.000Z",
-    "type": "sleep",
-    "title": "Noche en Seúl",
-    "location": "Seúl",
-    "coords": [
-      37.5665,
-      126.978
-    ],
-    "details": {
-      "Alojamiento": "NEED TO BOOK"
-    }
-  },
-  {
-    "datetime": "2025-10-07T09:00:00.000Z",
-    "type": "activity",
-    "title": "Día en Seúl",
-    "location": "Seúl",
-    "coords": [
-      37.5665,
-      126.978
-    ],
-    "details": {
-      "Plan": "Visitar el palacio Gyeongbokgung y Bukchon Hanok Village."
-    }
-  },
-  {
-    "datetime": "2025-10-07T23:00:00.000Z",
-    "type": "sleep",
-    "title": "Noche en Seúl",
-    "location": "Seúl",
-    "coords": [
-      37.5665,
-      126.978
-    ],
-    "details": {
-      "Alojamiento": "NEED TO BOOK"
-    }
-  },
-  {
-    "datetime": "2025-10-08T09:00:00.000Z",
-    "type": "activity",
-    "title": "Día en Seúl",
-    "location": "Seúl",
-    "coords": [
-      37.5665,
-      126.978
-    ],
-    "details": {
-      "Plan": "Explorar la zona de Myeongdong e Insadong."
-    }
-  },
-  {
-    "datetime": "2025-10-08T23:00:00.000Z",
-    "type": "sleep",
-    "title": "Noche en Seúl",
-    "location": "Seúl",
-    "coords": [
-      37.5665,
-      126.978
-    ],
-    "details": {
-      "Alojamiento": "NEED TO BOOK"
-    }
-  },
-  {
-    "datetime": "2025-10-09T09:00:00.000Z",
-    "type": "transport",
-    "title": "Tren a Busán",
-    "location": "Busán",
-    "coords": [
-      35.1796,
-      129.0756
-    ],
-    "duration": "~2h 30m",
-    "details": {
-      "Transporte": "Tren de alta velocidad KTX."
-    }
-  },
-  {
-    "datetime": "2025-10-09T12:00:00.000Z",
-    "type": "activity",
-    "title": "Tarde en Busán",
-    "location": "Busán",
-    "coords": [
-      35.1796,
-      129.0756
-    ],
-    "details": {
-      "Plan": "Llegada y tiempo libre para explorar."
-    }
-  },
-  {
-    "datetime": "2025-10-09T23:00:00.000Z",
-    "type": "sleep",
-    "title": "Noche en Busán",
-    "location": "Busán",
-    "coords": [
-      35.1796,
-      129.0756
-    ],
-    "details": {
-      "Alojamiento": "NEED TO BOOK"
-    }
-  },
-  {
-    "datetime": "2025-10-10T09:00:00.000Z",
-    "type": "transport",
-    "title": "Tren a Gyeongju",
-    "location": "Gyeongju",
-    "coords": [
-      35.8562,
-      129.2247
-    ],
-    "duration": "~30m",
-    "details": {
-      "Transporte": "Tren de alta velocidad KTX."
-    }
-  },
-  {
-    "datetime": "2025-10-10T10:00:00.000Z",
-    "type": "day_trip",
-    "title": "Día en Gyeongju",
-    "location": "Gyeongju",
-    "coords": [
-      35.8562,
-      129.2247
-    ],
-    "details": {
-      "Plan": "Explorar la capital del antiguo reino de Silla."
-    }
-  },
-  {
-    "datetime": "2025-10-10T22:00:00.000Z",
-    "type": "transport",
-    "title": "Tren de regreso a Busán",
-    "location": "Busán",
-    "coords": [
-      35.1796,
-      129.0756
-    ],
-    "duration": "~30m",
-    "details": {
-      "Transporte": "Tren de alta velocidad KTX."
-    }
-  },
-  {
-    "datetime": "2025-10-10T23:00:00.000Z",
-    "type": "sleep",
-    "title": "Noche en Busán",
-    "location": "Busán",
-    "coords": [
-      35.1796,
-      129.0756
-    ],
-    "details": {
-      "Alojamiento": "NEED TO BOOK"
-    }
-  },
-  {
-    "datetime": "2025-10-11T09:05:00.000Z",
-    "type": "flight",
-    "title": "Vuelo a Taipéi",
-    "location": "Taipéi",
-    "coords": [
-      25.033,
-      121.5654
-    ],
-    "duration": "~2h 45m",
-    "details": {
-      "Aerolínea": "Jeju Air",
-      "Aeropuerto Salida": "Busán (PUS)",
-      "Aeropuerto Llegada": "Taipéi (TPE)",
-      "Cost": "394 USD for 4 people"
-    }
-  },
-  {
-    "datetime": "2025-10-11T14:30:00.000Z",
-    "type": "activity",
-    "title": "Tarde en Taipéi",
-    "location": "Taipéi",
-    "coords": [
-      25.033,
-      121.5654
-    ],
-    "details": {
-      "Plan": "Tiempo libre para explorar. Visita el Taipei International Beef Noodle Festival."
-    }
-  },
-  {
-    "datetime": "2025-10-11T23:00:00.000Z",
-    "type": "sleep",
-    "title": "Noche en Taipéi",
-    "location": "Taipéi",
-    "coords": [
-      25.033,
-      121.5654
-    ],
-    "details": {
-      "Alojamiento": "NEED TO BOOK"
-    }
-  },
-  {
-    "datetime": "2025-10-12T10:00:00.000Z",
-    "type": "activity",
-    "title": "Día en Taipéi",
-    "location": "Taipéi",
-    "coords": [
-      25.033,
-      121.5654
-    ],
-    "details": {
-      "Plan": "Visitar el memorial de Chiang Kai-shek y mercado nocturno."
-    }
-  },
-  {
-    "datetime": "2025-10-12T23:00:00.000Z",
-    "type": "sleep",
-    "title": "Noche en Taipéi",
-    "location": "Taipéi",
-    "coords": [
-      25.033,
-      121.5654
-    ],
-    "details": {
-      "Alojamiento": "NEED TO BOOK"
-    }
-  },
-  {
-    "datetime": "2025-10-13T09:00:00.000Z",
-    "type": "day_trip",
-    "title": "Excursión a Jiufen y Shifen",
-    "location": "Taipéi",
-    "coords": [
-      25.1092,
-      121.8449
-    ],
-    "details": {
-      "Sugerencia": "Contratar conductor para el día."
-    }
-  },
-  {
-    "datetime": "2025-10-13T23:00:00.000Z",
-    "type": "sleep",
-    "title": "Noche en Taipéi",
-    "location": "Taipéi",
-    "coords": [
-      25.033,
-      121.5654
-    ],
-    "details": {
-      "Alojamiento": "NEED TO BOOK"
-    }
-  },
-  {
-    "datetime": "2025-10-14T07:45:00.000Z",
-    "type": "flight",
-    "title": "Vuelo a Osaka",
-    "location": "Osaka",
-    "coords": [
-      34.6937,
-      135.5023
-    ],
-    "duration": "~2h 45m",
-    "details": {
-      "Aerolínea": "Thai Vietjet Air",
-      "Aeropuerto Salida": "Taipéi (TPE)",
-      "Aeropuerto Llegada": "Osaka (KIX)",
-      "Cost": "435 USD for 4 people"
-    }
-  },
-  {
-    "datetime": "2025-10-14T12:00:00.000Z",
-    "type": "activity",
-    "title": "Día en Osaka",
-    "location": "Osaka",
-    "coords": [
-      34.6937,
-      135.5023
-    ],
-    "details": {
-      "Plan": "Tiempo libre para explorar."
-    }
-  },
-  {
-    "datetime": "2025-10-14T23:00:00.000Z",
-    "type": "sleep",
-    "title": "Noche en Osaka",
-    "location": "Osaka",
-    "coords": [
-      34.6937,
-      135.5023
-    ],
-    "details": {
-      "Alojamiento": "NEED TO BOOK"
-    }
-  },
-  {
-    "datetime": "2025-10-15T09:00:00.000Z",
-    "type": "activity",
-    "title": "Día en Osaka",
-    "location": "Osaka",
-    "coords": [
-      34.6937,
-      135.5023
-    ],
-    "details": {
-      "Plan": "Explorar la ciudad."
-    }
-  },
-  {
-    "datetime": "2025-10-15T23:00:00.000Z",
-    "type": "sleep",
-    "title": "Noche en Osaka",
-    "location": "Osaka",
-    "coords": [
-      34.6937,
-      135.5023
-    ],
-    "details": {
-      "Alojamiento": "NEED TO BOOK"
-    }
-  },
-  {
-    "datetime": "2025-10-16T09:00:00.000Z",
-    "type": "transport",
-    "title": "Tren a Kioto",
-    "location": "Kioto",
-    "coords": [
-      35.0116,
-      135.7681
-    ],
-    "duration": "~30m",
-    "details": {
-      "Ruta": "Tren local."
-    }
-  },
-  {
-    "datetime": "2025-10-16T10:00:00.000Z",
-    "type": "activity",
-    "title": "Día en Kioto",
-    "location": "Kioto",
-    "coords": [
-      35.0116,
-      135.7681
-    ],
-    "details": {
-      "Plan": "Explorar la zona de Gion y Higashiyama."
-    }
-  },
-  {
-    "datetime": "2025-10-16T23:00:00.000Z",
-    "type": "sleep",
-    "title": "Noche en Kioto",
-    "location": "Kioto",
-    "coords": [
-      35.0116,
-      135.7681
-    ],
-    "details": {
-      "Alojamiento": "NEED TO BOOK"
-    }
-  },
-  {
-    "datetime": "2025-10-17T09:00:00.000Z",
-    "type": "transport",
-    "title": "Tren a Nara",
-    "location": "Nara",
-    "coords": [
-      34.6851,
-      135.8048
-    ],
-    "duration": "~45m",
-    "details": {
-      "Transporte": "Tren local JR."
-    }
-  },
-  {
-    "datetime": "2025-10-17T10:00:00.000Z",
-    "type": "day_trip",
-    "title": "Excursión a Nara",
-    "location": "Nara",
-    "coords": [
-      34.6851,
-      135.8048
-    ],
-    "details": {
-      "Plan": "Visitar el Templo Tōdai-ji y el parque de los ciervos."
-    }
-  },
-  {
-    "datetime": "2025-10-17T17:30:00.000Z",
-    "type": "transport",
-    "title": "Tren de regreso a Kioto",
-    "location": "Kioto",
-    "coords": [
-      35.0116,
-      135.7681
-    ],
-    "duration": "~45m",
-    "details": {
-      "Transporte": "Tren local JR."
-    }
-  },
-  {
-    "datetime": "2025-10-17T23:00:00.000Z",
-    "type": "sleep",
-    "title": "Noche en Kioto",
-    "location": "Kioto",
-    "coords": [
-      35.0116,
-      135.7681
-    ],
-    "details": {
-      "Alojamiento": "NEED TO BOOK"
-    }
-  },
-  {
-    "datetime": "2025-10-18T09:00:00.000Z",
-    "type": "activity",
-    "title": "Día en Kioto",
-    "location": "Kioto",
-    "coords": [
-      35.0116,
-      135.7681
-    ],
-    "details": {
-      "Plan": "Visitar el Pabellón Dorado y Arashiyama."
-    }
-  },
-  {
-    "datetime": "2025-10-18T23:00:00.000Z",
-    "type": "sleep",
-    "title": "Noche en Kioto",
-    "location": "Kioto",
-    "coords": [
-      35.0116,
-      135.7681
-    ],
-    "details": {
-      "Alojamiento": "NEED TO BOOK"
-    }
-  },
-  {
-    "datetime": "2025-10-19T09:00:00.000Z",
-    "type": "transport",
-    "title": "Tren a Hakone",
-    "location": "Hakone",
-    "coords": [
-      35.2333,
-      139.1
-    ],
-    "duration": "~2h 30m",
-    "details": {
-      "Ruta": "Shinkansen a Odawara, luego tren local."
-    }
-  },
-  {
-    "datetime": "2025-10-19T13:00:00.000Z",
-    "type": "day_trip",
-    "title": "Visita a Woven City",
-    "location": "Susono",
-    "coords": [
-      35.17,
-      138.9
-    ],
-    "details": {
-      "Plan": "Excursión a la ciudad prototipo de Toyota.",
-      "Nota": "Se debe verificar el acceso al público."
-    }
-  },
-  {
-    "datetime": "2025-10-19T16:00:00.000Z",
-    "type": "activity",
-    "title": "Vistas del Monte Fuji",
-    "location": "Hakone",
-    "coords": [
-      35.2333,
-      139.1
-    ],
-    "details": {
-      "Plan": "Paseo en barco por el Lago Ashi."
-    }
-  },
-  {
-    "datetime": "2025-10-19T23:00:00.000Z",
-    "type": "sleep",
-    "title": "Noche en Hakone",
-    "location": "Hakone",
-    "coords": [
-      35.2333,
-      139.1
-    ],
-    "details": {
-      "Alojamiento": "NEED TO BOOK"
-    }
-  },
-  {
-    "datetime": "2025-10-20T09:00:00.000Z",
-    "type": "transport",
-    "title": "Tren a Narita",
-    "location": "Narita",
-    "coords": [
-      35.772,
-      140.3863
-    ],
-    "duration": "~2h 30m",
-    "details": {
-      "Transporte": "Tren local de Hakone a Odawara, luego Shinkansen a Tokio y Narita Express a NRT."
-    }
-  },
-  {
-    "datetime": "2025-10-20T16:55:00.000Z",
-    "type": "flight",
-    "title": "Vuelo desde Narita",
-    "location": "Fort Lauderdale",
-    "coords": [
-      26.0726,
-      -80.1528
-    ],
-    "duration": "~12h 15m",
-    "details": {
-      "Reserva": "AY2GE4",
-      "Aerolínea": "Air Canada",
-      "Sale de": "Narita (NRT)",
-      "Llega a": "Fort Lauderdale (FLL) a las 11:10 PM"
-    }
-  }
-]
+  ],
+  "Nara": [
+    {
+      "name": "Parque de los Ciervos de Nara",
+      "category": "Parque",
+      "description": "Gran parque con cientos de ciervos sika que deambulan libremente.",
+      "coords":
