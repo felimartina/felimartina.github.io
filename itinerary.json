@@ -355,35 +355,21 @@
   {
     "datetime": "2025-10-09T09:00:00.000Z",
     "type": "transport",
-    "title": "Tren a Busan",
-    "location": "Busan",
-    "coords": [
-      35.1796,
-      129.0756
-    ],
-    "duration": "~2h 30m",
-    "details": {
-      "Transporte": "Tren de alta velocidad KTX."
-    }
-  },
-  {
-    "datetime": "2025-10-09T12:00:00.000Z",
-    "type": "transport",
     "title": "Tren a Gyeongju",
     "location": "Gyeongju",
     "coords": [
       35.8562,
       129.2247
     ],
-    "duration": "~30m",
+    "duration": "~2h 30m",
     "details": {
-      "Transporte": "Tren de alta velocidad KTX desde Busan."
+      "Transporte": "Tren de alta velocidad KTX desde Seoul."
     }
   },
   {
-    "datetime": "2025-10-09T13:00:00.000Z",
-    "type": "day_trip",
-    "title": "Día en Gyeongju",
+    "datetime": "2025-10-09T12:00:00.000Z",
+    "type": "activity",
+    "title": "Tarde en Gyeongju",
     "location": "Gyeongju",
     "coords": [
       35.8562,
@@ -394,9 +380,9 @@
     }
   },
   {
-    "datetime": "2025-10-09T22:00:00.000Z",
+    "datetime": "2025-10-09T19:00:00.000Z",
     "type": "transport",
-    "title": "Tren de regreso a Busan",
+    "title": "Tren a Busan",
     "location": "Busan",
     "coords": [
       35.1796,
@@ -430,7 +416,7 @@
       129.0756
     ],
     "details": {
-      "Plan": "Día extra para explorar la ciudad."
+      "Plan": "Día libre para explorar la ciudad."
     }
   },
   {
