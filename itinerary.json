@@ -34,7 +34,7 @@
   {
     "datetime": "2025-09-28T13:45:00.000Z",
     "type": "flight",
-    "title": "Vuelo a Tokyo",
+    "title": "Vuelo a Tokio",
     "location": "Montreal",
     "coords": [
       45.4706,
@@ -45,14 +45,14 @@
       "Reserva": "AY2GE4",
       "Aerolínea": "Air Canada",
       "Sale de": "Montreal (YUL)",
-      "Llega a": "Tokyo (NRT)"
+      "Llega a": "Tokio (NRT)"
     }
   },
   {
     "datetime": "2025-09-29T15:25:00.000Z",
     "type": "flight_arrival",
-    "title": "Llegada a Tokyo",
-    "location": "Tokyo",
+    "title": "Llegada a Tokio",
+    "location": "Tokio",
     "coords": [
       35.772,
       140.3863
@@ -64,8 +64,8 @@
   {
     "datetime": "2025-09-29T23:00:00.000Z",
     "type": "sleep",
-    "title": "Noche en Tokyo",
-    "location": "Tokyo",
+    "title": "Noche en Tokio",
+    "location": "Tokio",
     "coords": [
       35.6895,
       139.6917
@@ -77,8 +77,8 @@
   {
     "datetime": "2025-09-30T09:00:00.000Z",
     "type": "activity",
-    "title": "Día en Tokyo",
-    "location": "Tokyo",
+    "title": "Día en Tokio",
+    "location": "Tokio",
     "coords": [
       35.6895,
       139.6917
@@ -90,8 +90,8 @@
   {
     "datetime": "2025-09-30T23:00:00.000Z",
     "type": "sleep",
-    "title": "Noche en Tokyo",
-    "location": "Tokyo",
+    "title": "Noche en Tokio",
+    "location": "Tokio",
     "coords": [
       35.6895,
       139.6917
@@ -103,8 +103,8 @@
   {
     "datetime": "2025-10-01T09:00:00.000Z",
     "type": "activity",
-    "title": "Día en Tokyo",
-    "location": "Tokyo",
+    "title": "Día en Tokio",
+    "location": "Tokio",
     "coords": [
       35.6895,
       139.6917
@@ -116,8 +116,8 @@
   {
     "datetime": "2025-10-01T23:00:00.000Z",
     "type": "sleep",
-    "title": "Noche en Tokyo",
-    "location": "Tokyo",
+    "title": "Noche en Tokio",
+    "location": "Tokio",
     "coords": [
       35.6895,
       139.6917
@@ -129,8 +129,8 @@
   {
     "datetime": "2025-10-02T09:00:00.000Z",
     "type": "activity",
-    "title": "Día en Tokyo",
-    "location": "Tokyo",
+    "title": "Día en Tokio",
+    "location": "Tokio",
     "coords": [
       35.6895,
       139.6917
@@ -142,8 +142,8 @@
   {
     "datetime": "2025-10-02T23:00:00.000Z",
     "type": "sleep",
-    "title": "Noche en Tokyo",
-    "location": "Tokyo",
+    "title": "Noche en Tokio",
+    "location": "Tokio",
     "coords": [
       35.6895,
       139.6917
@@ -156,7 +156,7 @@
     "datetime": "2025-10-03T09:00:00.000Z",
     "type": "business",
     "title": "Visita a Google Office",
-    "location": "Tokyo",
+    "location": "Tokio",
     "coords": [
       35.658,
       139.7016
@@ -168,8 +168,8 @@
   {
     "datetime": "2025-10-03T13:00:00.000Z",
     "type": "activity",
-    "title": "Tarde en Tokyo",
-    "location": "Tokyo",
+    "title": "Tarde en Tokio",
+    "location": "Tokio",
     "coords": [
       35.6895,
       139.6917
@@ -181,8 +181,8 @@
   {
     "datetime": "2025-10-03T23:00:00.000Z",
     "type": "sleep",
-    "title": "Noche en Tokyo",
-    "location": "Tokyo",
+    "title": "Noche en Tokio",
+    "location": "Tokio",
     "coords": [
       35.6895,
       139.6917
@@ -194,8 +194,8 @@
   {
     "datetime": "2025-10-04T09:00:00.000Z",
     "type": "activity",
-    "title": "Día en Tokyo",
-    "location": "Tokyo",
+    "title": "Día en Tokio",
+    "location": "Tokio",
     "coords": [
       35.6895,
       139.6917
@@ -207,8 +207,8 @@
   {
     "datetime": "2025-10-04T23:00:00.000Z",
     "type": "sleep",
-    "title": "Noche en Tokyo",
-    "location": "Tokyo",
+    "title": "Noche en Tokio",
+    "location": "Tokio",
     "coords": [
       35.6895,
       139.6917
@@ -218,7 +218,7 @@
     }
   },
   {
-    "datetime": "2025-10-05T09:00:00.000Z",
+    "datetime": "2025-10-05T15:00:00.000Z",
     "type": "transport",
     "title": "Tren a Narita",
     "location": "Narita",
@@ -232,10 +232,10 @@
     }
   },
   {
-    "datetime": "2025-10-05T10:30:00.000Z",
+    "datetime": "2025-10-05T18:00:00.000Z",
     "type": "flight",
-    "title": "Vuelo a Busan",
-    "location": "Busan",
+    "title": "Vuelo a Busán",
+    "location": "Busán",
     "coords": [
       35.1796,
       129.0756
@@ -249,23 +249,10 @@
     }
   },
   {
-    "datetime": "2025-10-05T13:00:00.000Z",
-    "type": "activity",
-    "title": "Día en Busan",
-    "location": "Busan",
-    "coords": [
-      35.1796,
-      129.0756
-    ],
-    "details": {
-      "Plan": "Explorar la zona de la playa Haeundae."
-    }
-  },
-  {
     "datetime": "2025-10-05T23:00:00.000Z",
     "type": "sleep",
-    "title": "Noche en Busan",
-    "location": "Busan",
+    "title": "Noche en Busán",
+    "location": "Busán",
     "coords": [
       35.1796,
       129.0756
@@ -276,53 +263,25 @@
   },
   {
     "datetime": "2025-10-06T09:00:00.000Z",
-    "type": "transport",
-    "title": "Tren a Gyeongju",
-    "location": "Gyeongju",
+    "type": "activity",
+    "title": "Día en Busán",
+    "location": "Busán",
     "coords": [
-      35.8562,
-      129.2247
+      35.1796,
+      129.0756
     ],
-    "duration": "~30m",
     "details": {
-      "Transporte": "Tren de alta velocidad KTX."
+      "Plan": "Explorar la zona de la playa Haeundae."
     }
   },
   {
-    "datetime": "2025-10-06T10:00:00.000Z",
-    "type": "day_trip",
-    "title": "Día en Gyeongju",
-    "location": "Gyeongju",
-    "coords": [
-      35.8562,
-      129.2247
-    ],
-    "details": {
-      "Plan": "Explorar la capital del antiguo reino de Silla."
-    }
-  },
-  {
-    "datetime": "2025-10-06T22:00:00.000Z",
-    "type": "transport",
-    "title": "Tren a Seoul",
-    "location": "Seoul",
-    "coords": [
-      37.5665,
-      126.978
-    ],
-    "duration": "~2h 15m",
-    "details": {
-      "Transporte": "Tren KTX nocturno desde Gyeongju."
-    }
-  },
-  {
-    "datetime": "2025-10-06T23:59:00.000Z",
+    "datetime": "2025-10-06T23:00:00.000Z",
     "type": "sleep",
-    "title": "Noche en Seoul",
-    "location": "Seoul",
+    "title": "Noche en Busán",
+    "location": "Busán",
     "coords": [
-      37.5665,
-      126.978
+      35.1796,
+      129.0756
     ],
     "details": {
       "Alojamiento": "NEED TO BOOK"
@@ -330,35 +289,36 @@
   },
   {
     "datetime": "2025-10-07T09:00:00.000Z",
-    "type": "business",
-    "title": "Visita a Google Office",
-    "location": "Seoul",
+    "type": "transport",
+    "title": "Tren a Seúl",
+    "location": "Seúl",
     "coords": [
-      37.5063,
-      127.035
+      37.5665,
+      126.978
     ],
+    "duration": "~2h 30m",
     "details": {
-      "Dirección": "Gangnam Finance Center"
+      "Transporte": "Tren de alta velocidad KTX."
     }
   },
   {
-    "datetime": "2025-10-07T13:00:00.000Z",
+    "datetime": "2025-10-07T12:00:00.000Z",
     "type": "activity",
-    "title": "Tarde en Seoul",
-    "location": "Seoul",
+    "title": "Tarde en Seúl",
+    "location": "Seúl",
     "coords": [
       37.5665,
       126.978
     ],
     "details": {
-      "Plan": "Explorar la zona de Gangnam y visitar el Festival Seoul Light Hangang Bitseom."
+      "Plan": "Llegada y tiempo libre para explorar. Visitar el Festival Seoul Light Hangang Bitseom."
     }
   },
   {
     "datetime": "2025-10-07T23:59:00.000Z",
     "type": "sleep",
-    "title": "Noche en Seoul",
-    "location": "Seoul",
+    "title": "Noche en Seúl",
+    "location": "Seúl",
     "coords": [
       37.5665,
       126.978
@@ -369,22 +329,35 @@
   },
   {
     "datetime": "2025-10-08T09:00:00.000Z",
+    "type": "business",
+    "title": "Visita a Google Office",
+    "location": "Seúl",
+    "coords": [
+      37.5063,
+      127.035
+    ],
+    "details": {
+      "Dirección": "Gangnam Finance Center"
+    }
+  },
+  {
+    "datetime": "2025-10-08T13:00:00.000Z",
     "type": "activity",
-    "title": "Día en Seoul",
-    "location": "Seoul",
+    "title": "Tarde en Seúl",
+    "location": "Seúl",
     "coords": [
       37.5665,
       126.978
     ],
     "details": {
-      "Plan": "Visitar el palacio Gyeongbokgung y Bukchon Hanok Village."
+      "Plan": "Explorar la zona de Gangnam."
     }
   },
   {
     "datetime": "2025-10-08T23:00:00.000Z",
     "type": "sleep",
-    "title": "Noche en Seoul",
-    "location": "Seoul",
+    "title": "Noche en Seúl",
+    "location": "Seúl",
     "coords": [
       37.5665,
       126.978
@@ -396,8 +369,34 @@
   {
     "datetime": "2025-10-09T09:00:00.000Z",
     "type": "activity",
-    "title": "Día en Seoul",
-    "location": "Seoul",
+    "title": "Día en Seúl",
+    "location": "Seúl",
+    "coords": [
+      37.5665,
+      126.978
+    ],
+    "details": {
+      "Plan": "Visitar el palacio Gyeongbokgung y Bukchon Hanok Village."
+    }
+  },
+  {
+    "datetime": "2025-10-09T23:00:00.000Z",
+    "type": "sleep",
+    "title": "Noche en Seúl",
+    "location": "Seúl",
+    "coords": [
+      37.5665,
+      126.978
+    ],
+    "details": {
+      "Alojamiento": "NEED TO BOOK"
+    }
+  },
+  {
+    "datetime": "2025-10-10T09:00:00.000Z",
+    "type": "activity",
+    "title": "Día en Seúl",
+    "location": "Seúl",
     "coords": [
       37.5665,
       126.978
@@ -407,10 +406,10 @@
     }
   },
   {
-    "datetime": "2025-10-09T23:00:00.000Z",
+    "datetime": "2025-10-10T23:00:00.000Z",
     "type": "sleep",
-    "title": "Noche en Seoul",
-    "location": "Seoul",
+    "title": "Noche en Seúl",
+    "location": "Seúl",
     "coords": [
       37.5665,
       126.978
@@ -420,10 +419,10 @@
     }
   },
   {
-    "datetime": "2025-10-10T09:05:00.000Z",
+    "datetime": "2025-10-11T09:05:00.000Z",
     "type": "flight",
-    "title": "Vuelo a Taipei",
-    "location": "Taipei",
+    "title": "Vuelo a Taipéi",
+    "location": "Taipéi",
     "coords": [
       25.033,
       121.5654
@@ -431,16 +430,16 @@
     "duration": "~2h 45m",
     "details": {
       "Aerolínea": "Jeju Air",
-      "Aeropuerto Salida": "Seoul (ICN)",
-      "Aeropuerto Llegada": "Taipei (TPE)",
+      "Aeropuerto Salida": "Seúl (ICN)",
+      "Aeropuerto Llegada": "Taipéi (TPE)",
       "Cost": "394 USD for 4 people"
     }
   },
   {
-    "datetime": "2025-10-10T14:30:00.000Z",
+    "datetime": "2025-10-11T14:30:00.000Z",
     "type": "activity",
-    "title": "Tarde en Taipei",
-    "location": "Taipei",
+    "title": "Tarde en Taipéi",
+    "location": "Taipéi",
     "coords": [
       25.033,
       121.5654
@@ -450,10 +449,10 @@
     }
   },
   {
-    "datetime": "2025-10-10T23:00:00.000Z",
+    "datetime": "2025-10-11T23:00:00.000Z",
     "type": "sleep",
-    "title": "Noche en Taipei",
-    "location": "Taipei",
+    "title": "Noche en Taipéi",
+    "location": "Taipéi",
     "coords": [
       25.033,
       121.5654
@@ -463,10 +462,10 @@
     }
   },
   {
-    "datetime": "2025-10-11T10:00:00.000Z",
+    "datetime": "2025-10-12T10:00:00.000Z",
     "type": "activity",
-    "title": "Día en Taipei",
-    "location": "Taipei",
+    "title": "Día en Taipéi",
+    "location": "Taipéi",
     "coords": [
       25.033,
       121.5654
@@ -476,36 +475,10 @@
     }
   },
   {
-    "datetime": "2025-10-11T23:00:00.000Z",
-    "type": "sleep",
-    "title": "Noche en Taipei",
-    "location": "Taipei",
-    "coords": [
-      25.033,
-      121.5654
-    ],
-    "details": {
-      "Alojamiento": "NEED TO BOOK"
-    }
-  },
-  {
-    "datetime": "2025-10-12T09:00:00.000Z",
-    "type": "day_trip",
-    "title": "Excursión a Jiufen y Shifen",
-    "location": "Taipei",
-    "coords": [
-      25.1092,
-      121.8449
-    ],
-    "details": {
-      "Sugerencia": "Contratar conductor para el día."
-    }
-  },
-  {
     "datetime": "2025-10-12T23:00:00.000Z",
     "type": "sleep",
-    "title": "Noche en Taipei",
-    "location": "Taipei",
+    "title": "Noche en Taipéi",
+    "location": "Taipéi",
     "coords": [
       25.033,
       121.5654
@@ -516,35 +489,22 @@
   },
   {
     "datetime": "2025-10-13T09:00:00.000Z",
-    "type": "business",
-    "title": "Visita a Google Office",
-    "location": "Taipei",
+    "type": "day_trip",
+    "title": "Excursión a Jiufen y Shifen",
+    "location": "Taipéi",
     "coords": [
-      25.0338,
-      121.5645
+      25.1092,
+      121.8449
     ],
     "details": {
-      "Dirección": "Taipei 101 Tower"
-    }
-  },
-  {
-    "datetime": "2025-10-13T13:00:00.000Z",
-    "type": "activity",
-    "title": "Tarde en Taipei",
-    "location": "Taipei",
-    "coords": [
-      25.033,
-      121.5654
-    ],
-    "details": {
-      "Plan": "Visitar Taipei 101."
+      "Sugerencia": "Contratar conductor para el día."
     }
   },
   {
     "datetime": "2025-10-13T23:00:00.000Z",
     "type": "sleep",
-    "title": "Noche en Taipei",
-    "location": "Taipei",
+    "title": "Noche en Taipéi",
+    "location": "Taipéi",
     "coords": [
       25.033,
       121.5654
@@ -565,7 +525,7 @@
     "duration": "~2h 45m",
     "details": {
       "Aerolínea": "Thai Vietjet Air",
-      "Aeropuerto Salida": "Taipei (TPE)",
+      "Aeropuerto Salida": "Taipéi (TPE)",
       "Aeropuerto Llegada": "Osaka (KIX)",
       "Cost": "435 USD for 4 people"
     }
@@ -625,8 +585,8 @@
   {
     "datetime": "2025-10-16T09:00:00.000Z",
     "type": "transport",
-    "title": "Tren a Kyoto",
-    "location": "Kyoto",
+    "title": "Tren a Kioto",
+    "location": "Kioto",
     "coords": [
       35.0116,
       135.7681
@@ -639,8 +599,8 @@
   {
     "datetime": "2025-10-16T10:00:00.000Z",
     "type": "activity",
-    "title": "Día en Kyoto",
-    "location": "Kyoto",
+    "title": "Día en Kioto",
+    "location": "Kioto",
     "coords": [
       35.0116,
       135.7681
@@ -652,8 +612,8 @@
   {
     "datetime": "2025-10-16T23:00:00.000Z",
     "type": "sleep",
-    "title": "Noche en Kyoto",
-    "location": "Kyoto",
+    "title": "Noche en Kioto",
+    "location": "Kioto",
     "coords": [
       35.0116,
       135.7681
@@ -692,8 +652,8 @@
   {
     "datetime": "2025-10-17T17:30:00.000Z",
     "type": "transport",
-    "title": "Tren de regreso a Kyoto",
-    "location": "Kyoto",
+    "title": "Tren de regreso a Kioto",
+    "location": "Kioto",
     "coords": [
       35.0116,
       135.7681
@@ -706,8 +666,8 @@
   {
     "datetime": "2025-10-17T23:00:00.000Z",
     "type": "sleep",
-    "title": "Noche en Kyoto",
-    "location": "Kyoto",
+    "title": "Noche en Kioto",
+    "location": "Kioto",
     "coords": [
       35.0116,
       135.7681
@@ -719,8 +679,8 @@
   {
     "datetime": "2025-10-18T09:00:00.000Z",
     "type": "activity",
-    "title": "Día en Kyoto",
-    "location": "Kyoto",
+    "title": "Día en Kioto",
+    "location": "Kioto",
     "coords": [
       35.0116,
       135.7681
@@ -732,8 +692,8 @@
   {
     "datetime": "2025-10-18T23:00:00.000Z",
     "type": "sleep",
-    "title": "Noche en Kyoto",
-    "location": "Kyoto",
+    "title": "Noche en Kioto",
+    "location": "Kioto",
     "coords": [
       35.0116,
       135.7681
@@ -807,7 +767,7 @@
     ],
     "duration": "~2h 30m",
     "details": {
-      "Transporte": "Tren local de Hakone a Odawara, luego Shinkansen a Tokyo y Narita Express a NRT."
+      "Transporte": "Tren local de Hakone a Odawara, luego Shinkansen a Tokio y Narita Express a NRT."
     }
   },
   {
