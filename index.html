@@ -594,15 +594,21 @@
 
         function renderCityTimeline() {
             const allCities = Object.keys(cityStays);
-            const pageSize = 3;
-            const totalPages = Math.ceil(allCities.length / pageSize);
+            const windowSize = 3;
 
-            if (cityPageIndex >= totalPages) cityPageIndex = totalPages - 1;
-            if (cityPageIndex < 0) cityPageIndex = 0;
+            // Ensure cityPageIndex is within valid bounds for the sliding window.
+            if (isMobile) {
+                if (cityPageIndex > allCities.length - windowSize) {
+                    cityPageIndex = allCities.length - windowSize;
+                }
+                if (cityPageIndex < 0) {
+                    cityPageIndex = 0;
+                }
+            }
 
-            const start = cityPageIndex * pageSize;
-            const end = start + pageSize;
-            const citiesToShow = isMobile ? allCities.slice(start, end) : allCities;
+            const citiesToShow = isMobile && allCities.length > windowSize
+                ? allCities.slice(cityPageIndex, cityPageIndex + windowSize)
+                : allCities;
 
             const timelineDiv = document.createElement('div');
             timelineDiv.className = 'city-timeline';
@@ -621,31 +627,57 @@
             cityTimelineContainer.innerHTML = '';
             cityTimelineContainer.appendChild(timelineDiv);
 
-            if (isMobile && totalPages > 1) {
+            if (isMobile && allCities.length > windowSize) {
                 const leftArrow = document.createElement('button');
                 leftArrow.className = 'scroll-arrow left';
                 leftArrow.innerHTML = `<span class="material-symbols-outlined">arrow_back_ios</span>`;
                 leftArrow.disabled = cityPageIndex === 0;
-                leftArrow.onclick = () => { cityPageIndex--; renderCityTimeline(); };
+                leftArrow.onclick = () => { if (cityPageIndex > 0) { cityPageIndex--; renderCityTimeline(); } };
 
                 const rightArrow = document.createElement('button');
                 rightArrow.className = 'scroll-arrow right';
                 rightArrow.innerHTML = `<span class="material-symbols-outlined">arrow_forward_ios</span>`;
-                rightArrow.disabled = cityPageIndex >= totalPages - 1;
-                rightArrow.onclick = () => { cityPageIndex++; renderCityTimeline(); };
+                rightArrow.disabled = cityPageIndex >= allCities.length - windowSize;
+                rightArrow.onclick = () => { if (cityPageIndex < allCities.length - windowSize) { cityPageIndex++; renderCityTimeline(); } };
 
                 cityTimelineContainer.appendChild(leftArrow);
                 cityTimelineContainer.appendChild(rightArrow);
             }
+
             if (groupedByDay.length > 0) {
-                 const currentEventTime = groupedByDay[currentDayIndex].date;
-                 updateCityTimelineActiveState(currentEventTime);
+                const currentEventTime = groupedByDay[currentDayIndex].date;
+                updateCityTimelineActiveState(currentEventTime);
             }
         }
 
         function renderDayView() {
             if (groupedByDay.length === 0) return;
+
             const currentDayData = groupedByDay[currentDayIndex];
+            const allCities = Object.keys(cityStays);
+            const windowSize = 3;
+
+            // --- Center Timeline on Active City (Mobile) ---
+            if (isMobile && groupedByDay.length > 0) {
+                const activeCity = getActiveCity(currentDayData.date);
+                if (activeCity) {
+                    const activeCityIndex = allCities.indexOf(activeCity);
+                    if (activeCityIndex !== -1) {
+                        // Try to center the active city (index - 1)
+                        let targetIndex = activeCityIndex - 1;
+
+                        // Clamp the index to be within the valid range
+                        const maxIndex = allCities.length > windowSize ? allCities.length - windowSize : 0;
+                        targetIndex = Math.max(0, Math.min(targetIndex, maxIndex));
+
+                        if (cityPageIndex !== targetIndex) {
+                            cityPageIndex = targetIndex;
+                            // Re-render timeline to center on the active city
+                            renderCityTimeline();
+                        }
+                    }
+                }
+            }
 
             const date = currentDayData.date;
             const dayName = date.toLocaleDateString('es-ES', { weekday: 'long', timeZone: 'UTC' });
@@ -659,7 +691,7 @@
             currentDayData.events.forEach(item => {
                 const timeString = item.datetime.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', hour12: true, timeZone: 'UTC' });
                 const container = document.createElement('div');
-                container.className = 'timeline-item-container group'; // Added group for hover effect
+                container.className = 'timeline-item-container group';
 
                 const hasDetails = item.details && Object.keys(item.details).length > 0 && ['flight', 'flight_arrival', 'transport', 'lodging'].includes(item.type);
 
@@ -691,7 +723,8 @@
             }
 
             updateMap(currentDayData.events);
-            updateCityTimelineActiveState(currentDayData.events[0].datetime);
+            // This call is now mainly for highlighting, as centering is handled above
+            updateCityTimelineActiveState(currentDayData.date);
         }
 
         function updateMap(events) {
@@ -776,14 +809,21 @@
             }
         }
 
-        function updateCityTimelineActiveState(currentTime) {
-            document.querySelectorAll('.city-timeline-item').forEach(el => el.classList.remove('active'));
+        function getActiveCity(currentTime) {
             let activeCity = null;
+            // Find the last city segment whose start time is before or at the current time
             for (const cityName in cityStays) {
                 if (currentTime >= cityStays[cityName].startTime) {
                     activeCity = cityName;
                 }
             }
+            return activeCity;
+        }
+
+        function updateCityTimelineActiveState(currentTime) {
+            document.querySelectorAll('.city-timeline-item').forEach(el => el.classList.remove('active'));
+            const activeCity = getActiveCity(currentTime);
+
             if (activeCity) {
                 const activeCityEl = document.querySelector(`.city-timeline-item[data-city="${activeCity}"]`);
                 if (activeCityEl) {
