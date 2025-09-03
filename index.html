@@ -585,6 +585,31 @@
         }
 
         // --- UI RENDERING ---
+        function handleCityClick(clickedCity) {
+            const activeCity = getActiveCity(groupedByDay[currentDayIndex].date);
+
+            if (clickedCity === activeCity) {
+                return;
+            }
+
+            const cityStartTime = cityStays[clickedCity]?.startTime;
+            if (!cityStartTime) {
+                return;
+            }
+
+            const targetDayIndex = groupedByDay.findIndex(day => {
+                const dayDate = day.date;
+                return dayDate.getUTCFullYear() === cityStartTime.getUTCFullYear() &&
+                       dayDate.getUTCMonth() === cityStartTime.getUTCMonth() &&
+                       dayDate.getUTCDate() === cityStartTime.getUTCDate();
+            });
+
+            if (targetDayIndex !== -1 && targetDayIndex !== currentDayIndex) {
+                currentDayIndex = targetDayIndex;
+                renderDayView();
+            }
+        }
+
         function renderUI() {
             renderCityTimeline();
             mainContent.style.display = 'grid';
@@ -621,6 +646,7 @@
                 let stayHtml = stayInfo ? `<div class="stay-info"><div class="stay-info-item" title="${stayInfo.days} Días"><span class="material-symbols-outlined">wb_sunny</span><span class="${String(stayInfo.days).includes('½') ? 'half-day' : ''}">${stayInfo.days}</span></div><div class="stay-info-item" title="${stayInfo.nights} Noches"><span class="material-symbols-outlined">dark_mode</span><span>${stayInfo.nights}</span></div></div>` : '';
                 let transportHtml = (stayInfo && stayInfo.transportToNext) ? `<div class="transport-icon"><span class="material-symbols-outlined">${stayInfo.transportToNext}</span></div>` : '';
                 itemDiv.innerHTML = `<div class="city-timeline-node">${stayInfo.flag || ''}</div><div class="city-timeline-label">${city}</div>${stayHtml}${transportHtml}`;
+                itemDiv.addEventListener('click', () => handleCityClick(city));
                 timelineDiv.appendChild(itemDiv);
             });
 
