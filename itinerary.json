@@ -528,7 +528,33 @@
     }
   },
   {
-    "datetime": "2025-10-14T07:45:00.000Z",
+    "datetime": "2025-10-14T09:00:00.000Z",
+    "type": "activity",
+    "title": "Día en Taipei",
+    "location": "Taipei",
+    "coords": [
+      25.033,
+      121.5654
+    ],
+    "details": {
+      "Plan": "Día libre para explorar."
+    }
+  },
+  {
+    "datetime": "2025-10-14T23:00:00.000Z",
+    "type": "sleep",
+    "title": "Noche en Taipei",
+    "location": "Taipei",
+    "coords": [
+      25.033,
+      121.5654
+    ],
+    "details": {
+      "Alojamiento": "NEED TO BOOK"
+    }
+  },
+  {
+    "datetime": "2025-10-15T07:45:00.000Z",
     "type": "flight",
     "title": "Vuelo a Osaka",
     "location": "Osaka",
@@ -545,7 +571,7 @@
     }
   },
   {
-    "datetime": "2025-10-14T12:00:00.000Z",
+    "datetime": "2025-10-15T12:00:00.000Z",
     "type": "activity",
     "title": "Día en Osaka",
     "location": "Osaka",
@@ -555,32 +581,6 @@
     ],
     "details": {
       "Plan": "Tiempo libre para explorar."
-    }
-  },
-  {
-    "datetime": "2025-10-14T23:00:00.000Z",
-    "type": "sleep",
-    "title": "Noche en Osaka",
-    "location": "Osaka",
-    "coords": [
-      34.6937,
-      135.5023
-    ],
-    "details": {
-      "Alojamiento": "NEED TO BOOK"
-    }
-  },
-  {
-    "datetime": "2025-10-15T09:00:00.000Z",
-    "type": "activity",
-    "title": "Día en Osaka",
-    "location": "Osaka",
-    "coords": [
-      34.6937,
-      135.5023
-    ],
-    "details": {
-      "Plan": "Explorar la ciudad."
     }
   },
   {
@@ -598,6 +598,32 @@
   },
   {
     "datetime": "2025-10-16T09:00:00.000Z",
+    "type": "activity",
+    "title": "Día en Osaka",
+    "location": "Osaka",
+    "coords": [
+      34.6937,
+      135.5023
+    ],
+    "details": {
+      "Plan": "Explorar la ciudad."
+    }
+  },
+  {
+    "datetime": "2025-10-16T23:00:00.000Z",
+    "type": "sleep",
+    "title": "Noche en Osaka",
+    "location": "Osaka",
+    "coords": [
+      34.6937,
+      135.5023
+    ],
+    "details": {
+      "Alojamiento": "NEED TO BOOK"
+    }
+  },
+  {
+    "datetime": "2025-10-17T09:00:00.000Z",
     "type": "transport",
     "title": "Tren a Kyoto",
     "location": "Kyoto",
@@ -611,7 +637,7 @@
     }
   },
   {
-    "datetime": "2025-10-16T10:00:00.000Z",
+    "datetime": "2025-10-17T10:00:00.000Z",
     "type": "activity",
     "title": "Día en Kyoto",
     "location": "Kyoto",
@@ -621,60 +647,6 @@
     ],
     "details": {
       "Plan": "Explorar la zona de Gion y Higashiyama."
-    }
-  },
-  {
-    "datetime": "2025-10-16T23:00:00.000Z",
-    "type": "sleep",
-    "title": "Noche en Kyoto",
-    "location": "Kyoto",
-    "coords": [
-      35.0116,
-      135.7681
-    ],
-    "details": {
-      "Alojamiento": "NEED TO BOOK"
-    }
-  },
-  {
-    "datetime": "2025-10-17T09:00:00.000Z",
-    "type": "transport",
-    "title": "Tren a Nara",
-    "location": "Nara",
-    "coords": [
-      34.6851,
-      135.8048
-    ],
-    "duration": "~45m",
-    "details": {
-      "Transporte": "Tren local JR."
-    }
-  },
-  {
-    "datetime": "2025-10-17T10:00:00.000Z",
-    "type": "day_trip",
-    "title": "Excursión a Nara",
-    "location": "Nara",
-    "coords": [
-      34.6851,
-      135.8048
-    ],
-    "details": {
-      "Plan": "Visitar el Templo Tōdai-ji y el parque de los ciervos."
-    }
-  },
-  {
-    "datetime": "2025-10-17T17:30:00.000Z",
-    "type": "transport",
-    "title": "Tren de regreso a Kyoto",
-    "location": "Kyoto",
-    "coords": [
-      35.0116,
-      135.7681
-    ],
-    "duration": "~45m",
-    "details": {
-      "Transporte": "Tren local JR."
     }
   },
   {
@@ -692,15 +664,43 @@
   },
   {
     "datetime": "2025-10-18T09:00:00.000Z",
-    "type": "activity",
-    "title": "Día en Kyoto",
+    "type": "transport",
+    "title": "Tren a Nara",
+    "location": "Nara",
+    "coords": [
+      34.6851,
+      135.8048
+    ],
+    "duration": "~45m",
+    "details": {
+      "Transporte": "Tren local JR."
+    }
+  },
+  {
+    "datetime": "2025-10-18T10:00:00.000Z",
+    "type": "day_trip",
+    "title": "Excursión a Nara",
+    "location": "Nara",
+    "coords": [
+      34.6851,
+      135.8048
+    ],
+    "details": {
+      "Plan": "Visitar el Templo Tōdai-ji y el parque de los ciervos."
+    }
+  },
+  {
+    "datetime": "2025-10-18T17:30:00.000Z",
+    "type": "transport",
+    "title": "Tren de regreso a Kyoto",
     "location": "Kyoto",
     "coords": [
       35.0116,
       135.7681
     ],
+    "duration": "~45m",
     "details": {
-      "Plan": "Visitar el Pabellón Dorado y Arashiyama."
+      "Transporte": "Tren local JR."
     }
   },
   {
@@ -718,53 +718,25 @@
   },
   {
     "datetime": "2025-10-19T09:00:00.000Z",
-    "type": "transport",
-    "title": "Tren a Hakone",
-    "location": "Hakone",
-    "coords": [
-      35.2333,
-      139.1
-    ],
-    "duration": "~2h 30m",
-    "details": {
-      "Ruta": "Shinkansen a Odawara, luego tren local."
-    }
-  },
-  {
-    "datetime": "2025-10-19T13:00:00.000Z",
-    "type": "day_trip",
-    "title": "Visita a Woven City",
-    "location": "Susono",
-    "coords": [
-      35.17,
-      138.9
-    ],
-    "details": {
-      "Plan": "Excursión a la ciudad prototipo de Toyota.",
-      "Nota": "Se debe verificar el acceso al público."
-    }
-  },
-  {
-    "datetime": "2025-10-19T16:00:00.000Z",
     "type": "activity",
-    "title": "Vistas del Monte Fuji",
-    "location": "Hakone",
+    "title": "Día en Kyoto",
+    "location": "Kyoto",
     "coords": [
-      35.2333,
-      139.1
+      35.0116,
+      135.7681
     ],
     "details": {
-      "Plan": "Paseo en barco por el Lago Ashi."
+      "Plan": "Visitar el Pabellón Dorado y Arashiyama."
     }
   },
   {
     "datetime": "2025-10-19T23:00:00.000Z",
     "type": "sleep",
-    "title": "Noche en Hakone",
-    "location": "Hakone",
+    "title": "Noche en Kyoto",
+    "location": "Kyoto",
     "coords": [
-      35.2333,
-      139.1
+      35.0116,
+      135.7681
     ],
     "details": {
       "Alojamiento": "NEED TO BOOK"
@@ -772,16 +744,19 @@
   },
   {
     "datetime": "2025-10-20T09:00:00.000Z",
-    "type": "transport",
-    "title": "Tren a Narita",
+    "type": "flight",
+    "title": "Vuelo a Tokyo",
     "location": "Narita",
     "coords": [
-      35.772,
-      140.3863
+      34.6937,
+      135.5023
     ],
-    "duration": "~2h 30m",
+    "duration": "~1h 30m",
     "details": {
-      "Transporte": "Tren local de Hakone a Odawara, luego Shinkansen a Tokyo y Narita Express a NRT."
+      "Aerolínea": "TBD",
+      "Aeropuerto Salida": "Osaka (KIX)",
+      "Aeropuerto Llegada": "Narita (NRT)",
+      "Cost": "TBD"
     }
   },
   {
