@@ -303,7 +303,6 @@
             "Hakone": `<span class="fi fi-jp"></span>`,
             "Kyoto": `<span class="fi fi-jp"></span>`,
             "Osaka": `<span class="fi fi-jp"></span>`,
-            "Okinawa": `<span class="fi fi-jp"></span>`,
             "Busan": `<span class="fi fi-kr"></span>`,
             "Seoul": `<span class="fi fi-kr"></span>`,
             "Taipei": `<span class="fi fi-tw"></span>`,
@@ -454,59 +453,118 @@
         // --- DYNAMIC CITY STAY CALCULATION LOGIC (REFACTORED) ---
         function calculateCityStaysRobust(itinerary) {
             const segments = {};
+            if (itinerary.length === 0) return {};
             const sleepEvents = itinerary.filter(e => e.type === 'sleep');
-
             if (sleepEvents.length === 0) return {};
 
-            sleepEvents.forEach(event => {
-                const city = event.location;
-                if (!segments[city]) {
-                    segments[city] = {
-                        city: city,
-                        start: event.datetime,
-                        end: event.datetime,
-                        nights: 0,
-                        flag: countryFlags[city] || ''
-                    };
-                }
-                segments[city].nights += 1;
-                if (event.datetime < segments[city].start) {
-                    segments[city].start = event.datetime;
-                }
-                if (event.datetime > segments[city].end) {
-                    segments[city].end = event.datetime;
+            let currentSegment = { city: null, start: itinerary[0].datetime, end: null, transport: null };
+            let lastSleepCity = null;
+
+            itinerary.forEach((event, i) => {
+                if (event.type === 'sleep') {
+                    if (lastSleepCity === null) { // First sleep of the trip
+                        currentSegment.city = event.location;
+                        lastSleepCity = event.location;
+                        for (let j = i; j >= 0; j--) {
+                            const pastEvent = itinerary[j];
+                            if (pastEvent.location === currentSegment.city && (pastEvent.type === 'flight_arrival' || pastEvent.type === 'transport' || pastEvent.type === 'activity')) {
+                                currentSegment.start = pastEvent.datetime;
+                            }
+                            if(pastEvent.type === 'flight' && pastEvent.location !== currentSegment.city) break;
+                        }
+                    } else if (event.location !== lastSleepCity) {
+                        let departureEvent = null;
+                        for (let j = i; j >= 0; j--) {
+                             const prevEvent = itinerary[j];
+                             if ((prevEvent.type === 'flight' || prevEvent.type === 'transport') && prevEvent.location !== lastSleepCity) {
+                                 departureEvent = prevEvent;
+                                 break;
+                             }
+                        }
+                        currentSegment.end = departureEvent ? departureEvent.datetime : event.datetime;
+                        currentSegment.transport = departureEvent ? (departureEvent.type === 'flight' ? 'flight_takeoff' : 'train') : 'commute';
+                        let segmentName = currentSegment.city;
+                        let count = 1;
+                        while (segments[segmentName]) {
+                            segmentName = `${currentSegment.city} (${count++})`;
+                        }
+
+                        segments[segmentName] = { ...currentSegment };
+                        currentSegment = { city: event.location, start: departureEvent ? departureEvent.datetime : event.datetime, end: null, transport: null };
+                        lastSleepCity = event.location;
+                    }
                 }
             });
 
-            // Find transport to next city
-            Object.keys(segments).forEach(city => {
-                const segment = segments[city];
-                const lastSleepTime = segment.end;
-                const transportEvent = itinerary.find(e => e.datetime > lastSleepTime && (e.type === 'flight' || e.type === 'transport'));
-                if (transportEvent) {
-                    segment.transportToNext = transportEvent.type === 'flight' ? 'flight_takeoff' : 'train';
+            if (currentSegment.city) {
+                currentSegment.end = itinerary[itinerary.length - 1].datetime;
+                const lastEvent = itinerary[itinerary.length - 1];
+                if (lastEvent.type === 'flight') currentSegment.transport = 'flight_takeoff';
+                else if (lastEvent.type === 'transport') currentSegment.transport = 'train';
+                let segmentName = currentSegment.city;
+                let count = 1;
+                while (segments[segmentName]) {
+                    segmentName = `${currentSegment.city} (${count++})`;
                 }
-            });
+                segments[segmentName] = { ...currentSegment };
+            }
 
             const orderedSegments = Object.keys(segments).sort((a, b) => segments[a].start - segments[b].start);
             const finalSegments = {};
+            const cityVisits = {};
             orderedSegments.forEach(name => {
-                finalSegments[name] = segments[name];
+                const segment = segments[name];
+                const baseCity = segment.city;
+                cityVisits[baseCity] = (cityVisits[baseCity] || 0) + 1;
             });
 
+            const multiVisitCities = Object.keys(cityVisits).filter(city => cityVisits[city] > 1);
+            const cityCounters = {};
+            orderedSegments.forEach(name => {
+                const segment = segments[name];
+                const baseCity = segment.city;
+                let newName = baseCity;
+                if (multiVisitCities.includes(baseCity)) {
+                    cityCounters[baseCity] = (cityCounters[baseCity] || 0) + 1;
+                    newName = `${baseCity} (${cityCounters[baseCity]})`;
+                }
+                finalSegments[newName] = segment;
+                finalSegments[newName].flag = countryFlags[baseCity] || '';
+            });
             return calculateDurations(finalSegments);
         }
 
         function calculateDurations(segments) {
+            const THRESHOLD_1PM = 13;
+            const THRESHOLD_7PM = 19;
+            const MS_IN_A_DAY = 24 * 60 * 60 * 1000;
             const results = {};
-            for (const name in segments) {
+            const orderedSegmentNames = Object.keys(segments).sort((a, b) => segments[a].start - segments[b].start);
+
+            for (const name of orderedSegmentNames) {
                 const segment = segments[name];
-                // A simple day calculation: nights + 1
-                const days = segment.nights + 1;
+                const start = new Date(segment.start);
+                const end = new Date(segment.end);
+
+                const startDate = new Date(start.getFullYear(), start.getMonth(), start.getDate());
+                const endDate = new Date(end.getFullYear(), end.getMonth(), end.getDate());
+                let nights = Math.round((endDate.getTime() - startDate.getTime()) / MS_IN_A_DAY);
+                if (nights < 0) nights = 0;
+
+                let days = nights;
+
+                if (start.getHours() >= THRESHOLD_1PM) {
+                    days -= 0.5;
+                }
+
+                if (end.getHours() < THRESHOLD_7PM) {
+                    days -= 0.5;
+                }
+
                 results[name] = {
-                    days: String(days),
-                    nights: String(segment.nights),
-                    transportToNext: segment.transportToNext,
+                    days: String(days).replace('.5', '½'),
+                    nights: String(nights),
+                    transportToNext: segment.transport,
                     startTime: segment.start,
                     flag: segment.flag
                 };
