@@ -4,663 +4,92 @@
     "type": "flight",
     "title": "Vuelo a Montreal (escala)",
     "location": "Fort Lauderdale",
-    "coords": [
-      26.0726,
-      -80.1528
-    ],
+    "coords": [ 26.0726, -80.1528 ],
     "duration": "~3h 50m",
-    "details": {
-      "Reserva": "AY2GE4",
-      "Aerolínea": "Air Canada",
-      "Sale de": "Fort Lauderdale (FLL)",
-      "Llega a": "Montreal (YUL)"
-    }
+    "details": { "Reserva": "AY2GE4", "Aerolínea": "Air Canada", "Sale de": "Fort Lauderdale (FLL)", "Llega a": "Montreal (YUL)" }
   },
   {
     "datetime": "2025-09-28T01:30:00.000Z",
     "type": "lodging",
     "title": "DoubleTree by Hilton Montreal Airport",
     "location": "Montreal",
-    "coords": [
-      45.4706,
-      -73.7408
-    ],
-    "details": {
-      "Confirmación": "257-4614967",
-      "Dirección": "705 Avenue Michel-Jasmin Dorval QC H9P 1B8 CA",
-      "Check-out": "12:00 PM"
-    }
+    "coords": [ 45.4706, -73.7408 ],
+    "details": { "Confirmación": "257-4614967", "Dirección": "705 Avenue Michel-Jasmin Dorval QC H9P 1B8 CA", "Check-out": "12:00 PM" }
   },
   {
     "datetime": "2025-09-28T13:45:00.000Z",
     "type": "flight",
     "title": "Vuelo a Tokyo",
     "location": "Montreal",
-    "coords": [
-      45.4706,
-      -73.7408
-    ],
+    "coords": [ 45.4706, -73.7408 ],
     "duration": "~14h",
-    "details": {
-      "Reserva": "AY2GE4",
-      "Aerolínea": "Air Canada",
-      "Sale de": "Montreal (YUL)",
-      "Llega a": "Tokyo (NRT)"
-    }
+    "details": { "Reserva": "AY2GE4", "Aerolínea": "Air Canada", "Sale de": "Montreal (YUL)", "Llega a": "Tokyo (NRT)" }
   },
   {
     "datetime": "2025-09-29T15:25:00.000Z",
     "type": "flight_arrival",
     "title": "Llegada a Tokyo",
     "location": "Tokyo",
-    "coords": [
-      35.772,
-      140.3863
-    ],
-    "details": {
-      "Transporte Sugerido": "Narita Express (N'EX) a Shinjuku/Tokyo Station."
-    }
+    "coords": [ 35.772, 140.3863 ],
+    "details": { "Transporte Sugerido": "Narita Express (N'EX) a Shinjuku/Tokyo Station." }
+  },
+  { "datetime": "2025-09-29T23:00:00.000Z", "type": "sleep", "title": "Noche en Tokyo", "location": "Tokyo", "coords": [ 35.6895, 139.6917 ], "details": { "Alojamiento": "NEED TO BOOK" } },
+  { "datetime": "2025-09-30T09:00:00.000Z", "type": "activity", "title": "Día en Tokyo", "location": "Tokyo", "coords": [ 35.6895, 139.6917 ], "details": { "Plan": "Explorar la zona de Shibuya y Harajuku." } },
+  { "datetime": "2025-09-30T23:00:00.000Z", "type": "sleep", "title": "Noche en Tokyo", "location": "Tokyo", "coords": [ 35.6895, 139.6917 ], "details": { "Alojamiento": "NEED TO BOOK" } },
+  { "datetime": "2025-10-01T09:00:00.000Z", "type": "activity", "title": "Día en Tokyo", "location": "Tokyo", "coords": [ 35.6895, 139.6917 ], "details": { "Plan": "Explorar la zona de Asakusa y Ueno." } },
+  { "datetime": "2025-10-01T23:00:00.000Z", "type": "sleep", "title": "Noche en Tokyo", "location": "Tokyo", "coords": [ 35.6895, 139.6917 ], "details": { "Alojamiento": "NEED TO BOOK" } },
+  { "datetime": "2025-10-02T09:00:00.000Z", "type": "activity", "title": "Día en Tokyo", "location": "Tokyo", "coords": [ 35.6895, 139.6917 ], "details": { "Plan": "Visitar el mercado de Tsukiji y los jardines del Palacio Imperial." } },
+  { "datetime": "2025-10-02T23:00:00.000Z", "type": "sleep", "title": "Noche en Tokyo", "location": "Tokyo", "coords": [ 35.6895, 139.6917 ], "details": { "Alojamiento": "NEED TO BOOK" } },
+  { "datetime": "2025-10-03T09:00:00.000Z", "type": "business", "title": "Visita a Google Office", "location": "Tokyo", "coords": [ 35.658, 139.7016 ], "details": { "Dirección": "Shibuya Stream, 3-21-3 Shibuya" } },
+  { "datetime": "2025-10-03T13:00:00.000Z", "type": "activity", "title": "Tarde en Tokyo", "location": "Tokyo", "coords": [ 35.6895, 139.6917 ], "details": { "Plan": "Tiempo libre para explorar Shibuya y visitar el Festival Moon Art Night en Shimokitazawa." } },
+  { "datetime": "2025-10-03T23:00:00.000Z", "type": "sleep", "title": "Noche en Tokyo", "location": "Tokyo", "coords": [ 35.6895, 139.6917 ], "details": { "Alojamiento": "NEED TO BOOK" } },
+  { "datetime": "2025-10-04T09:00:00.000Z", "type": "activity", "title": "Día en Tokyo", "location": "Tokyo", "coords": [ 35.6895, 139.6917 ], "details": { "Plan": "Día libre para explorar o compras." } },
+  { "datetime": "2025-10-04T23:00:00.000Z", "type": "sleep", "title": "Noche en Tokyo", "location": "Tokyo", "coords": [ 35.6895, 139.6917 ], "details": { "Alojamiento": "NEED TO BOOK" } },
+  { "datetime": "2025-10-05T09:00:00.000Z", "type": "activity", "title": "Día en Tokyo", "location": "Tokyo", "coords": [ 35.6895, 139.6917 ], "details": { "Plan": "Día libre." } },
+  { "datetime": "2025-10-05T23:00:00.000Z", "type": "sleep", "title": "Noche en Tokyo", "location": "Tokyo", "coords": [ 35.6895, 139.6917 ], "details": { "Alojamiento": "NEED TO BOOK" } },
+  {
+    "datetime": "2025-10-06T10:30:00", "type": "flight", "title": "Vuelo a Busan", "location": "Busan", "coords": [ 35.1796, 129.0756 ], "duration": "2h 30m",
+    "details": { "Aerolínea": "Jeju Air", "Sale de": "Narita International Airport (NRT)", "Llega a": "Gimhae International Airport (PUS)", "Cost": "from $571 (Bravofly)", "Enlace": "https://www.google.com/travel/flights/s/AuPuZFsygNMxiMeN9" }
+  },
+  { "datetime": "2025-10-06T23:00:00.000Z", "type": "sleep", "title": "Noche en Busan", "location": "Busan", "coords": [ 35.1796, 129.0756 ], "details": { "Alojamiento": "NEED TO BOOK" } },
+  { "datetime": "2025-10-07T09:00:00.000Z", "type": "activity", "title": "Día en Busan", "location": "Busan", "coords": [ 35.1796, 129.0756 ], "details": { "Plan": "Explorar la ciudad." } },
+  { "datetime": "2025-10-07T23:00:00.000Z", "type": "sleep", "title": "Noche en Busan", "location": "Busan", "coords": [ 35.1796, 129.0756 ], "details": { "Alojamiento": "NEED TO BOOK" } },
+  { "datetime": "2025-10-08T09:00:00.000Z", "type": "day_trip", "title": "Excursión a Gyeongju y tren a Seoul", "location": "Gyeongju", "coords": [ 35.8562, 129.2247 ], "details": { "Plan": "Explorar Gyeongju y luego tomar tren a Seoul." } },
+  { "datetime": "2025-10-08T23:00:00.000Z", "type": "sleep", "title": "Noche en Seoul", "location": "Seoul", "coords": [ 37.5665, 126.978 ], "details": { "Alojamiento": "NEED TO BOOK" } },
+  { "datetime": "2025-10-09T09:00:00.000Z", "type": "activity", "title": "Día en Seoul", "location": "Seoul", "coords": [ 37.5665, 126.978 ], "details": { "Plan": "Explorar la ciudad." } },
+  { "datetime": "2025-10-09T23:00:00.000Z", "type": "sleep", "title": "Noche en Seoul", "location": "Seoul", "coords": [ 37.5665, 126.978 ], "details": { "Alojamiento": "NEED TO BOOK" } },
+  { "datetime": "2025-10-10T09:00:00.000Z", "type": "activity", "title": "Día en Seoul", "location": "Seoul", "coords": [ 37.5665, 126.978 ], "details": { "Plan": "Explorar la ciudad." } },
+  { "datetime": "2025-10-10T23:00:00.000Z", "type": "sleep", "title": "Noche en Seoul", "location": "Seoul", "coords": [ 37.5665, 126.978 ], "details": { "Alojamiento": "NEED TO BOOK" } },
+  { "datetime": "2025-10-11T09:00:00.000Z", "type": "activity", "title": "Día en Seoul", "location": "Seoul", "coords": [ 37.5665, 126.978 ], "details": { "Plan": "Explorar la ciudad." } },
+  { "datetime": "2025-10-11T23:00:00.000Z", "type": "sleep", "title": "Noche en Seoul", "location": "Seoul", "coords": [ 37.5665, 126.978 ], "details": { "Alojamiento": "NEED TO BOOK" } },
+  {
+    "datetime": "2025-10-12T09:55:00", "type": "flight", "title": "Vuelo a Okinawa", "location": "Okinawa", "coords": [ 26.2124, 127.6792 ], "duration": "2h 25m",
+    "details": { "Aerolínea": "Jin Air", "Vuelo": "LJ 341", "Sale de": "Incheon International Airport (ICN)", "Llega a": "Naha International Airport (OKA)", "Clase": "Economy", "Avión": "Boeing 777", "Notas": "Average legroom (30 in), In-seat power outlet", "Cost": "from $356 (Trip.com)", "Enlace": "https://www.google.com/travel/flights/s/cg5V2TmMcRDzST2U9" }
+  },
+  { "datetime": "2025-10-12T23:00:00.000Z", "type": "sleep", "title": "Noche en Okinawa", "location": "Okinawa", "coords": [ 26.2124, 127.6792 ], "details": { "Alojamiento": "NEED TO BOOK" } },
+  { "datetime": "2025-10-13T09:00:00.000Z", "type": "activity", "title": "Día en Okinawa", "location": "Okinawa", "coords": [ 26.2124, 127.6792 ], "details": { "Plan": "Explorar la isla." } },
+  { "datetime": "2025-10-13T23:00:00.000Z", "type": "sleep", "title": "Noche en Okinawa", "location": "Okinawa", "coords": [ 26.2124, 127.6792 ], "details": { "Alojamiento": "NEED TO BOOK" } },
+  { "datetime": "2025-10-14T09:00:00.000Z", "type": "activity", "title": "Día en Okinawa", "location": "Okinawa", "coords": [ 26.2124, 127.6792 ], "details": { "Plan": "Explorar la isla." } },
+  { "datetime": "2025-10-14T23:00:00.000Z", "type": "sleep", "title": "Noche en Okinawa", "location": "Okinawa", "coords": [ 26.2124, 127.6792 ], "details": { "Alojamiento": "NEED TO BOOK" } },
+  {
+    "datetime": "2025-10-15T11:40:00", "type": "flight", "title": "Vuelo a Osaka", "location": "Osaka", "coords": [ 34.6937, 135.5023 ], "duration": "2h 5m",
+    "details": { "Aerolínea": "Peach Aviation", "Sale de": "Naha International Airport (OKA)", "Llega a": "Kansai International Airport (KIX)", "Notas": "-16% emissions", "Cost": "from $247 (Bravofly)", "Enlace": "https://www.google.com/travel/flights/s/Pvc6UqerSurbDNxa8" }
+  },
+  { "datetime": "2025-10-15T23:00:00.000Z", "type": "sleep", "title": "Noche en Osaka", "location": "Osaka", "coords": [ 34.6937, 135.5023 ], "details": { "Alojamiento": "NEED TO BOOK" } },
+  { "datetime": "2025-10-16T09:00:00.000Z", "type": "activity", "title": "Día en Osaka", "location": "Osaka", "coords": [ 34.6937, 135.5023 ], "details": { "Plan": "Explorar la ciudad." } },
+  { "datetime": "2025-10-16T23:00:00.000Z", "type": "sleep", "title": "Noche en Osaka", "location": "Osaka", "coords": [ 34.6937, 135.5023 ], "details": { "Alojamiento": "NEED TO BOOK" } },
+  { "datetime": "2025-10-17T09:00:00.000Z", "type": "transport", "title": "Tren a Kyoto", "location": "Kyoto", "coords": [ 35.0116, 135.7681 ], "duration": "~30m", "details": { "Transporte": "Tren local." } },
+  { "datetime": "2025-10-17T23:00:00.000Z", "type": "sleep", "title": "Noche en Kyoto", "location": "Kyoto", "coords": [ 35.0116, 135.7681 ], "details": { "Alojamiento": "NEED TO BOOK" } },
+  { "datetime": "2025-10-18T09:00:00.000Z", "type": "activity", "title": "Día en Kyoto", "location": "Kyoto", "coords": [ 35.0116, 135.7681 ], "details": { "Plan": "Explorar la ciudad." } },
+  { "datetime": "2025-10-18T23:00:00.000Z", "type": "sleep", "title": "Noche en Kyoto", "location": "Kyoto", "coords": [ 35.0116, 135.7681 ], "details": { "Alojamiento": "NEED TO BOOK" } },
+  { "datetime": "2025-10-19T09:00:00.000Z", "type": "activity", "title": "Día en Kyoto", "location": "Kyoto", "coords": [ 35.0116, 135.7681 ], "details": { "Plan": "Explorar la ciudad." } },
+  { "datetime": "2025-10-19T23:00:00.000Z", "type": "sleep", "title": "Noche en Kyoto", "location": "Kyoto", "coords": [ 35.0116, 135.7681 ], "details": { "Alojamiento": "NEED TO BOOK" } },
+  {
+    "datetime": "2025-10-20T11:50:00", "type": "flight", "title": "Vuelo a Narita", "location": "Narita", "coords": [ 35.772, 140.3863 ], "duration": "1h 30m",
+    "details": { "Aerolínea": "Jetstar", "Sale de": "Kansai International Airport (KIX)", "Llega a": "Narita International Airport (NRT)", "Cost": "from $236 (Jetstar)", "Enlace": "https://www.google.com/travel/flights/s/vHdscCrUWrTBMehs7" }
   },
   {
-    "datetime": "2025-09-29T23:00:00.000Z",
-    "type": "sleep",
-    "title": "Noche en Tokyo",
-    "location": "Tokyo",
-    "coords": [
-      35.6895,
-      139.6917
-    ],
-    "details": {
-      "Alojamiento": "NEED TO BOOK"
-    }
-  },
-  {
-    "datetime": "2025-09-30T09:00:00.000Z",
-    "type": "activity",
-    "title": "Día en Tokyo",
-    "location": "Tokyo",
-    "coords": [
-      35.6895,
-      139.6917
-    ],
-    "details": {
-      "Plan": "Explorar la zona de Shibuya y Harajuku."
-    }
-  },
-  {
-    "datetime": "2025-09-30T23:00:00.000Z",
-    "type": "sleep",
-    "title": "Noche en Tokyo",
-    "location": "Tokyo",
-    "coords": [
-      35.6895,
-      139.6917
-    ],
-    "details": {
-      "Alojamiento": "NEED TO BOOK"
-    }
-  },
-  {
-    "datetime": "2025-10-01T09:00:00.000Z",
-    "type": "activity",
-    "title": "Día en Tokyo",
-    "location": "Tokyo",
-    "coords": [
-      35.6895,
-      139.6917
-    ],
-    "details": {
-      "Plan": "Explorar la zona de Asakusa y Ueno."
-    }
-  },
-  {
-    "datetime": "2025-10-01T23:00:00.000Z",
-    "type": "sleep",
-    "title": "Noche en Tokyo",
-    "location": "Tokyo",
-    "coords": [
-      35.6895,
-      139.6917
-    ],
-    "details": {
-      "Alojamiento": "NEED TO BOOK"
-    }
-  },
-  {
-    "datetime": "2025-10-02T09:00:00.000Z",
-    "type": "activity",
-    "title": "Día en Tokyo",
-    "location": "Tokyo",
-    "coords": [
-      35.6895,
-      139.6917
-    ],
-    "details": {
-      "Plan": "Visitar el mercado de Tsukiji y los jardines del Palacio Imperial."
-    }
-  },
-  {
-    "datetime": "2025-10-02T23:00:00.000Z",
-    "type": "sleep",
-    "title": "Noche en Tokyo",
-    "location": "Tokyo",
-    "coords": [
-      35.6895,
-      139.6917
-    ],
-    "details": {
-      "Alojamiento": "NEED TO BOOK"
-    }
-  },
-  {
-    "datetime": "2025-10-03T09:00:00.000Z",
-    "type": "business",
-    "title": "Visita a Google Office",
-    "location": "Tokyo",
-    "coords": [
-      35.658,
-      139.7016
-    ],
-    "details": {
-      "Dirección": "Shibuya Stream, 3-21-3 Shibuya"
-    }
-  },
-  {
-    "datetime": "2025-10-03T13:00:00.000Z",
-    "type": "activity",
-    "title": "Tarde en Tokyo",
-    "location": "Tokyo",
-    "coords": [
-      35.6895,
-      139.6917
-    ],
-    "details": {
-      "Plan": "Tiempo libre para explorar Shibuya y visitar el Festival Moon Art Night en Shimokitazawa."
-    }
-  },
-  {
-    "datetime": "2025-10-03T23:00:00.000Z",
-    "type": "sleep",
-    "title": "Noche en Tokyo",
-    "location": "Tokyo",
-    "coords": [
-      35.6895,
-      139.6917
-    ],
-    "details": {
-      "Alojamiento": "NEED TO BOOK"
-    }
-  },
-  {
-    "datetime": "2025-10-04T09:00:00.000Z",
-    "type": "activity",
-    "title": "Día en Tokyo",
-    "location": "Tokyo",
-    "coords": [
-      35.6895,
-      139.6917
-    ],
-    "details": {
-      "Plan": "Día libre para explorar o compras."
-    }
-  },
-  {
-    "datetime": "2025-10-04T23:00:00.000Z",
-    "type": "sleep",
-    "title": "Noche en Tokyo",
-    "location": "Tokyo",
-    "coords": [
-      35.6895,
-      139.6917
-    ],
-    "details": {
-      "Alojamiento": "NEED TO BOOK"
-    }
-  },
-  {
-    "datetime": "2025-10-05T09:00:00.000Z",
-    "type": "activity",
-    "title": "Día en Tokyo",
-    "location": "Tokyo",
-    "coords": [
-      35.6895,
-      139.6917
-    ],
-    "details": {
-      "Plan": "Día libre."
-    }
-  },
-  {
-    "datetime": "2025-10-05T23:00:00.000Z",
-    "type": "sleep",
-    "title": "Noche en Tokyo",
-    "location": "Tokyo",
-    "coords": [
-      35.6895,
-      139.6917
-    ],
-    "details": {
-      "Alojamiento": "NEED TO BOOK"
-    }
-  },
-  {
-    "datetime": "2025-10-06T01:30:00.000Z",
-    "type": "flight",
-    "title": "Vuelo a Busan",
-    "location": "Busan",
-    "coords": [
-      35.1796,
-      129.0756
-    ],
-    "duration": "2h 30m",
-    "details": {
-      "Aerolínea": "Jeju Air",
-      "Sale de": "Narita International Airport (NRT)",
-      "Llega a": "Gimhae International Airport (PUS)",
-      "Cost": "from $571 (Bravofly)",
-      "Enlace": "https://www.google.com/travel/flights/s/AuPuZFsygNMxiMeN9"
-    }
-  },
-  {
-    "datetime": "2025-10-06T23:00:00.000Z",
-    "type": "sleep",
-    "title": "Noche en Busan",
-    "location": "Busan",
-    "coords": [
-      35.1796,
-      129.0756
-    ],
-    "details": {
-      "Alojamiento": "NEED TO BOOK"
-    }
-  },
-  {
-    "datetime": "2025-10-07T09:00:00.000Z",
-    "type": "activity",
-    "title": "Día en Busan",
-    "location": "Busan",
-    "coords": [
-      35.1796,
-      129.0756
-    ],
-    "details": {
-      "Plan": "Explorar la ciudad."
-    }
-  },
-  {
-    "datetime": "2025-10-07T23:00:00.000Z",
-    "type": "sleep",
-    "title": "Noche en Busan",
-    "location": "Busan",
-    "coords": [
-      35.1796,
-      129.0756
-    ],
-    "details": {
-      "Alojamiento": "NEED TO BOOK"
-    }
-  },
-  {
-    "datetime": "2025-10-08T09:00:00.000Z",
-    "type": "day_trip",
-    "title": "Excursión a Gyeongju y tren a Seoul",
-    "location": "Gyeongju",
-    "coords": [
-      35.8562,
-      129.2247
-    ],
-    "details": {
-      "Plan": "Explorar Gyeongju y luego tomar tren a Seoul."
-    }
-  },
-  {
-    "datetime": "2025-10-08T23:00:00.000Z",
-    "type": "sleep",
-    "title": "Noche en Seoul",
-    "location": "Seoul",
-    "coords": [
-      37.5665,
-      126.978
-    ],
-    "details": {
-      "Alojamiento": "NEED TO BOOK"
-    }
-  },
-  {
-    "datetime": "2025-10-09T09:00:00.000Z",
-    "type": "activity",
-    "title": "Día en Seoul",
-    "location": "Seoul",
-    "coords": [
-      37.5665,
-      126.978
-    ],
-    "details": {
-      "Plan": "Explorar la ciudad."
-    }
-  },
-  {
-    "datetime": "2025-10-09T23:00:00.000Z",
-    "type": "sleep",
-    "title": "Noche en Seoul",
-    "location": "Seoul",
-    "coords": [
-      37.5665,
-      126.978
-    ],
-    "details": {
-      "Alojamiento": "NEED TO BOOK"
-    }
-  },
-  {
-    "datetime": "2025-10-10T09:00:00.000Z",
-    "type": "activity",
-    "title": "Día en Seoul",
-    "location": "Seoul",
-    "coords": [
-      37.5665,
-      126.978
-    ],
-    "details": {
-      "Plan": "Explorar la ciudad."
-    }
-  },
-  {
-    "datetime": "2025-10-10T23:00:00.000Z",
-    "type": "sleep",
-    "title": "Noche en Seoul",
-    "location": "Seoul",
-    "coords": [
-      37.5665,
-      126.978
-    ],
-    "details": {
-      "Alojamiento": "NEED TO BOOK"
-    }
-  },
-  {
-    "datetime": "2025-10-11T09:00:00.000Z",
-    "type": "activity",
-    "title": "Día en Seoul",
-    "location": "Seoul",
-    "coords": [
-      37.5665,
-      126.978
-    ],
-    "details": {
-      "Plan": "Explorar la ciudad."
-    }
-  },
-  {
-    "datetime": "2025-10-11T23:00:00.000Z",
-    "type": "sleep",
-    "title": "Noche en Seoul",
-    "location": "Seoul",
-    "coords": [
-      37.5665,
-      126.978
-    ],
-    "details": {
-      "Alojamiento": "NEED TO BOOK"
-    }
-  },
-  {
-    "datetime": "2025-10-12T00:55:00.000Z",
-    "type": "flight",
-    "title": "Vuelo a Okinawa",
-    "location": "Okinawa",
-    "coords": [
-      26.2124,
-      127.6792
-    ],
-    "duration": "2h 25m",
-    "details": {
-      "Aerolínea": "Jin Air",
-      "Vuelo": "LJ 341",
-      "Sale de": "Incheon International Airport (ICN)",
-      "Llega a": "Naha International Airport (OKA)",
-      "Clase": "Economy",
-      "Avión": "Boeing 777",
-      "Notas": "Average legroom (30 in), In-seat power outlet",
-      "Cost": "from $356 (Trip.com)",
-      "Enlace": "https://www.google.com/travel/flights/s/cg5V2TmMcRDzST2U9"
-    }
-  },
-  {
-    "datetime": "2025-10-12T23:00:00.000Z",
-    "type": "sleep",
-    "title": "Noche en Okinawa",
-    "location": "Okinawa",
-    "coords": [
-      26.2124,
-      127.6792
-    ],
-    "details": {
-      "Alojamiento": "NEED TO BOOK"
-    }
-  },
-  {
-    "datetime": "2025-10-13T09:00:00.000Z",
-    "type": "activity",
-    "title": "Día en Okinawa",
-    "location": "Okinawa",
-    "coords": [
-      26.2124,
-      127.6792
-    ],
-    "details": {
-      "Plan": "Explorar la isla."
-    }
-  },
-  {
-    "datetime": "2025-10-13T23:00:00.000Z",
-    "type": "sleep",
-    "title": "Noche en Okinawa",
-    "location": "Okinawa",
-    "coords": [
-      26.2124,
-      127.6792
-    ],
-    "details": {
-      "Alojamiento": "NEED TO BOOK"
-    }
-  },
-  {
-    "datetime": "2025-10-14T09:00:00.000Z",
-    "type": "activity",
-    "title": "Día en Okinawa",
-    "location": "Okinawa",
-    "coords": [
-      26.2124,
-      127.6792
-    ],
-    "details": {
-      "Plan": "Explorar la isla."
-    }
-  },
-  {
-    "datetime": "2025-10-14T23:00:00.000Z",
-    "type": "sleep",
-    "title": "Noche en Okinawa",
-    "location": "Okinawa",
-    "coords": [
-      26.2124,
-      127.6792
-    ],
-    "details": {
-      "Alojamiento": "NEED TO BOOK"
-    }
-  },
-  {
-    "datetime": "2025-10-15T02:40:00.000Z",
-    "type": "flight",
-    "title": "Vuelo a Osaka",
-    "location": "Osaka",
-    "coords": [
-      34.6937,
-      135.5023
-    ],
-    "duration": "2h 5m",
-    "details": {
-      "Aerolínea": "Peach Aviation",
-      "Sale de": "Naha International Airport (OKA)",
-      "Llega a": "Kansai International Airport (KIX)",
-      "Notas": "-16% emissions",
-      "Cost": "from $247 (Bravofly)",
-      "Enlace": "https://www.google.com/travel/flights/s/Pvc6UqerSurbDNxa8"
-    }
-  },
-  {
-    "datetime": "2025-10-15T23:00:00.000Z",
-    "type": "sleep",
-    "title": "Noche en Osaka",
-    "location": "Osaka",
-    "coords": [
-      34.6937,
-      135.5023
-    ],
-    "details": {
-      "Alojamiento": "NEED TO BOOK"
-    }
-  },
-  {
-    "datetime": "2025-10-16T09:00:00.000Z",
-    "type": "activity",
-    "title": "Día en Osaka",
-    "location": "Osaka",
-    "coords": [
-      34.6937,
-      135.5023
-    ],
-    "details": {
-      "Plan": "Explorar la ciudad."
-    }
-  },
-  {
-    "datetime": "2025-10-16T23:00:00.000Z",
-    "type": "sleep",
-    "title": "Noche en Osaka",
-    "location": "Osaka",
-    "coords": [
-      34.6937,
-      135.5023
-    ],
-    "details": {
-      "Alojamiento": "NEED TO BOOK"
-    }
-  },
-  {
-    "datetime": "2025-10-17T09:00:00.000Z",
-    "type": "transport",
-    "title": "Tren a Kyoto",
-    "location": "Kyoto",
-    "coords": [
-      35.0116,
-      135.7681
-    ],
-    "duration": "~30m",
-    "details": {
-      "Transporte": "Tren local."
-    }
-  },
-  {
-    "datetime": "2025-10-17T23:00:00.000Z",
-    "type": "sleep",
-    "title": "Noche en Kyoto",
-    "location": "Kyoto",
-    "coords": [
-      35.0116,
-      135.7681
-    ],
-    "details": {
-      "Alojamiento": "NEED TO BOOK"
-    }
-  },
-  {
-    "datetime": "2025-10-18T09:00:00.000Z",
-    "type": "activity",
-    "title": "Día en Kyoto",
-    "location": "Kyoto",
-    "coords": [
-      35.0116,
-      135.7681
-    ],
-    "details": {
-      "Plan": "Explorar la ciudad."
-    }
-  },
-  {
-    "datetime": "2025-10-18T23:00:00.000Z",
-    "type": "sleep",
-    "title": "Noche en Kyoto",
-    "location": "Kyoto",
-    "coords": [
-      35.0116,
-      135.7681
-    ],
-    "details": {
-      "Alojamiento": "NEED TO BOOK"
-    }
-  },
-  {
-    "datetime": "2025-10-19T09:00:00.000Z",
-    "type": "activity",
-    "title": "Día en Kyoto",
-    "location": "Kyoto",
-    "coords": [
-      35.0116,
-      135.7681
-    ],
-    "details": {
-      "Plan": "Explorar la ciudad."
-    }
-  },
-  {
-    "datetime": "2025-10-19T23:00:00.000Z",
-    "type": "sleep",
-    "title": "Noche en Kyoto",
-    "location": "Kyoto",
-    "coords": [
-      35.0116,
-      135.7681
-    ],
-    "details": {
-      "Alojamiento": "NEED TO BOOK"
-    }
-  },
-  {
-    "datetime": "2025-10-20T02:50:00.000Z",
-    "type": "flight",
-    "title": "Vuelo a Narita",
-    "location": "Narita",
-    "coords": [
-      35.772,
-      140.3863
-    ],
-    "duration": "1h 30m",
-    "details": {
-      "Aerolínea": "Jetstar",
-      "Sale de": "Kansai International Airport (KIX)",
-      "Llega a": "Narita International Airport (NRT)",
-      "Cost": "from $236 (Jetstar)",
-      "Enlace": "https://www.google.com/travel/flights/s/vHdscCrUWrTBMehs7"
-    }
-  },
-  {
-    "datetime": "2025-10-20T16:55:00.000Z",
-    "type": "flight",
-    "title": "Vuelo desde Narita",
-    "location": "Fort Lauderdale",
-    "coords": [
-      26.0726,
-      -80.1528
-    ],
-    "duration": "~12h 15m",
-    "details": {
-      "Reserva": "AY2GE4",
-      "Aerolínea": "Air Canada",
-      "Sale de": "Narita (NRT)",
-      "Llega a": "Fort Lauderdale (FLL) a las 11:10 PM"
-    }
+    "datetime": "2025-10-20T16:55:00.000Z", "type": "flight", "title": "Vuelo desde Narita", "location": "Fort Lauderdale", "coords": [ 26.0726, -80.1528 ], "duration": "~12h 15m",
+    "details": { "Reserva": "AY2GE4", "Aerolínea": "Air Canada", "Sale de": "Narita (NRT)", "Llega a": "Fort Lauderdale (FLL) a las 11:10 PM" }
   }
 ]
