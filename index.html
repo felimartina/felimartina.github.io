@@ -303,6 +303,7 @@
             "Hakone": `<span class="fi fi-jp"></span>`,
             "Kyoto": `<span class="fi fi-jp"></span>`,
             "Osaka": `<span class="fi fi-jp"></span>`,
+            "Okinawa": `<span class="fi fi-jp"></span>`,
             "Busan": `<span class="fi fi-kr"></span>`,
             "Seoul": `<span class="fi fi-kr"></span>`,
             "Taipei": `<span class="fi fi-tw"></span>`,
@@ -408,12 +409,17 @@
                 const itineraryDataRaw = await itineraryResponse.json();
                 const poiDataRaw = await poiResponse.json();
 
-                itineraryData = itineraryDataRaw.map(item => ({
-                    ...item,
-                    datetime: new Date(item.datetime),
-                    coords: parseCoords(item.coords),
-                    location: normalizeStr(item.location)
-                }));
+                itineraryData = itineraryDataRaw.map(item => {
+                    // Dates in JSON are local time. Parsing them directly will create a Date object
+                    // where the date methods (like getUTCHours) will reflect those local times,
+                    // assuming the server runs in a UTC-like environment. This avoids timezone headaches.
+                    return {
+                        ...item,
+                        datetime: new Date(item.datetime),
+                        coords: parseCoords(item.coords),
+                        location: normalizeStr(item.location)
+                    };
+                });
 
                 pointsOfInterest = {};
                 for (const city in poiDataRaw) {
@@ -450,94 +456,77 @@
             }
         }
 
-        // --- DYNAMIC CITY STAY CALCULATION LOGIC (REFACTORED) ---
+        // --- DYNAMIC CITY STAY CALCULATION LOGIC (REWRITTEN FOR ACCURACY) ---
         function calculateCityStaysRobust(itinerary) {
-            const segments = {};
+            const segments = [];
             if (itinerary.length === 0) return {};
-            const sleepEvents = itinerary.filter(e => e.type === 'sleep');
-            if (sleepEvents.length === 0) return {};
 
-            let currentSegment = { city: null, start: itinerary[0].datetime, end: null, transport: null };
-            let lastSleepCity = null;
-
-            itinerary.forEach((event, i) => {
-                if (event.type === 'sleep') {
-                    if (lastSleepCity === null) { // First sleep of the trip
-                        currentSegment.city = event.location;
-                        lastSleepCity = event.location;
-                        for (let j = i; j >= 0; j--) {
-                            const pastEvent = itinerary[j];
-                            if (pastEvent.location === currentSegment.city && (pastEvent.type === 'flight_arrival' || pastEvent.type === 'transport' || pastEvent.type === 'activity')) {
-                                currentSegment.start = pastEvent.datetime;
-                            }
-                            if(pastEvent.type === 'flight' && pastEvent.location !== currentSegment.city) break;
-                        }
-                    } else if (event.location !== lastSleepCity) {
-                        let departureEvent = null;
-                        for (let j = i; j >= 0; j--) {
-                             const prevEvent = itinerary[j];
-                             if ((prevEvent.type === 'flight' || prevEvent.type === 'transport') && prevEvent.location !== lastSleepCity) {
-                                 departureEvent = prevEvent;
-                                 break;
-                             }
-                        }
-                        currentSegment.end = departureEvent ? departureEvent.datetime : event.datetime;
-                        currentSegment.transport = departureEvent ? (departureEvent.type === 'flight' ? 'flight_takeoff' : 'train') : 'commute';
-                        let segmentName = currentSegment.city;
-                        let count = 1;
-                        while (segments[segmentName]) {
-                            segmentName = `${currentSegment.city} (${count++})`;
-                        }
-
-                        segments[segmentName] = { ...currentSegment };
-                        currentSegment = { city: event.location, start: departureEvent ? departureEvent.datetime : event.datetime, end: null, transport: null };
-                        lastSleepCity = event.location;
-                    }
+            // 1. Find all unique cities that have "sleep" events, in order of their first sleep event.
+            // This establishes the chronological order of our stays.
+            const orderedCitiesWithStays = [];
+            const seenCities = new Set();
+            for (const event of itinerary) {
+                if (event.type === 'sleep' && !seenCities.has(event.location)) {
+                    orderedCitiesWithStays.push(event.location);
+                    seenCities.add(event.location);
                 }
-            });
-
-            if (currentSegment.city) {
-                currentSegment.end = itinerary[itinerary.length - 1].datetime;
-                const lastEvent = itinerary[itinerary.length - 1];
-                if (lastEvent.type === 'flight') currentSegment.transport = 'flight_takeoff';
-                else if (lastEvent.type === 'transport') currentSegment.transport = 'train';
-                let segmentName = currentSegment.city;
-                let count = 1;
-                while (segments[segmentName]) {
-                    segmentName = `${currentSegment.city} (${count++})`;
-                }
-                segments[segmentName] = { ...currentSegment };
             }
 
-            const orderedSegments = Object.keys(segments).sort((a, b) => segments[a].start - segments[b].start);
+            if (orderedCitiesWithStays.length === 0) return {};
+
+            // 2. For each city, find its exact start and end times.
+            for (let i = 0; i < orderedCitiesWithStays.length; i++) {
+                const city = orderedCitiesWithStays[i];
+                let start, end, transport = null;
+
+                // The start of a stay is the arrival event in that city.
+                const arrivalEvent = itinerary.find(e => e.type === 'flight_arrival' && e.location === city);
+                if (arrivalEvent) {
+                    start = arrivalEvent.datetime;
+                } else {
+                    // For the very first city, there might not be an "arrival", so find the first event there.
+                    const firstEventInCity = itinerary.find(e => e.location === city);
+                    start = firstEventInCity ? firstEventInCity.datetime : null;
+                }
+
+                // The end of a stay is the departure from that city.
+                const departureEvent = itinerary.find(e =>
+                    e.datetime > start &&
+                    e.location === city &&
+                    (e.type === 'flight' || e.type === 'transport')
+                );
+
+                if (departureEvent) {
+                    end = departureEvent.datetime;
+                    transport = departureEvent.type === 'flight' ? 'flight_takeoff' : 'train';
+                } else {
+                    // For the last city, the end is the final departure flight of the whole trip.
+                    const finalDeparture = itinerary.slice().reverse().find(e => e.type === 'flight');
+                    end = finalDeparture ? finalDeparture.datetime : itinerary[itinerary.length - 1].datetime;
+                }
+
+                if (start && end) {
+                    segments.push({ city, start, end, transport, flag: countryFlags[city] || '' });
+                }
+            }
+
+            // Convert the array of segments into the final object structure.
             const finalSegments = {};
-            const cityVisits = {};
-            orderedSegments.forEach(name => {
-                const segment = segments[name];
-                const baseCity = segment.city;
-                cityVisits[baseCity] = (cityVisits[baseCity] || 0) + 1;
+            segments.forEach(seg => {
+                let name = seg.city;
+                let count = 1;
+                while (finalSegments[name]) { // Handle visiting the same city multiple times
+                    name = `${seg.city} (${++count})`;
+                }
+                finalSegments[name] = seg;
             });
 
-            const multiVisitCities = Object.keys(cityVisits).filter(city => cityVisits[city] > 1);
-            const cityCounters = {};
-            orderedSegments.forEach(name => {
-                const segment = segments[name];
-                const baseCity = segment.city;
-                let newName = baseCity;
-                if (multiVisitCities.includes(baseCity)) {
-                    cityCounters[baseCity] = (cityCounters[baseCity] || 0) + 1;
-                    newName = `${baseCity} (${cityCounters[baseCity]})`;
-                }
-                finalSegments[newName] = segment;
-                finalSegments[newName].flag = countryFlags[baseCity] || '';
-            });
             return calculateDurations(finalSegments);
         }
 
         function calculateDurations(segments) {
-            const THRESHOLD_1PM = 13;
-            const THRESHOLD_7PM = 19;
-            const MS_IN_A_DAY = 24 * 60 * 60 * 1000;
+            const NOON = 12;
+            const SIX_PM = 18;
             const results = {};
             const orderedSegmentNames = Object.keys(segments).sort((a, b) => segments[a].start - segments[b].start);
 
@@ -546,23 +535,34 @@
                 const start = new Date(segment.start);
                 const end = new Date(segment.end);
 
-                const startDate = new Date(start.getFullYear(), start.getMonth(), start.getDate());
-                const endDate = new Date(end.getFullYear(), end.getMonth(), end.getDate());
-                let nights = Math.round((endDate.getTime() - startDate.getTime()) / MS_IN_A_DAY);
-                if (nights < 0) nights = 0;
+                // The most reliable way to count nights is to count the 'sleep' events within the segment's timeframe.
+                const nights = sortedData.filter(e =>
+                    e.type === 'sleep' &&
+                    e.location === segment.city &&
+                    e.datetime >= start &&
+                    e.datetime < end
+                ).length;
 
-                let days = nights;
+                // A stay of N nights spans N+1 calendar days. This is our starting point.
+                let days = nights + 1;
 
-                if (start.getHours() >= THRESHOLD_1PM) {
-                    days -= 0.5;
+                const startHour = start.getUTCHours(); // Using getUTCHours() as a proxy for local hour
+                const endHour = end.getUTCHours();
+
+                // Adjust for arrival time based on user rules.
+                if (startHour >= NOON) {
+                    days -= 0.5; // Arriving after noon only counts as a half day.
                 }
 
-                if (end.getHours() < THRESHOLD_7PM) {
-                    days -= 0.5;
+                // Adjust for departure time based on user rules.
+                if (endHour < NOON) {
+                    days -= 1.0; // Leaving before noon doesn't count as a day.
+                } else if (endHour < SIX_PM) {
+                    days -= 0.5; // Leaving between noon and 6 PM counts as a half day.
                 }
 
                 results[name] = {
-                    days: String(days).replace('.5', '½'),
+                    days: String(Math.max(0, days)).replace('.5', '½'),
                     nights: String(nights),
                     transportToNext: segment.transport,
                     startTime: segment.start,
