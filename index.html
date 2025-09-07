@@ -303,6 +303,7 @@
             "Hakone": `<span class="fi fi-jp"></span>`,
             "Kyoto": `<span class="fi fi-jp"></span>`,
             "Osaka": `<span class="fi fi-jp"></span>`,
+            "Okinawa": `<span class="fi fi-jp"></span>`,
             "Busan": `<span class="fi fi-kr"></span>`,
             "Seoul": `<span class="fi fi-kr"></span>`,
             "Taipei": `<span class="fi fi-tw"></span>`,
@@ -453,120 +454,59 @@
         // --- DYNAMIC CITY STAY CALCULATION LOGIC (REFACTORED) ---
         function calculateCityStaysRobust(itinerary) {
             const segments = {};
-            if (itinerary.length === 0) return {};
             const sleepEvents = itinerary.filter(e => e.type === 'sleep');
+
             if (sleepEvents.length === 0) return {};
 
-            let currentSegment = { city: null, start: itinerary[0].datetime, end: null, transport: null };
-            let lastSleepCity = null;
-
-            itinerary.forEach((event, i) => {
-                if (event.type === 'sleep') {
-                    if (lastSleepCity === null) { // First sleep of the trip
-                        currentSegment.city = event.location;
-                        lastSleepCity = event.location;
-                        for (let j = i; j >= 0; j--) {
-                            const pastEvent = itinerary[j];
-                            if (pastEvent.location === currentSegment.city && (pastEvent.type === 'flight_arrival' || pastEvent.type === 'transport' || pastEvent.type === 'activity')) {
-                                currentSegment.start = pastEvent.datetime;
-                            }
-                            if(pastEvent.type === 'flight' && pastEvent.location !== currentSegment.city) break;
-                        }
-                    } else if (event.location !== lastSleepCity) {
-                        let departureEvent = null;
-                        for (let j = i; j >= 0; j--) {
-                             const prevEvent = itinerary[j];
-                             if ((prevEvent.type === 'flight' || prevEvent.type === 'transport') && prevEvent.location !== lastSleepCity) {
-                                 departureEvent = prevEvent;
-                                 break;
-                             }
-                        }
-                        currentSegment.end = departureEvent ? departureEvent.datetime : event.datetime;
-                        currentSegment.transport = departureEvent ? (departureEvent.type === 'flight' ? 'flight_takeoff' : 'train') : 'commute';
-                        let segmentName = currentSegment.city;
-                        let count = 1;
-                        while (segments[segmentName]) {
-                            segmentName = `${currentSegment.city} (${count++})`;
-                        }
-
-                        segments[segmentName] = { ...currentSegment };
-                        currentSegment = { city: event.location, start: departureEvent ? departureEvent.datetime : event.datetime, end: null, transport: null };
-                        lastSleepCity = event.location;
-                    }
+            sleepEvents.forEach(event => {
+                const city = event.location;
+                if (!segments[city]) {
+                    segments[city] = {
+                        city: city,
+                        start: event.datetime,
+                        end: event.datetime,
+                        nights: 0,
+                        flag: countryFlags[city] || ''
+                    };
+                }
+                segments[city].nights += 1;
+                if (event.datetime < segments[city].start) {
+                    segments[city].start = event.datetime;
+                }
+                if (event.datetime > segments[city].end) {
+                    segments[city].end = event.datetime;
                 }
             });
 
-            if (currentSegment.city) {
-                currentSegment.end = itinerary[itinerary.length - 1].datetime;
-                const lastEvent = itinerary[itinerary.length - 1];
-                if (lastEvent.type === 'flight') currentSegment.transport = 'flight_takeoff';
-                else if (lastEvent.type === 'transport') currentSegment.transport = 'train';
-                let segmentName = currentSegment.city;
-                let count = 1;
-                while (segments[segmentName]) {
-                    segmentName = `${currentSegment.city} (${count++})`;
+            // Find transport to next city
+            Object.keys(segments).forEach(city => {
+                const segment = segments[city];
+                const lastSleepTime = segment.end;
+                const transportEvent = itinerary.find(e => e.datetime > lastSleepTime && (e.type === 'flight' || e.type === 'transport'));
+                if (transportEvent) {
+                    segment.transportToNext = transportEvent.type === 'flight' ? 'flight_takeoff' : 'train';
                 }
-                segments[segmentName] = { ...currentSegment };
-            }
+            });
 
             const orderedSegments = Object.keys(segments).sort((a, b) => segments[a].start - segments[b].start);
             const finalSegments = {};
-            const cityVisits = {};
             orderedSegments.forEach(name => {
-                const segment = segments[name];
-                const baseCity = segment.city;
-                cityVisits[baseCity] = (cityVisits[baseCity] || 0) + 1;
+                finalSegments[name] = segments[name];
             });
 
-            const multiVisitCities = Object.keys(cityVisits).filter(city => cityVisits[city] > 1);
-            const cityCounters = {};
-            orderedSegments.forEach(name => {
-                const segment = segments[name];
-                const baseCity = segment.city;
-                let newName = baseCity;
-                if (multiVisitCities.includes(baseCity)) {
-                    cityCounters[baseCity] = (cityCounters[baseCity] || 0) + 1;
-                    newName = `${baseCity} (${cityCounters[baseCity]})`;
-                }
-                finalSegments[newName] = segment;
-                finalSegments[newName].flag = countryFlags[baseCity] || '';
-            });
             return calculateDurations(finalSegments);
         }
 
         function calculateDurations(segments) {
-            const THRESHOLD_1PM = 13 * 60;
-            const THRESHOLD_6PM = 18 * 60;
-            const MS_IN_A_DAY = 24 * 60 * 60 * 1000;
             const results = {};
-            const orderedSegmentNames = Object.keys(segments).sort((a, b) => segments[a].start - segments[b].start);
-
-            for (const name of orderedSegmentNames) {
+            for (const name in segments) {
                 const segment = segments[name];
-                let days = 0;
-                const start = segment.start;
-                const end = segment.end;
-                const startTimeInMinutes = start.getUTCHours() * 60 + start.getUTCMinutes();
-                const endTimeInMinutes = end.getUTCHours() * 60 + end.getUTCMinutes();
-                const startDateUTC = new Date(Date.UTC(start.getUTCFullYear(), start.getUTCMonth(), start.getUTCDate()));
-                const endDateUTC = new Date(Date.UTC(end.getUTCFullYear(), end.getUTCMonth(), end.getUTCDate()));
-                let nights = Math.round((endDateUTC - startDateUTC) / MS_IN_A_DAY);
-
-                if (nights === 0) {
-                    if (startTimeInMinutes < THRESHOLD_6PM) {
-                         if (startTimeInMinutes < THRESHOLD_1PM && endTimeInMinutes >= THRESHOLD_1PM) days = 1;
-                         else if ((end.getTime() - start.getTime()) >= (3 * 60 * 60 * 1000)) days = 0.5;
-                    }
-                } else {
-                    days = nights - 1;
-                    if (startTimeInMinutes < THRESHOLD_1PM) days += 1;
-                    else if (startTimeInMinutes < THRESHOLD_6PM) days += 0.5;
-                    if (endTimeInMinutes >= THRESHOLD_1PM) days += 0.5;
-                }
+                // A simple day calculation: nights + 1
+                const days = segment.nights + 1;
                 results[name] = {
-                    days: String(days).replace('.5', '½'),
-                    nights: String(nights),
-                    transportToNext: segment.transport,
+                    days: String(days),
+                    nights: String(segment.nights),
+                    transportToNext: segment.transportToNext,
                     startTime: segment.start,
                     flag: segment.flag
                 };
