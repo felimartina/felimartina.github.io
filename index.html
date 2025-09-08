@@ -383,7 +383,7 @@
             sleep: `<span class="material-symbols-outlined">dark_mode</span>`,
             transport: `<span class="material-symbols-outlined">train</span>`,
             activity: `<span class="material-symbols-outlined">local_activity</span>`,
-            daytrip: `<span class="material-symbols-outlined">explore</span>`,
+            daytrip: `<span class="material-symbols-outlined">holiday_village</span>`,
             business: `<span class="material-symbols-outlined">work</span>`,
         };
         
@@ -723,9 +723,14 @@
                 itemDiv.className = 'city-timeline-item';
                 itemDiv.dataset.city = cityKey;
 
-                const stayHtml = `<div class="stay-info">
-                    <div class="stay-info-item" title="${stayInfo.days} Días"><span class="material-symbols-outlined">wb_sunny</span><span class="${String(stayInfo.days).includes('½') ? 'half-day' : ''}">${stayInfo.days}</span></div>
-                    <div class="stay-info-item" title="${stayInfo.nights} Noches"><span class="material-symbols-outlined">dark_mode</span><span>${stayInfo.nights}</span></div>
+                let stayHtml = `<div class="stay-info">
+                    <div class="stay-info-item" title="${stayInfo.days} Días"><span class="material-symbols-outlined">wb_sunny</span><span class="${String(stayInfo.days).includes('½') ? 'half-day' : ''}">${stayInfo.days}</span></div>`;
+
+                if (stayInfo.dayTrips.length > 0) {
+                    stayHtml += `<div class="stay-info-item" title="${stayInfo.dayTrips.length} Excursiones"><span class="material-symbols-outlined">holiday_village</span><span>${stayInfo.dayTrips.length}</span></div>`;
+                }
+
+                stayHtml += `<div class="stay-info-item" title="${stayInfo.nights} Noches"><span class="material-symbols-outlined">dark_mode</span><span>${stayInfo.nights}</span></div>
                 </div>`;
 
                 const nodeHtml = stayInfo.flag || '';
@@ -751,7 +756,7 @@
                         const dayTripItem = document.createElement('div');
                         dayTripItem.className = 'day-trip-item-org';
                         dayTripItem.innerHTML = `
-                            <div class="day-trip-icon"><span class="material-symbols-outlined">explore</span></div>
+                            <div class="day-trip-icon"><span class="material-symbols-outlined">holiday_village</span></div>
                             <div class="day-trip-label">${trip.city}</div>
                         `;
                         dayTripsContainer.appendChild(dayTripItem);
