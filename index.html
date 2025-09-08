@@ -420,12 +420,17 @@
                 const poiDataRaw = await poiResponse.json();
 
                 itineraryData = itineraryDataRaw.map(item => {
-                    // Dates in JSON are local time. Parsing them directly will create a Date object
-                    // where the date methods (like getUTCHours) will reflect those local times,
-                    // assuming the server runs in a UTC-like environment. This avoids timezone headaches.
+                    // The user wants all times to be treated as "local" to the event's location.
+                    // By removing the 'Z' (UTC specifier), we force JavaScript to parse the date
+                    // string as if it's in the user's local timezone. This prevents unwanted
+                    // timezone conversions and displays the time as it appears in the JSON.
+                    const localDatetimeStr = typeof item.datetime === 'string' && item.datetime.endsWith('Z')
+                        ? item.datetime.slice(0, -1)
+                        : item.datetime;
+
                     return {
                         ...item,
-                        datetime: new Date(item.datetime),
+                        datetime: new Date(localDatetimeStr),
                         coords: parseCoords(item.coords),
                         location: normalizeStr(item.location)
                     };
@@ -443,7 +448,7 @@
                 sortedData = itineraryData.sort((a, b) => a.datetime - b.datetime);
 
                 const byDate = sortedData.reduce((acc, item, index) => {
-                    const dateKey = item.datetime.toLocaleDateString('es-ES', { timeZone: 'UTC' });
+                    const dateKey = item.datetime.toLocaleDateString('es-ES', {});
                     if (!acc[dateKey]) {
                         acc[dateKey] = { date: item.datetime, events: [] };
                     }
@@ -577,8 +582,8 @@
                 // A stay of N nights spans N+1 calendar days. This is our starting point.
                 let days = nights + 1;
 
-                const startHour = start.getUTCHours(); // Using getUTCHours() as a proxy for local hour
-                const endHour = end.getUTCHours();
+                const startHour = start.getHours();
+                const endHour = end.getHours();
 
                 // Adjust for arrival time based on user rules.
                 if (startHour >= NOON) {
@@ -752,16 +757,16 @@
             }
 
             const date = currentDayData.date;
-            const dayName = date.toLocaleDateString('es-ES', { weekday: 'long', timeZone: 'UTC' });
+            const dayName = date.toLocaleDateString('es-ES', { weekday: 'long' });
             dateDisplay.innerHTML = `
                 <h3 class="text-lg font-bold text-slate-900">${capitalizeFirstLetter(dayName)}</h3>
-                <p class="text-sm text-slate-500">${date.toLocaleDateString('es-ES', { month: 'long', day: 'numeric', timeZone: 'UTC' })}</p>`;
+                <p class="text-sm text-slate-500">${date.toLocaleDateString('es-ES', { month: 'long', day: 'numeric' })}</p>`;
             prevDayBtn.disabled = currentDayIndex === 0;
             nextDayBtn.disabled = currentDayIndex === groupedByDay.length - 1;
 
             itineraryList.innerHTML = '';
             currentDayData.events.forEach(item => {
-                const timeString = item.datetime.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', hour12: true, timeZone: 'UTC' });
+                const timeString = item.datetime.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', hour12: true });
                 const container = document.createElement('div');
                 container.className = 'timeline-item-container group';
 
