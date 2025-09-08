@@ -703,7 +703,7 @@
 
         function renderCityTimeline() {
             const allCities = Object.keys(cityStays);
-            const windowSize = 3;
+            const windowSize = 2;
 
             if (isMobile) {
                 cityPageIndex = Math.max(0, Math.min(cityPageIndex, allCities.length - windowSize));
@@ -825,7 +825,7 @@
 
             const currentDayData = groupedByDay[currentDayIndex];
             const allCities = Object.keys(cityStays);
-            const windowSize = 3;
+            const windowSize = 2;
 
             if (isMobile) {
                 const activeCity = getActiveCity(currentDayData.date);
