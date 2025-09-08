@@ -115,14 +115,12 @@
             width: 100%;
             height: 100%;
             z-index: 15;
-            pointer-events: none; /* Allows clicks to pass through to the city item */
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
         }
 
         .transport-icon {
-            position: absolute;
-            top: 20px; /* Positioned relative to the item top, to be above the line */
-            left: 50%;
-            transform: translateX(-50%);
             background-color: #fff;
             border-radius: 50%;
             color: #64748b;
@@ -137,15 +135,19 @@
         }
         .transport-icon .material-symbols-outlined { font-size: 18px; }
 
-        .day-trip-node {
-            position: absolute;
-            top: 80px; /* Position below the timeline line */
-            left: 25%; /* Position on the first half of the segment */
-            transform: translateX(-50%);
+        .day-trips-container {
             display: flex;
             flex-direction: column;
             align-items: center;
-            pointer-events: none; /* Make it unclickable */
+            justify-content: center;
+            gap: 4px;
+            pointer-events: auto;
+        }
+
+        .day-trip-node {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             cursor: default;
         }
 
@@ -680,20 +682,23 @@
 
                 const isLastCity = cityKey === allCities[allCities.length - 1];
 
+                if (stayInfo.dayTrips.length > 0) {
+                    const dayTripsContainer = document.createElement('div');
+                    dayTripsContainer.className = 'day-trips-container';
+                    stayInfo.dayTrips.forEach(trip => {
+                        const dayTripDiv = document.createElement('div');
+                        dayTripDiv.className = 'day-trip-node';
+                        dayTripDiv.innerHTML = `<div class="city-timeline-node">${icons.daytrip}</div><div class="city-timeline-label">${trip.city}</div>`;
+                        dayTripsContainer.appendChild(dayTripDiv);
+                    });
+                    connectionDiv.appendChild(dayTripsContainer);
+                }
+
                 if (!isLastCity && stayInfo.transportToNext) {
                     const transportDiv = document.createElement('div');
                     transportDiv.className = 'transport-icon';
                     transportDiv.innerHTML = `<span class="material-symbols-outlined">${transportIcons[stayInfo.transportToNext]}</span>`;
                     connectionDiv.appendChild(transportDiv);
-                }
-
-                if (stayInfo.dayTrips.length > 0) {
-                    stayInfo.dayTrips.forEach(trip => {
-                        const dayTripDiv = document.createElement('div');
-                        dayTripDiv.className = 'day-trip-node';
-                        dayTripDiv.innerHTML = `<div class="city-timeline-node">${icons.daytrip}</div><div class="city-timeline-label">${trip.city}</div>`;
-                        connectionDiv.appendChild(dayTripDiv);
-                    });
                 }
 
                 if (connectionDiv.hasChildNodes()) {
