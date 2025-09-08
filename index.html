@@ -89,28 +89,12 @@
 
         /* --- City Overview Timeline Styles --- */
         .city-timeline { position: relative; display: flex; justify-content: space-between; padding: 2rem 0; margin: 0 1rem; }
-        .city-timeline::before { content: ''; position: absolute; top: 52px; left: 0; right: 0; height: 4px; background-color: #e2e8f0; z-index: 5; }
-        .city-timeline-item { display: flex; flex-direction: column; align-items: center; position: relative; flex-grow: 1; z-index: 10; min-width: 110px; /* Ensure enough space on mobile scroll */ }
+        .city-timeline::before { content: ''; position: absolute; top: 52px; left: 0; right: 0; height: 4px; background-color: #e2e8f0; z-index: 1; }
+        .city-timeline-item { display: flex; flex-direction: column; align-items: center; position: relative; flex-grow: 1; z-index: 10; min-width: 110px; }
         .city-timeline-node { width: 44px; height: 44px; background-color: #fff; border-radius: 50%; border: 3px solid #cbd5e1; transition: border-color 0.3s ease, box-shadow 0.3s ease; flex-shrink: 0; overflow: hidden; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);}
-        .city-timeline-item.day-trip .city-timeline-node {
-            width: 24px;
-            height: 24px;
-            border-width: 2px;
-        }
-        .city-timeline-item.day-trip .city-timeline-label {
-            font-weight: 500;
-            font-size: 0.8rem;
-        }
-        /* Styling for the Flag Icons - Adjusted for better aspect ratio display */
-        .city-timeline-node .fi {
-            font-size: 32px; /* Adjusted size */
-            line-height: 1em;
-            /* Removed explicit width/height to allow natural aspect ratio inside the circle */
-        }
-        /* Specific fix for rectangular flags like Taiwan's to fill the circle */
-        .city-timeline-node .fi-tw {
-            transform: scale(1.4);
-        }
+
+        .city-timeline-node .fi { font-size: 32px; line-height: 1em; }
+        .city-timeline-node .fi-tw { transform: scale(1.4); }
 
         .city-timeline-item.active .city-timeline-node {
             border-color: var(--primary-color);
@@ -123,9 +107,59 @@
         .stay-info-item span:first-child { margin-right: 4px; }
         .stay-info-item .material-symbols-outlined { font-size: 16px; }
         .half-day { margin-right: 0.25rem; }
-        .transport-icon { position: absolute; top: -8px; left: 100%; transform: translateX(-50%); background-color: #fff; border-radius: 50%; z-index: 15; color: #64748b; border: 1px solid #e2e8f0; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; }
+
+        .timeline-connection {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            z-index: 15;
+            pointer-events: none; /* Allows clicks to pass through to the city item */
+        }
+
+        .transport-icon {
+            position: absolute;
+            top: 20px; /* Positioned relative to the item top, to be above the line */
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #fff;
+            border-radius: 50%;
+            color: #64748b;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            pointer-events: auto;
+        }
         .transport-icon .material-symbols-outlined { font-size: 18px; }
-        .city-timeline-item:last-child .transport-icon { display: none; }
+
+        .day-trip-node {
+            position: absolute;
+            top: 80px; /* Position below the timeline line */
+            left: 25%; /* Position on the first half of the segment */
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            pointer-events: auto;
+            cursor: pointer;
+        }
+
+        .day-trip-node .city-timeline-node {
+            width: 24px;
+            height: 24px;
+            border-width: 2px;
+        }
+
+        .day-trip-node .city-timeline-label {
+            font-weight: 500;
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+        }
         
         /* --- POI Styles (Accordion) --- */
         .poi-category h4 { font-weight: 600; color: #334155; background-color: #f1f5f9; padding: 0.75rem 1rem; border-radius: 0.5rem; margin-bottom: 0.5rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: background-color 0.2s; }
@@ -295,7 +329,7 @@
         };
 
         const icons = {
-            flight: `<span class="material-symbols-outlined">flight_takeoff</span>`,
+            flight: `<span class="material-symbols-outlined">flight</span>`,
             flight_arrival: `<span class="material-symbols-outlined">flight_land</span>`,
             lodging: `<span class="material-symbols-outlined">hotel</span>`,
             sleep: `<span class="material-symbols-outlined">dark_mode</span>`,
@@ -305,6 +339,11 @@
             business: `<span class="material-symbols-outlined">work</span>`,
         };
         
+        const transportIcons = {
+            flight: 'flight_takeoff',
+            train: 'train',
+        };
+
         // Flags configuration using flag-icon-css library classes (fi fi-xx)
         const rawCountryFlags = {
             "Tokyo": `<span class="fi fi-jp"></span>`,
@@ -358,50 +397,26 @@
         let poiLayerGroup;
 
         // --- COORDINATE PARSING & VALIDATION (ROBUST) ---
-        // Accepts:
-        //  - [lat, lng] (numbers or numeric strings)
-        //  - {lat: x, lng: y} or {latitude: x, longitude: y}
-        // Returns [latNumber, lngNumber] or null
         function parseCoords(coords) {
             if (!coords) return null;
-
-            // If object with lat/lng keys
             if (typeof coords === 'object' && !Array.isArray(coords)) {
-                const lat = coords.lat ?? coords.latitude ?? coords.Lat ?? coords.Latitude;
-                const lng = coords.lng ?? coords.longitude ?? coords.Lng ?? coords.Longitude;
+                const lat = coords.lat ?? coords.latitude;
+                const lng = coords.lng ?? coords.longitude;
                 const latN = Number(lat);
                 const lngN = Number(lng);
-                if (isFinite(latN) && isFinite(lngN) && latN >= -90 && latN <= 90 && lngN >= -180 && lngN <= 180) {
-                    return [latN, lngN];
-                }
-                return null;
+                if (isFinite(latN) && isFinite(lngN)) return [latN, lngN];
             }
-
-            // If array-like [lat, lng] possibly with strings
             if (Array.isArray(coords) && coords.length >= 2) {
                 const latN = Number(coords[0]);
                 const lngN = Number(coords[1]);
-                if (isFinite(latN) && isFinite(lngN) && latN >= -90 && latN <= 90 && lngN >= -180 && lngN <= 180) {
-                    return [latN, lngN];
-                }
+                if (isFinite(latN) && isFinite(lngN)) return [latN, lngN];
             }
             return null;
         }
 
-        // validation helper for lat/lng arrays or objects
         function isValidLatLng(point) {
-            if (!point) return false;
-            if (Array.isArray(point) && point.length >= 2) {
-                const lat = Number(point[0]);
-                const lng = Number(point[1]);
-                return isFinite(lat) && isFinite(lng) && lat >= -90 && lat <= 90 && lng >= -180 && lng <= 180;
-            }
-            if (typeof point === 'object') {
-                const lat = Number(point.lat ?? point.latitude);
-                const lng = Number(point.lng ?? point.longitude);
-                return isFinite(lat) && isFinite(lng) && lat >= -90 && lat <= 90 && lng >= -180 && lng <= 180;
-            }
-            return false;
+            const coords = parseCoords(point);
+            return coords !== null && coords[0] >= -90 && coords[0] <= 90 && coords[1] >= -180 && coords[1] <= 180;
         }
 
         // --- DATA FETCHING AND PROCESSING ---
@@ -418,7 +433,6 @@
 
                 const itineraryDataRaw = await itineraryResponse.json();
                 const poiDataRaw = await poiResponse.json();
-
                 itineraryData = itineraryDataRaw.map(item => {
                     // The user wants all times to be treated as "local" to the event's location.
                     // By removing the 'Z' (UTC specifier), we force JavaScript to parse the date
@@ -436,14 +450,14 @@
                     };
                 });
 
-                pointsOfInterest = {};
-                for (const city in poiDataRaw) {
+                pointsOfInterest = Object.keys(poiDataRaw).reduce((acc, city) => {
                     const normalizedCity = normalizeStr(city);
-                    pointsOfInterest[normalizedCity] = poiDataRaw[city].map(poi => ({
+                    acc[normalizedCity] = poiDataRaw[city].map(poi => ({
                         ...poi,
                         coords: parseCoords(poi.coords)
                     }));
-                }
+                    return acc;
+                }, {});
 
                 sortedData = itineraryData.sort((a, b) => a.datetime - b.datetime);
 
@@ -457,7 +471,7 @@
                 }, {});
                 groupedByDay = Object.values(byDate);
 
-                cityStays = calculateCityStaysRobust(sortedData);
+                cityStays = calculateCityStays(sortedData);
 
                 if (Object.keys(cityStays).length > 0) {
                     renderUI();
@@ -471,143 +485,103 @@
             }
         }
 
-        // --- DYNAMIC CITY STAY CALCULATION LOGIC (REWRITTEN FOR ACCURACY) ---
-        function calculateCityStaysRobust(itinerary) {
-            const segments = [];
-            if (itinerary.length === 0) return {};
+        function calculateCityStays(itinerary) {
+            const stays = {};
+            if (itinerary.length === 0) return stays;
 
-            // 1. Find all unique cities that have "sleep" or "daytrip" events, in order of their first appearance.
-            const orderedCitiesWithStays = [];
+            const mainCities = [];
             const seenCities = new Set();
-            for (const event of itinerary) {
-                if ((event.type === 'sleep' || event.type === 'daytrip') && !seenCities.has(event.location)) {
-                    orderedCitiesWithStays.push({location: event.location, type: event.type});
-                    seenCities.add(event.location);
+            itinerary.forEach(e => {
+                if (e.type === 'sleep' && !seenCities.has(e.location)) {
+                    mainCities.push(e.location);
+                    seenCities.add(e.location);
                 }
-            }
-
-            if (orderedCitiesWithStays.length === 0) return {};
-
-            // 2. For each city, find its exact start and end times.
-            for (let i = 0; i < orderedCitiesWithStays.length; i++) {
-                const cityInfo = orderedCitiesWithStays[i];
-                const city = cityInfo.location;
-                let start, end, transport = null;
-
-                if (cityInfo.type === 'daytrip') {
-                    const dayTripEvent = itinerary.find(e => e.type === 'daytrip' && e.location === city);
-                    start = dayTripEvent.datetime;
-                    end = new Date(start.getTime() + 1); // A day trip has a very short duration
-                    segments.push({ city, start, end, transport, flag: countryFlags[city] || '', isDayTrip: true });
-                    continue;
-                }
-
-                // The start of a stay is the arrival event in that city.
-                const arrivalEvent = itinerary.find(e => e.type === 'flight_arrival' && e.location === city);
-                if (arrivalEvent) {
-                    start = arrivalEvent.datetime;
-                } else {
-                    // For the very first city, there might not be an "arrival", so find the first event there.
-                    const firstEventInCity = itinerary.find(e => e.location === city);
-                    start = firstEventInCity ? firstEventInCity.datetime : null;
-                }
-
-                // The end of a stay is the departure from that city.
-                const departureEvent = itinerary.find(e =>
-                    e.datetime > start &&
-                    e.location === city &&
-                    (e.type === 'flight' || e.type === 'transport')
-                );
-
-                if (departureEvent) {
-                    end = departureEvent.datetime;
-                    transport = departureEvent.type === 'flight' ? 'flight_takeoff' : 'train';
-                } else {
-                    // For the last city, the end is the final departure flight of the whole trip.
-                    const finalDeparture = itinerary.slice().reverse().find(e => e.type === 'flight');
-                    end = finalDeparture ? finalDeparture.datetime : itinerary[itinerary.length - 1].datetime;
-                }
-
-                if (start && end) {
-                    segments.push({ city, start, end, transport, flag: countryFlags[city] || '', isDayTrip: false });
-                }
-            }
-
-            // Convert the array of segments into the final object structure.
-            const finalSegments = {};
-            segments.sort((a,b) => a.start - b.start).forEach(seg => {
-                let name = seg.city;
-                let count = 1;
-                while (finalSegments[name]) { // Handle visiting the same city multiple times
-                    name = `${seg.city} (${++count})`;
-                }
-                finalSegments[name] = seg;
             });
 
-            return calculateDurations(finalSegments);
-        }
+            mainCities.forEach((city, i) => {
+                const nextCity = mainCities[i + 1];
 
-        function calculateDurations(segments) {
-            const NOON = 12;
-            const SIX_PM = 18;
-            const results = {};
-            const orderedSegmentNames = Object.keys(segments).sort((a, b) => segments[a].start - segments[b].start);
+                const firstEventIndex = itinerary.findIndex(e => e.location === city);
+                const lastSleepEventIndex = itinerary.findLastIndex(e => e.location === city && e.type === 'sleep');
 
-            for (const name of orderedSegmentNames) {
-                const segment = segments[name];
-
-                if (segment.isDayTrip) {
-                    results[name] = {
-                        days: "1",
-                        nights: "0",
-                        transportToNext: null,
-                        startTime: segment.start,
-                        flag: segment.flag,
-                        isDayTrip: true
-                    };
-                    continue;
+                let endOfStayIndex = itinerary.length - 1;
+                if (nextCity) {
+                    // Find the start of the next city's stay, which is typically the arrival or first sleep
+                    endOfStayIndex = itinerary.findIndex(e => e.location === nextCity && (e.type === 'sleep' || e.type === 'flight_arrival' || e.type === 'lodging'));
                 }
 
-                const start = new Date(segment.start);
-                const end = new Date(segment.end);
+                const segment = itinerary.slice(firstEventIndex, endOfStayIndex);
+                const cityEvents = segment.filter(e => e.location === city);
 
-                // The most reliable way to count nights is to count the 'sleep' events within the segment's timeframe.
-                const nights = sortedData.filter(e =>
-                    e.type === 'sleep' &&
-                    e.location === segment.city &&
-                    e.datetime >= start &&
-                    e.datetime < end
-                ).length;
+                const start = cityEvents[0]?.datetime;
+                let end = cityEvents.length > 0 ? cityEvents[cityEvents.length - 1]?.datetime : start;
 
-                // A stay of N nights spans N+1 calendar days. This is our starting point.
-                let days = nights + 1;
+                let transport = null;
+                if (nextCity) {
+                    const transportSegment = itinerary.slice(lastSleepEventIndex, endOfStayIndex);
 
-                const startHour = start.getHours();
-                const endHour = end.getHours();
-
-                // Adjust for arrival time based on user rules.
-                if (startHour >= NOON) {
-                    days -= 0.5; // Arriving after noon only counts as a half day.
+                    let transportEvent = transportSegment.find(e => e.type === 'flight');
+                    if (transportEvent) {
+                        transport = 'flight';
+                        end = transportEvent.datetime;
+                    } else {
+                        transportEvent = transportSegment.find(e => e.type === 'transport');
+                        if (transportEvent) {
+                            transport = 'train';
+                            end = transportEvent.datetime;
+                        } else {
+                            const busanToSeoulHint = transportSegment.find(e => e.details?.Plan?.includes('tren a Seoul'));
+                            if (busanToSeoulHint) transport = 'train';
+                        }
+                    }
                 }
 
-                // Adjust for departure time based on user rules.
-                if (endHour < NOON) {
-                    days -= 1.0; // Leaving before noon doesn't count as a day.
-                } else if (endHour < SIX_PM) {
-                    days -= 0.5; // Leaving between noon and 6 PM counts as a half day.
+                const nights = cityEvents.filter(e => e.type === 'sleep').length;
+                let days = 0;
+                if (start && end) {
+                    const durationMs = end - start;
+                    days = durationMs / (1000 * 60 * 60 * 24);
+                    const startHour = start.getUTCHours();
+                    const endHour = end.getUTCHours();
+                    if (days < 1 && startHour >= 12) days = 0.5;
+                    else if (startHour >= 18) days -= 0.5;
+                    if (nextCity) {
+                        if (endHour < 12) days -= 0.5;
+                        else if (endHour < 18) days -= 0.5;
+                    }
+                    days = Math.round(days * 2) / 2;
                 }
 
-                results[name] = {
-                    days: String(Math.max(0, days)).replace('.5', '½'),
+                const dayTrips = [];
+                segment.forEach(e => {
+                    if (e.type === 'daytrip' && !mainCities.includes(e.location)) {
+                        dayTrips.push({
+                            city: e.location,
+                            flag: countryFlags[e.location] || ''
+                        });
+                    }
+                });
+
+                let name = city;
+                let count = 1;
+                while (stays[name]) {
+                    name = `${city} (${++count})`;
+                }
+
+                stays[name] = {
+                    city: city,
+                    startTime: start,
+                    days: String(Math.max(0.5, days)).replace('.5', '½'),
                     nights: String(nights),
-                    transportToNext: segment.transport,
-                    startTime: segment.start,
-                    flag: segment.flag,
-                    isDayTrip: false
+                    transportToNext: transport,
+                    flag: countryFlags[city] || '',
+                    dayTrips: dayTrips
                 };
-            }
-            return results;
+            });
+
+            return stays;
         }
+
 
         // --- MAP INITIALIZATION ---
         function initializeMap() {
@@ -621,23 +595,14 @@
 
         // --- UI RENDERING ---
         function handleCityClick(clickedCity) {
-            const activeCity = getActiveCity(groupedByDay[currentDayIndex].date);
-
-            if (clickedCity === activeCity) {
-                return;
-            }
-
             const cityStartTime = cityStays[clickedCity]?.startTime;
-            if (!cityStartTime) {
-                return;
-            }
+            if (!cityStartTime) return;
 
-            const targetDayIndex = groupedByDay.findIndex(day => {
-                const dayDate = day.date;
-                return dayDate.getUTCFullYear() === cityStartTime.getUTCFullYear() &&
-                       dayDate.getUTCMonth() === cityStartTime.getUTCMonth() &&
-                       dayDate.getUTCDate() === cityStartTime.getUTCDate();
-            });
+            const targetDayIndex = groupedByDay.findIndex(day =>
+                day.date.getUTCFullYear() === cityStartTime.getUTCFullYear() &&
+                day.date.getUTCMonth() === cityStartTime.getUTCMonth() &&
+                day.date.getUTCDate() === cityStartTime.getUTCDate()
+            );
 
             if (targetDayIndex !== -1 && targetDayIndex !== currentDayIndex) {
                 currentDayIndex = targetDayIndex;
@@ -656,14 +621,8 @@
             const allCities = Object.keys(cityStays);
             const windowSize = 3;
 
-            // Ensure cityPageIndex is within valid bounds for the sliding window.
             if (isMobile) {
-                if (cityPageIndex > allCities.length - windowSize) {
-                    cityPageIndex = allCities.length - windowSize;
-                }
-                if (cityPageIndex < 0) {
-                    cityPageIndex = 0;
-                }
+                cityPageIndex = Math.max(0, Math.min(cityPageIndex, allCities.length - windowSize));
             }
 
             const citiesToShow = isMobile && allCities.length > windowSize
@@ -673,31 +632,46 @@
             const timelineDiv = document.createElement('div');
             timelineDiv.className = 'city-timeline';
 
-            citiesToShow.forEach(city => {
-                const stayInfo = cityStays[city];
+            citiesToShow.forEach(cityKey => {
+                const stayInfo = cityStays[cityKey];
                 const itemDiv = document.createElement('div');
                 itemDiv.className = 'city-timeline-item';
-                if (stayInfo.isDayTrip) {
-                    itemDiv.classList.add('day-trip');
+                itemDiv.dataset.city = cityKey;
+
+                const stayHtml = `<div class="stay-info">
+                    <div class="stay-info-item" title="${stayInfo.days} Días"><span class="material-symbols-outlined">wb_sunny</span><span class="${String(stayInfo.days).includes('½') ? 'half-day' : ''}">${stayInfo.days}</span></div>
+                    <div class="stay-info-item" title="${stayInfo.nights} Noches"><span class="material-symbols-outlined">dark_mode</span><span>${stayInfo.nights}</span></div>
+                </div>`;
+
+                const nodeHtml = stayInfo.flag || '';
+                itemDiv.innerHTML = `<div class="city-timeline-node">${nodeHtml}</div><div class="city-timeline-label">${stayInfo.city}</div>${stayHtml}`;
+
+                const connectionDiv = document.createElement('div');
+                connectionDiv.className = 'timeline-connection';
+
+                const isLastCity = cityKey === allCities[allCities.length - 1];
+
+                if (!isLastCity && stayInfo.transportToNext) {
+                    const transportDiv = document.createElement('div');
+                    transportDiv.className = 'transport-icon';
+                    transportDiv.innerHTML = `<span class="material-symbols-outlined">${transportIcons[stayInfo.transportToNext]}</span>`;
+                    connectionDiv.appendChild(transportDiv);
                 }
-                itemDiv.dataset.city = city;
 
-                let stayHtml = '';
-                if (stayInfo && !stayInfo.isDayTrip) {
-                    stayHtml = `<div class="stay-info"><div class="stay-info-item" title="${stayInfo.days} Días"><span class="material-symbols-outlined">wb_sunny</span><span class="${String(stayInfo.days).includes('½') ? 'half-day' : ''}">${stayInfo.days}</span></div><div class="stay-info-item" title="${stayInfo.nights} Noches"><span class="material-symbols-outlined">dark_mode</span><span>${stayInfo.nights}</span></div></div>`;
-                } else if (stayInfo && stayInfo.isDayTrip) {
-                    stayHtml = `<div class="stay-info"><div class="stay-info-item" title="Day Trip"><span class="material-symbols-outlined">explore</span></div></div>`;
+                if (stayInfo.dayTrips.length > 0) {
+                    stayInfo.dayTrips.forEach(trip => {
+                        const dayTripDiv = document.createElement('div');
+                        dayTripDiv.className = 'day-trip-node';
+                        dayTripDiv.innerHTML = `<div class="city-timeline-node">${icons.daytrip}</div><div class="city-timeline-label">${trip.city}</div>`;
+                        connectionDiv.appendChild(dayTripDiv);
+                    });
                 }
 
-                let transportHtml = (stayInfo && stayInfo.transportToNext) ? `<div class="transport-icon"><span class="material-symbols-outlined">${stayInfo.transportToNext}</span></div>` : '';
-
-                let nodeHtml = stayInfo.flag || '';
-                if (stayInfo.isDayTrip) {
-                    nodeHtml = icons.daytrip;
+                if (connectionDiv.hasChildNodes()) {
+                    itemDiv.appendChild(connectionDiv);
                 }
 
-                itemDiv.innerHTML = `<div class="city-timeline-node">${nodeHtml}</div><div class="city-timeline-label">${city}</div>${stayHtml}${transportHtml}`;
-                itemDiv.addEventListener('click', () => handleCityClick(city));
+                itemDiv.addEventListener('click', () => handleCityClick(cityKey));
                 timelineDiv.appendChild(itemDiv);
             });
 
@@ -734,22 +708,16 @@
             const allCities = Object.keys(cityStays);
             const windowSize = 3;
 
-            // --- Center Timeline on Active City (Mobile) ---
-            if (isMobile && groupedByDay.length > 0) {
+            if (isMobile) {
                 const activeCity = getActiveCity(currentDayData.date);
                 if (activeCity) {
                     const activeCityIndex = allCities.indexOf(activeCity);
                     if (activeCityIndex !== -1) {
-                        // Try to center the active city (index - 1)
                         let targetIndex = activeCityIndex - 1;
-
-                        // Clamp the index to be within the valid range
                         const maxIndex = allCities.length > windowSize ? allCities.length - windowSize : 0;
                         targetIndex = Math.max(0, Math.min(targetIndex, maxIndex));
-
                         if (cityPageIndex !== targetIndex) {
                             cityPageIndex = targetIndex;
-                            // Re-render timeline to center on the active city
                             renderCityTimeline();
                         }
                     }
@@ -771,10 +739,7 @@
                 container.className = 'timeline-item-container group';
 
                 const hasDetails = item.details && Object.keys(item.details).length > 0 && ['flight', 'flight_arrival', 'transport', 'lodging'].includes(item.type);
-
-                const infoIconHtml = hasDetails
-                    ? `<span class="material-symbols-outlined text-slate-400 group-hover:text-emerald-600 transition ml-2" style="font-size: 20px;">info</span>`
-                    : '';
+                const infoIconHtml = hasDetails ? `<span class="material-symbols-outlined text-slate-400 group-hover:text-emerald-600 transition ml-2" style="font-size: 20px;">info</span>` : '';
 
                 container.innerHTML = `
                     <div class="timeline-line"></div>
@@ -800,7 +765,6 @@
             }
 
             updateMap(currentDayData.events);
-            // This call is now mainly for highlighting, as centering is handled above
             updateCityTimelineActiveState(currentDayData.date);
         }
 
@@ -813,25 +777,13 @@
             }
 
             const allCoords = [];
-
             events.forEach(item => {
-                if (isValidLatLng(item.coords)) {
-                    allCoords.push(item.coords);
-                    const iconHtml = `<div style="background-color: var(--primary-color); color: white; border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;"><span class="material-symbols-outlined">place</span></div>`;
-                    const mainIcon = L.divIcon({ className: '', html: iconHtml, iconSize: [36, 36], iconAnchor: [18, 18] });
-                    try {
-                        L.marker(item.coords, { icon: mainIcon }).addTo(map).bindPopup(`<b>${item.title}</b><br>${item.location}`);
-                    } catch (err) {
-                        console.error('Failed to create marker for item with coords', item.coords, err);
-                    }
-                } else if (item.coords) {
-                    console.warn('Skipping invalid itinerary coords for item:', item, 'parsed coords:', item.coords);
-                }
+                if (isValidLatLng(item.coords)) allCoords.push(item.coords);
             });
 
             const firstEvent = events[0];
             if (firstEvent) {
-                const cityMap = { "Susono": "Hakone", "Narita": "Tokio", "Gyeongju": "Busán" };
+                const cityMap = { "Susono": "Hakone", "Narita": "Tokyo", "Gyeongju": "Busan" };
                 let poiLookupLocation = cityMap[firstEvent.location] || firstEvent.location;
                 if (pointsOfInterest[poiLookupLocation]) {
                      pointsOfInterest[poiLookupLocation].forEach(poi => {
@@ -839,58 +791,30 @@
                             allCoords.push(poi.coords);
                             const iconHtml = `<span class="material-symbols-outlined">${poiIcons[poi.category] || 'place'}</span>`;
                             const divIcon = L.divIcon({ className: 'leaflet-div-icon', html: iconHtml, iconSize: [30, 30], iconAnchor: [15, 15] });
-                            try {
-                                let popupContent = `<b>${poi.name}</b><br>${poi.category}`;
-                                if (poi.maps_url) {
-                                    popupContent += `<br><a href="${poi.maps_url}" target="_blank" rel="noopener noreferrer">Ver en Google Maps</a>`;
-                                }
-                                L.marker(poi.coords, { icon: divIcon }).addTo(poiLayerGroup).bindPopup(popupContent);
-                            } catch (err) {
-                                console.error('Failed to create POI marker for', poi, err);
-                            }
-                        } else if (poi.coords) {
-                            console.warn('Skipping invalid POI coords:', poi);
+                            let popupContent = `<b>${poi.name}</b><br>${poi.category}`;
+                            if (poi.maps_url) popupContent += `<br><a href="${poi.maps_url}" target="_blank" rel="noopener noreferrer">Ver en Google Maps</a>`;
+                            L.marker(poi.coords, { icon: divIcon }).addTo(poiLayerGroup).bindPopup(popupContent);
                         }
                     });
                 }
             }
 
-            // Filter duplicates and invalid points robustly
-            const uniqueCoords = allCoords
-                .filter(isValidLatLng)
-                .map(pt => [Number(pt[0]), Number(pt[1])])
-                .filter((pt, idx, arr) => !arr.slice(0, idx).some(other => other[0] === pt[0] && other[1] === pt[1]));
+            const uniqueCoords = allCoords.filter((pt, idx, arr) => arr.findIndex(other => other[0] === pt[0] && other[1] === pt[1]) === idx);
 
-            if (uniqueCoords.length > 1) { // If more than one point, use bounds
-                try {
-                    const bounds = L.latLngBounds(uniqueCoords);
-                    map.invalidateSize();
-                    if (bounds.isValid && bounds.getNorthWest && bounds.getSouthEast) {
-                        map.fitBounds(bounds, { padding: [50, 50], maxZoom: 14 });
-                    } else {
-                        console.warn('Computed bounds are invalid, skipping fitBounds', bounds);
-                    }
-                } catch (err) {
-                    console.error('Error when calling fitBounds with coords:', uniqueCoords, err);
+            if (uniqueCoords.length > 0) {
+                const bounds = L.latLngBounds(uniqueCoords);
+                map.invalidateSize();
+                if (bounds.isValid()) {
+                    map.fitBounds(bounds, { padding: [50, 50], maxZoom: 14 });
                 }
-            } else if (uniqueCoords.length === 1) { // If only one point, fly to it
-                try {
-                    map.invalidateSize();
-                    map.setView(uniqueCoords[0], 14);
-                } catch (err) {
-                    console.error('Error when calling setView with coord:', uniqueCoords[0], err);
-                }
-            } else {
-                // No valid coords to fit map to - optionally center to a fallback
-                console.info('No valid coords to fit map, keeping previous view.');
             }
         }
 
         function getActiveCity(currentTime) {
             let activeCity = null;
-            // Find the last city segment whose start time is before or at the current time
-            for (const cityName in cityStays) {
-                if (currentTime >= cityStays[cityName].startTime) {
+            const sortedCities = Object.keys(cityStays).sort((a,b) => cityStays[a].startTime - cityStays[b].startTime);
+            for (const cityName of sortedCities) {
+                if (cityStays[cityName].startTime <= currentTime) {
                     activeCity = cityName;
                 }
             }
@@ -911,24 +835,17 @@
 
         // --- Event Handlers ---
         prevDayBtn.addEventListener('click', () => {
-            if (currentDayIndex > 0) {
-                currentDayIndex--;
-                renderDayView();
-            }
+            if (currentDayIndex > 0) { currentDayIndex--; renderDayView(); }
         });
 
         nextDayBtn.addEventListener('click', () => {
-            if (currentDayIndex < groupedByDay.length - 1) {
-                currentDayIndex++;
-                renderDayView();
-            }
+            if (currentDayIndex < groupedByDay.length - 1) { currentDayIndex++; renderDayView(); }
         });
 
         window.addEventListener('resize', () => {
             const newIsMobile = window.innerWidth < LG_BREAKPOINT;
             if (newIsMobile !== isMobile) {
                 isMobile = newIsMobile;
-                // Re-render the city timeline to add/remove arrows and adjust layout
                 renderCityTimeline();
             }
         });
@@ -944,122 +861,81 @@
         function showPoiModal(location) {
             const cityMap = { "Susono": "Hakone", "Narita": "Tokyo", "Gyeongju": "Busan" };
             let poiLookupLocation = cityMap[location] || location;
-
             modalTitle.textContent = `Puntos de Interés en ${poiLookupLocation}`;
-
             let contentHtml = '';
-
             if (pointsOfInterest[poiLookupLocation]) {
-                const cityPOIs = pointsOfInterest[poiLookupLocation];
-                const groupedPOIs = cityPOIs.reduce((acc, poi) => {
+                const groupedPOIs = pointsOfInterest[poiLookupLocation].reduce((acc, poi) => {
                     if (!acc[poi.category]) acc[poi.category] = [];
                     acc[poi.category].push(poi);
                     return acc;
                 }, {});
 
                 contentHtml += `<div class="space-y-4">`;
-
                 for (const category in groupedPOIs) {
-                    const count = groupedPOIs[category].length;
                     contentHtml += `
                         <details class="poi-category-details group" open>
                             <summary class="poi-category-summary list-none flex justify-between items-center cursor-pointer p-3 bg-slate-100 rounded-lg hover:bg-slate-200 transition">
                                 <div class="flex items-center">
                                     <span class="material-symbols-outlined text-slate-600 mr-3">${poiIcons[category] || 'place'}</span>
                                     <span class="font-semibold text-slate-700">${category}</span>
-                                    <span class="text-sm text-slate-500 ml-2">(${count})</span>
+                                    <span class="text-sm text-slate-500 ml-2">(${groupedPOIs[category].length})</span>
                                 </div>
                                 <span class="material-symbols-outlined transition-transform duration-300 group-open:rotate-180">expand_more</span>
                             </summary>
-                            <div class="poi-list-modal p-3 space-y-3">`;
-                    groupedPOIs[category].forEach(poi => {
-                        let mapsLink = '';
-                        if (poi.maps_url) {
-                            mapsLink = `<a href="${poi.maps_url}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-sm text-emerald-600 hover:text-emerald-800 font-semibold mt-1">Ver en Google Maps <span class="material-symbols-outlined" style="font-size: 16px;">open_in_new</span></a>`;
-                        }
-                        contentHtml += `<div class="poi-item-modal border-l-2 border-slate-200 pl-4 py-2"><p class="font-semibold text-slate-800">${poi.name}</p><p class="text-sm text-slate-600">${poi.description}</p>${mapsLink}</div>`;
-                    });
-                    contentHtml += `</div></details>`;
+                            <div class="poi-list-modal p-3 space-y-3">
+                                ${groupedPOIs[category].map(poi => `
+                                    <div class="poi-item-modal border-l-2 border-slate-200 pl-4 py-2">
+                                        <p class="font-semibold text-slate-800">${poi.name}</p>
+                                        <p class="text-sm text-slate-600">${poi.description}</p>
+                                        ${poi.maps_url ? `<a href="${poi.maps_url}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-sm text-emerald-600 hover:text-emerald-800 font-semibold mt-1">Ver en Google Maps <span class="material-symbols-outlined" style="font-size: 16px;">open_in_new</span></a>` : ''}
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </details>`;
                 }
                 contentHtml += '</div>';
             } else {
                  contentHtml = `<p class="text-slate-500 italic">No hay Puntos de Interés para mostrar en ${poiLookupLocation}.</p>`;
             }
-
             modalContent.innerHTML = contentHtml;
-
-            detailsModal.classList.remove('hidden');
-            detailsModal.classList.add('flex');
-            setTimeout(() => { // For transition
-                modalCard.classList.remove('scale-95');
-                modalCard.classList.add('scale-100');
-            }, 10);
+            openModal();
         }
 
         function showDetailsModal(item) {
             modalTitle.textContent = item.title;
-
-            let contentHtml = '';
-
-            // Render item details
+            let contentHtml = '<div class="space-y-3 p-4 bg-slate-50 rounded-lg shadow-inner">';
             if (item.details && Object.keys(item.details).length > 0) {
-                contentHtml += '<div class="space-y-3 p-4 bg-slate-50 rounded-lg shadow-inner">';
                 for (const [key, value] of Object.entries(item.details)) {
-                    let valueHtml = value;
-                    if (key === 'Enlace' && typeof value === 'string' && value.startsWith('http')) {
-                        valueHtml = `<a href="${value}" target="_blank" rel="noopener noreferrer" class="text-emerald-600 hover:underline">${value}</a>`;
-                    }
+                    let valueHtml = (typeof value === 'string' && value.startsWith('http'))
+                        ? `<a href="${value}" target="_blank" rel="noopener noreferrer" class="text-emerald-600 hover:underline">${value}</a>`
+                        : value;
                     contentHtml += `<p><strong class="text-slate-600 font-semibold">${key}:</strong> <span class="text-slate-800">${valueHtml}</span></p>`;
                 }
-                contentHtml += '</div>';
+            } else {
+                contentHtml += '<p class="text-slate-500 italic">No hay detalles para mostrar.</p>';
             }
-
-
-            if (contentHtml.trim() === '') {
-                contentHtml = '<p class="text-slate-500 italic">No hay detalles para mostrar.</p>';
-            }
-
+            contentHtml += '</div>';
             modalContent.innerHTML = contentHtml;
+            openModal();
+        }
 
+        function openModal() {
             detailsModal.classList.remove('hidden');
             detailsModal.classList.add('flex');
-            setTimeout(() => { // For transition
-                modalCard.classList.remove('scale-95');
-                modalCard.classList.add('scale-100');
-            }, 10);
+            setTimeout(() => modalCard.classList.remove('scale-95'), 10);
         }
 
         function hideDetailsModal() {
             modalCard.classList.add('scale-95');
-            modalCard.classList.remove('scale-100');
-            setTimeout(() => {
-                detailsModal.classList.add('hidden');
-                detailsModal.classList.remove('flex');
-            }, 200); // Match transition duration
+            setTimeout(() => detailsModal.classList.add('hidden'), 200);
         }
 
         modalCloseBtn.addEventListener('click', hideDetailsModal);
-        detailsModal.addEventListener('click', (e) => {
-            if (e.target === detailsModal) {
-                hideDetailsModal();
-            }
-        });
+        detailsModal.addEventListener('click', (e) => { if (e.target === detailsModal) hideDetailsModal(); });
 
         poiModalBtn.addEventListener('click', () => {
-            const currentDayData = groupedByDay[currentDayIndex];
-            if (currentDayData && currentDayData.events.length > 0) {
-                const mainLocation = currentDayData.events[0].location;
-                showPoiModal(mainLocation);
-            } else {
-                modalTitle.textContent = 'Atracciones';
-                modalContent.innerHTML = '<p class="text-slate-500 italic">No hay una ciudad principal para mostrar Puntos de Interés.</p>';
-                detailsModal.classList.remove('hidden');
-                detailsModal.classList.add('flex');
-                 setTimeout(() => {
-                    modalCard.classList.remove('scale-95');
-                    modalCard.classList.add('scale-100');
-                }, 10);
-            }
+            const mainLocation = groupedByDay[currentDayIndex]?.events[0]?.location;
+            if (mainLocation) showPoiModal(mainLocation);
         });
 
         // --- Start the Application ---
