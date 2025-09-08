@@ -952,7 +952,11 @@
             if (item.details && Object.keys(item.details).length > 0) {
                 contentHtml += '<div class="space-y-3 p-4 bg-slate-50 rounded-lg shadow-inner">';
                 for (const [key, value] of Object.entries(item.details)) {
-                    contentHtml += `<p><strong class="text-slate-600 font-semibold">${key}:</strong> <span class="text-slate-800">${value}</span></p>`;
+                    let valueHtml = value;
+                    if (key === 'Enlace' && typeof value === 'string' && value.startsWith('http')) {
+                        valueHtml = `<a href="${value}" target="_blank" rel="noopener noreferrer" class="text-emerald-600 hover:underline">${value}</a>`;
+                    }
+                    contentHtml += `<p><strong class="text-slate-600 font-semibold">${key}:</strong> <span class="text-slate-800">${valueHtml}</span></p>`;
                 }
                 contentHtml += '</div>';
             }
