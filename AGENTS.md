@@ -70,6 +70,16 @@ The calculation of days is also affected by arrival and departure times:
 
 When making changes that could affect the trip summary, please be mindful of this logic and the special role of the `sleep`, `activity`, and `daytrip` event types.
 
+### Updating the Itinerary
+
+When you are asked to update the itinerary, please follow these guidelines to ensure consistency:
+
+*   **Flights:** When adding a flight, you should also add the following events:
+    *   A `transport` event for the commute to the airport before the flight.
+    *   A `flight_arrival` event to mark the landing. This is important for the timeline visualization.
+*   **Day Trips:** When adding a day trip, remember to add `transport` events for the commute to and from the day trip location.
+*   **Travel Duration:** For all `flight` and `transport` events, add a `duration` field. If the duration is not provided, please search for it online or make a reasonable estimate.
+
 ### Taking Screenshots
 
 When you make changes to the website, you **must** provide a screenshot of the updated UI along with your code changes.
