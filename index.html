@@ -145,8 +145,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            pointer-events: auto;
-            cursor: pointer;
+            pointer-events: none; /* Make it unclickable */
+            cursor: default;
         }
 
         .day-trip-node .city-timeline-node {
@@ -487,94 +487,123 @@
 
         function calculateCityStays(itinerary) {
             const stays = {};
-            if (itinerary.length === 0) return stays;
+            if (!itinerary || itinerary.length === 0) return stays;
 
-            const mainCities = [];
-            const seenCities = new Set();
-            itinerary.forEach(e => {
-                if (e.type === 'sleep' && !seenCities.has(e.location)) {
-                    mainCities.push(e.location);
-                    seenCities.add(e.location);
+            // 1. Identify the chronological sequence of cities where an overnight stay occurs.
+            const stayNodes = [];
+            let lastSleepLocation = null;
+            itinerary.forEach((event, index) => {
+                if (event.type === 'sleep') {
+                    if (event.location !== lastSleepLocation) {
+                        stayNodes.push({ city: event.location, firstSleepIndex: index });
+                    }
+                    lastSleepLocation = event.location;
                 }
             });
 
-            mainCities.forEach((city, i) => {
-                const nextCity = mainCities[i + 1];
+            // 2. Process the itinerary segment for each stay.
+            stayNodes.forEach((node, i) => {
+                const nextNode = stayNodes[i + 1];
 
-                const firstEventIndex = itinerary.findIndex(e => e.location === city);
-                const lastSleepEventIndex = itinerary.findLastIndex(e => e.location === city && e.type === 'sleep');
-
-                let endOfStayIndex = itinerary.length - 1;
-                if (nextCity) {
-                    // Find the start of the next city's stay, which is typically the arrival or first sleep
-                    endOfStayIndex = itinerary.findIndex(e => e.location === nextCity && (e.type === 'sleep' || e.type === 'flight_arrival' || e.type === 'lodging'));
+                // a. Determine the start index of the segment.
+                // It's the index of the first event with the city's location before the first sleep.
+                let stayStartIndex = node.firstSleepIndex;
+                const searchArea = itinerary.slice(0, node.firstSleepIndex).reverse();
+                const firstEventForCityIndexInReversed = searchArea.findIndex(e => e.location === node.city);
+                if (firstEventForCityIndexInReversed !== -1) {
+                    stayStartIndex = node.firstSleepIndex - 1 - firstEventForCityIndexInReversed;
                 }
 
-                const segment = itinerary.slice(firstEventIndex, endOfStayIndex);
-                const cityEvents = segment.filter(e => e.location === city);
-
-                const start = cityEvents[0]?.datetime;
-                let end = cityEvents.length > 0 ? cityEvents[cityEvents.length - 1]?.datetime : start;
-
-                let transport = null;
-                if (nextCity) {
-                    const transportSegment = itinerary.slice(lastSleepEventIndex, endOfStayIndex);
-
-                    let transportEvent = transportSegment.find(e => e.type === 'flight');
-                    if (transportEvent) {
-                        transport = 'flight';
-                        end = transportEvent.datetime;
-                    } else {
-                        transportEvent = transportSegment.find(e => e.type === 'transport');
-                        if (transportEvent) {
-                            transport = 'train';
-                            end = transportEvent.datetime;
-                        } else {
-                            const busanToSeoulHint = transportSegment.find(e => e.details?.Plan?.includes('tren a Seoul'));
-                            if (busanToSeoulHint) transport = 'train';
-                        }
+                // b. Determine the end index of the segment.
+                // It's the start index of the next city's stay.
+                let stayEndIndex = itinerary.length;
+                if (nextNode) {
+                    let nextStayArrivalIndex = nextNode.firstSleepIndex;
+                    const searchAreaNext = itinerary.slice(0, nextNode.firstSleepIndex).reverse();
+                    const firstEventForNextCityIndexInReversed = searchAreaNext.findIndex(e => e.location === nextNode.city);
+                    if (firstEventForNextCityIndexInReversed !== -1) {
+                        nextStayArrivalIndex = nextNode.firstSleepIndex - 1 - firstEventForNextCityIndexInReversed;
                     }
+                    stayEndIndex = nextStayArrivalIndex;
                 }
 
-                const nights = cityEvents.filter(e => e.type === 'sleep').length;
-                let days = 0;
-                if (start && end) {
-                    const durationMs = end - start;
-                    days = durationMs / (1000 * 60 * 60 * 24);
-                    const startHour = start.getUTCHours();
-                    const endHour = end.getUTCHours();
-                    if (days < 1 && startHour >= 12) days = 0.5;
-                    else if (startHour >= 18) days -= 0.5;
-                    if (nextCity) {
-                        if (endHour < 12) days -= 0.5;
-                        else if (endHour < 18) days -= 0.5;
-                    }
-                    days = Math.round(days * 2) / 2;
-                }
+                const segment = itinerary.slice(stayStartIndex, stayEndIndex);
+
+                // c. Perform calculations for the stay.
+                const nights = segment.filter(e => e.type === 'sleep' && e.location === node.city).length;
+                if (nights === 0) return; // This isn't a valid overnight stay.
+
+                const arrivalTime = itinerary[stayStartIndex].datetime;
 
                 const dayTrips = [];
+                const allSleepCities = stayNodes.map(n => n.city);
                 segment.forEach(e => {
-                    if (e.type === 'daytrip' && !mainCities.includes(e.location)) {
-                        dayTrips.push({
-                            city: e.location,
-                            flag: countryFlags[e.location] || ''
-                        });
+                    if (e.type === 'daytrip' && !allSleepCities.includes(e.location)) {
+                        if (!dayTrips.some(dt => dt.city === e.location)) {
+                            dayTrips.push({ city: e.location, flag: countryFlags[e.location] || '' });
+                        }
                     }
                 });
 
-                let name = city;
+                const transportEvent = segment.find(e => e.type === 'flight' || e.type === 'transport');
+                const transport = transportEvent ? (transportEvent.type === 'flight' ? 'flight' : 'train') : null;
+
+                // Use a unique key for the stay, e.g., "Tokyo (1)"
+                let name = node.city;
                 let count = 1;
                 while (stays[name]) {
-                    name = `${city} (${++count})`;
+                    name = `${node.city} (${++count})`;
                 }
 
+                const departureEvent = segment.find(e => e.type === 'flight' || e.type === 'transport');
+                const departureTime = departureEvent ? departureEvent.datetime : (segment.length > 0 ? segment[segment.length - 1].datetime : arrivalTime);
+
+                // --- Day Calculation ---
+                const start = new Date(arrivalTime);
+                const end = new Date(departureTime);
+
+                // Create a set of unique calendar days for the stay in the main city
+                const stayDayStrings = new Set();
+                segment.forEach(e => {
+                    // Only count days with 'sleep' or 'activity' in the main city
+                    if (e.location === node.city && (e.type === 'sleep' || e.type === 'activity' || e.type === 'business')) {
+                        stayDayStrings.add(new Date(e.datetime.getFullYear(), e.datetime.getMonth(), e.datetime.getDate()).toDateString());
+                    }
+                });
+
+                let daysCount = stayDayStrings.size;
+
+                // Adjust for arrival and departure times based on user rules
+                if (start.getHours() >= 11) {
+                    daysCount -= 0.5;
+                }
+                if (end.getHours() < 13) {
+                    daysCount -= 0.5;
+                } else if (end.getHours() < 18) {
+                    daysCount -= 0.5;
+                }
+
+                // "Daytrips don't count as days in the main city"
+                // This means we should not count a day if it has a daytrip.
+                const dayTripDayStrings = new Set();
+                dayTrips.forEach(trip => {
+                    const tripEvent = segment.find(e => e.location === trip.city && e.type === 'daytrip');
+                    if (tripEvent) {
+                       const dayString = new Date(tripEvent.datetime.getFullYear(), tripEvent.datetime.getMonth(), tripEvent.datetime.getDate()).toDateString();
+                       if(stayDayStrings.has(dayString) && !dayTripDayStrings.has(dayString)) {
+                           daysCount -= 1;
+                           dayTripDayStrings.add(dayString);
+                       }
+                    }
+                });
+
                 stays[name] = {
-                    city: city,
-                    startTime: start,
-                    days: String(Math.max(0.5, days)).replace('.5', '½'),
+                    city: node.city,
+                    startTime: arrivalTime,
+                    days: String(Math.max(0.5, daysCount)).replace('.5', '½'),
                     nights: String(nights),
                     transportToNext: transport,
-                    flag: countryFlags[city] || '',
+                    flag: countryFlags[node.city] || '',
                     dayTrips: dayTrips
                 };
             });
