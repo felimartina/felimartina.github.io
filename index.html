@@ -603,47 +603,54 @@
                     name = `${node.city} (${++count})`;
                 }
 
-                const departureEvent = segment.find(e => e.type === 'flight' || e.type === 'transport');
-                const departureTime = departureEvent ? departureEvent.datetime : (segment.length > 0 ? segment[segment.length - 1].datetime : arrivalTime);
-
                 // --- Day Calculation ---
-                const start = new Date(arrivalTime);
-                const end = new Date(departureTime);
+                const departureEvent = [...segment].reverse().find(e => e.location === node.city && (e.type === 'flight' || e.type === 'transport')) || segment.slice().reverse().find(e => e.location === node.city) || segment[segment.length - 1];
+                const departureTime = departureEvent.datetime;
 
-                // Create a set of unique calendar days for the stay in the main city
-                const stayDayStrings = new Set();
+                const dayValues = new Map();
+
+                // Find all daytrip dates
+                const dayTripDates = new Set();
                 segment.forEach(e => {
-                    // Only count days with 'sleep' or 'activity' in the main city
-                    if (e.location === node.city && (e.type === 'sleep' || e.type === 'activity' || e.type === 'business')) {
-                        stayDayStrings.add(new Date(e.datetime.getFullYear(), e.datetime.getMonth(), e.datetime.getDate()).toDateString());
+                    if (e.type === 'daytrip') {
+                        dayTripDates.add(e.datetime.toDateString());
                     }
                 });
 
-                let daysCount = stayDayStrings.size;
+                // Iterate through each day of the stay and assign its value
+                for (let d = new Date(arrivalTime); d <= departureTime; d.setDate(d.getDate() + 1)) {
+                    const dayStr = d.toDateString();
+                    const isArrivalDay = dayStr === arrivalTime.toDateString();
+                    const isDepartureDay = dayStr === departureTime.toDateString();
 
-                // Adjust for arrival and departure times based on user rules
-                if (start.getHours() >= 11) {
-                    daysCount -= 0.5;
-                }
-                if (end.getHours() < 13) {
-                    daysCount -= 0.5;
-                } else if (end.getHours() < 18) {
-                    daysCount -= 0.5;
-                }
+                    let dayValue = 1.0; // Default full day
 
-                // "Daytrips don't count as days in the main city"
-                // This means we should not count a day if it has a daytrip.
-                const dayTripDayStrings = new Set();
-                dayTrips.forEach(trip => {
-                    const tripEvent = segment.find(e => e.location === trip.city && e.type === 'daytrip');
-                    if (tripEvent) {
-                       const dayString = new Date(tripEvent.datetime.getFullYear(), tripEvent.datetime.getMonth(), tripEvent.datetime.getDate()).toDateString();
-                       if(stayDayStrings.has(dayString) && !dayTripDayStrings.has(dayString)) {
-                           daysCount -= 1;
-                           dayTripDayStrings.add(dayString);
-                       }
+                    if (dayTripDates.has(dayStr)) {
+                        dayValue = 0.0;
+                    } else if (isArrivalDay && isDepartureDay) {
+                        const hour = departureTime.getHours();
+                        if (hour >= 18) dayValue = 1.0;
+                        else if (hour < 13) dayValue = 0.0;
+                        else dayValue = 0.5;
+                    } else if (isArrivalDay) {
+                        const hour = arrivalTime.getHours();
+                        if (hour >= 18) dayValue = 0.0;
+                        else if (hour > 11) dayValue = 0.5;
+                        else dayValue = 1.0;
+                    } else if (isDepartureDay) {
+                        const hour = departureTime.getHours();
+                        if (hour >= 18) dayValue = 1.0;
+                        else if (hour < 13) dayValue = 0.0;
+                        else dayValue = 0.5;
                     }
-                });
+
+                    dayValues.set(dayStr, dayValue);
+                }
+
+                let daysCount = 0;
+                for (const value of dayValues.values()) {
+                    daysCount += value;
+                }
 
                 stays[name] = {
                     city: node.city,
