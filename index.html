@@ -92,7 +92,15 @@
         .city-timeline::before { content: ''; position: absolute; top: 52px; left: 0; right: 0; height: 4px; background-color: #e2e8f0; z-index: 5; }
         .city-timeline-item { display: flex; flex-direction: column; align-items: center; position: relative; flex-grow: 1; z-index: 10; min-width: 110px; /* Ensure enough space on mobile scroll */ }
         .city-timeline-node { width: 44px; height: 44px; background-color: #fff; border-radius: 50%; border: 3px solid #cbd5e1; transition: border-color 0.3s ease, box-shadow 0.3s ease; flex-shrink: 0; overflow: hidden; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);}
-        
+        .city-timeline-item.day-trip .city-timeline-node {
+            width: 24px;
+            height: 24px;
+            border-width: 2px;
+        }
+        .city-timeline-item.day-trip .city-timeline-label {
+            font-weight: 500;
+            font-size: 0.8rem;
+        }
         /* Styling for the Flag Icons - Adjusted for better aspect ratio display */
         .city-timeline-node .fi {
             font-size: 32px; /* Adjusted size */
@@ -293,7 +301,7 @@
             sleep: `<span class="material-symbols-outlined">dark_mode</span>`,
             transport: `<span class="material-symbols-outlined">train</span>`,
             activity: `<span class="material-symbols-outlined">local_activity</span>`,
-            day_trip: `<span class="material-symbols-outlined">explore</span>`,
+            daytrip: `<span class="material-symbols-outlined">explore</span>`,
             business: `<span class="material-symbols-outlined">work</span>`,
         };
         
@@ -301,10 +309,12 @@
         const rawCountryFlags = {
             "Tokyo": `<span class="fi fi-jp"></span>`,
             "Hakone": `<span class="fi fi-jp"></span>`,
+            "Nara": `<span class="fi fi-jp"></span>`,
             "Kyoto": `<span class="fi fi-jp"></span>`,
             "Osaka": `<span class="fi fi-jp"></span>`,
             "Okinawa": `<span class="fi fi-jp"></span>`,
             "Busan": `<span class="fi fi-kr"></span>`,
+            "Gyeongju": `<span class="fi fi-kr"></span>`,
             "Seoul": `<span class="fi fi-kr"></span>`,
             "Taipei": `<span class="fi fi-tw"></span>`,
         };
@@ -461,13 +471,12 @@
             const segments = [];
             if (itinerary.length === 0) return {};
 
-            // 1. Find all unique cities that have "sleep" events, in order of their first sleep event.
-            // This establishes the chronological order of our stays.
+            // 1. Find all unique cities that have "sleep" or "daytrip" events, in order of their first appearance.
             const orderedCitiesWithStays = [];
             const seenCities = new Set();
             for (const event of itinerary) {
-                if (event.type === 'sleep' && !seenCities.has(event.location)) {
-                    orderedCitiesWithStays.push(event.location);
+                if ((event.type === 'sleep' || event.type === 'daytrip') && !seenCities.has(event.location)) {
+                    orderedCitiesWithStays.push({location: event.location, type: event.type});
                     seenCities.add(event.location);
                 }
             }
@@ -476,8 +485,17 @@
 
             // 2. For each city, find its exact start and end times.
             for (let i = 0; i < orderedCitiesWithStays.length; i++) {
-                const city = orderedCitiesWithStays[i];
+                const cityInfo = orderedCitiesWithStays[i];
+                const city = cityInfo.location;
                 let start, end, transport = null;
+
+                if (cityInfo.type === 'daytrip') {
+                    const dayTripEvent = itinerary.find(e => e.type === 'daytrip' && e.location === city);
+                    start = dayTripEvent.datetime;
+                    end = new Date(start.getTime() + 1); // A day trip has a very short duration
+                    segments.push({ city, start, end, transport, flag: countryFlags[city] || '', isDayTrip: true });
+                    continue;
+                }
 
                 // The start of a stay is the arrival event in that city.
                 const arrivalEvent = itinerary.find(e => e.type === 'flight_arrival' && e.location === city);
@@ -506,13 +524,13 @@
                 }
 
                 if (start && end) {
-                    segments.push({ city, start, end, transport, flag: countryFlags[city] || '' });
+                    segments.push({ city, start, end, transport, flag: countryFlags[city] || '', isDayTrip: false });
                 }
             }
 
             // Convert the array of segments into the final object structure.
             const finalSegments = {};
-            segments.forEach(seg => {
+            segments.sort((a,b) => a.start - b.start).forEach(seg => {
                 let name = seg.city;
                 let count = 1;
                 while (finalSegments[name]) { // Handle visiting the same city multiple times
@@ -532,6 +550,19 @@
 
             for (const name of orderedSegmentNames) {
                 const segment = segments[name];
+
+                if (segment.isDayTrip) {
+                    results[name] = {
+                        days: "1",
+                        nights: "0",
+                        transportToNext: null,
+                        startTime: segment.start,
+                        flag: segment.flag,
+                        isDayTrip: true
+                    };
+                    continue;
+                }
+
                 const start = new Date(segment.start);
                 const end = new Date(segment.end);
 
@@ -566,7 +597,8 @@
                     nights: String(nights),
                     transportToNext: segment.transport,
                     startTime: segment.start,
-                    flag: segment.flag
+                    flag: segment.flag,
+                    isDayTrip: false
                 };
             }
             return results;
@@ -637,13 +669,29 @@
             timelineDiv.className = 'city-timeline';
 
             citiesToShow.forEach(city => {
+                const stayInfo = cityStays[city];
                 const itemDiv = document.createElement('div');
                 itemDiv.className = 'city-timeline-item';
+                if (stayInfo.isDayTrip) {
+                    itemDiv.classList.add('day-trip');
+                }
                 itemDiv.dataset.city = city;
-                const stayInfo = cityStays[city];
-                let stayHtml = stayInfo ? `<div class="stay-info"><div class="stay-info-item" title="${stayInfo.days} Días"><span class="material-symbols-outlined">wb_sunny</span><span class="${String(stayInfo.days).includes('½') ? 'half-day' : ''}">${stayInfo.days}</span></div><div class="stay-info-item" title="${stayInfo.nights} Noches"><span class="material-symbols-outlined">dark_mode</span><span>${stayInfo.nights}</span></div></div>` : '';
+
+                let stayHtml = '';
+                if (stayInfo && !stayInfo.isDayTrip) {
+                    stayHtml = `<div class="stay-info"><div class="stay-info-item" title="${stayInfo.days} Días"><span class="material-symbols-outlined">wb_sunny</span><span class="${String(stayInfo.days).includes('½') ? 'half-day' : ''}">${stayInfo.days}</span></div><div class="stay-info-item" title="${stayInfo.nights} Noches"><span class="material-symbols-outlined">dark_mode</span><span>${stayInfo.nights}</span></div></div>`;
+                } else if (stayInfo && stayInfo.isDayTrip) {
+                    stayHtml = `<div class="stay-info"><div class="stay-info-item" title="Day Trip"><span class="material-symbols-outlined">explore</span></div></div>`;
+                }
+
                 let transportHtml = (stayInfo && stayInfo.transportToNext) ? `<div class="transport-icon"><span class="material-symbols-outlined">${stayInfo.transportToNext}</span></div>` : '';
-                itemDiv.innerHTML = `<div class="city-timeline-node">${stayInfo.flag || ''}</div><div class="city-timeline-label">${city}</div>${stayHtml}${transportHtml}`;
+
+                let nodeHtml = stayInfo.flag || '';
+                if (stayInfo.isDayTrip) {
+                    nodeHtml = icons.daytrip;
+                }
+
+                itemDiv.innerHTML = `<div class="city-timeline-node">${nodeHtml}</div><div class="city-timeline-label">${city}</div>${stayHtml}${transportHtml}`;
                 itemDiv.addEventListener('click', () => handleCityClick(city));
                 timelineDiv.appendChild(itemDiv);
             });
