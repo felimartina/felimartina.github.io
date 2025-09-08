@@ -48,7 +48,7 @@
     {
       "name": "Takeshita Street",
       "category": "Compras",
-      "description": "El epicentro de la cultura adolescente y la moda de Harajuku, famosa por sus tiendas y crepes.",
+      "description": "El epicentro de la cultura adolescente y la moda de Harajuku, famosa por sus tiendas y crepes. (touristy shopping street. Not local)",
       "coords": [
         35.6701,
         139.7061
@@ -75,7 +75,7 @@
     {
       "name": "Templo Senso-ji",
       "category": "Templo",
-      "description": "El templo más antiguo de Tokio, en Asakusa, con su icónica linterna roja gigante.",
+      "description": "El templo más antiguo de Tokio, en Asakusa, con su icónica linterna roja gigante. (crowded. Instead check gotokuji temple in setagaya)",
       "coords": [
         35.7148,
         139.7967
@@ -120,7 +120,7 @@
     {
       "name": "Templo Gotokuji",
       "category": "Templo",
-      "description": "Famoso por ser el origen del Maneki-neko (gato de la suerte), con miles de estatuillas de gatos.",
+      "description": "Famoso por ser el origen del Maneki-neko (gato de la suerte), con miles de estatuillas de gatos. (less crowded alternative to Senso-ji)",
       "coords": [
         35.6483,
         139.6469
@@ -129,7 +129,7 @@
     {
       "name": "Tokyo Skytree",
       "category": "Mirador",
-      "description": "La estructura más alta de Japón, con vistas espectaculares desde sus observatorios.",
+      "description": "La estructura más alta de Japón, con vistas espectaculares desde sus observatorios. (expensive and overcrowded)",
       "coords": [
         35.7101,
         139.8107
@@ -252,7 +252,7 @@
     {
       "name": "Templo Gōtokuji",
       "category": "Templo",
-      "description": "Edo period Buddhist temple with a large collection of lucky beckoning cat statues.",
+      "description": "Edo period Buddhist temple with a large collection of lucky beckoning cat statues. (less crowded alternative to Senso-ji)",
       "coords": [
         35.6483,
         139.6469
@@ -322,7 +322,7 @@
     {
       "name": "Tsukiji Outer Market",
       "category": "Mercado",
-      "description": "An extensive fish market with a variety of seafood and areas to watch the famous tuna auction.",
+      "description": "An extensive fish market with a variety of seafood and areas to watch the famous tuna auction. (touristy)",
       "coords": [
         35.6644,
         139.7709
@@ -392,7 +392,7 @@
     {
       "name": "Hotel Chinzanso Tokyo",
       "category": "Alojamiento",
-      "description": "A refined hotel with several restaurants, lush gardens, a spa, and an indoor pool.",
+      "description": "A refined hotel with several restaurants, lush gardens, a spa, and an indoor pool. Also known as garden above the clouds hotel chinzanso.",
       "coords": [
         35.7107,
         139.7335
@@ -432,7 +432,7 @@
     {
       "name": "Sensō-ji",
       "category": "Templo",
-      "description": "Tokyo's oldest temple, completed in the year 645, in honor of Kannon, goddess of mercy.",
+      "description": "Tokyo's oldest temple, completed in the year 645, in honor of Kannon, goddess of mercy. (crowded. Instead check gotokuji temple in setagaya)",
       "coords": [
         35.7147,
         139.7967
@@ -448,6 +448,141 @@
         139.7742
       ],
       "maps_url": "https://maps.google.com/?cid=12811393089244390490&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNl"
+    },
+    {
+      "name": "Bar de cocktails Centifolia",
+      "category": "Restaurante",
+      "description": "30usd cocktails",
+      "coords": [
+        35.65806,
+        139.75139
+      ]
+    },
+    {
+      "name": "Suzukien Asakusa",
+      "category": "Restaurante",
+      "description": "Matcha ice cream",
+      "coords": [
+        35.7151389,
+        139.7974361
+      ]
+    },
+    {
+      "name": "Yanaka",
+      "category": "Atracción",
+      "description": "Tokyo old world and peaceful neighborhood",
+      "coords": [
+        35.72429,
+        139.76791
+      ]
+    },
+    {
+      "name": "MAGNET by SHIBUYA109",
+      "category": "Mirador",
+      "description": "Shibuya viewing deck (mag spark in the elevator) after 11am",
+      "coords": [
+        35.6595,
+        139.70056
+      ]
+    },
+    {
+      "name": "Maid Cafe",
+      "category": "Restaurante",
+      "description": "In Akihabara. (This is a generic entry, there are many maid cafes in Akihabara)",
+      "coords": [
+        35.7022,
+        139.774
+      ]
+    },
+    {
+      "name": "Shibuya Yokocho",
+      "category": "Atracción",
+      "description": "",
+      "coords": [
+        35.6612,
+        139.7017
+      ]
+    },
+    {
+      "name": "Golden Gai",
+      "category": "Atracción",
+      "description": "",
+      "coords": [
+        35.69389,
+        139.70472
+      ]
+    },
+    {
+      "name": "Odaiba Marine Park",
+      "category": "Parque",
+      "description": "",
+      "coords": [
+        35.63054,
+        139.77874
+      ]
+    },
+    {
+      "name": "Ginza Corridor Street",
+      "category": "Atracción",
+      "description": "",
+      "coords": [
+        35.67184,
+        139.76717
+      ]
+    },
+    {
+      "name": "Shimokitazawa",
+      "category": "Atracción",
+      "description": "boho chick neighborhood with vintage boutiques",
+      "coords": [
+        35.661388888889,
+        139.6675
+      ]
+    },
+    {
+      "name": "Tsukishima Monja Street",
+      "category": "Atracción",
+      "description": "Monjayaki pancakes here. Less touristy",
+      "coords": [
+        35.6635594,
+        139.7814453
+      ]
+    },
+    {
+      "name": "Roppongi Hills Mori Tower",
+      "category": "Mirador",
+      "description": "More chill elevated spot with good view and less crowds",
+      "coords": [
+        35.66056,
+        139.72917
+      ]
+    },
+    {
+      "name": "Nezu Shrine",
+      "category": "Templo",
+      "description": "in Bunkyo for a local experience",
+      "coords": [
+        35.72028,
+        139.76083
+      ]
+    },
+    {
+      "name": "Nakamise Shopping Street",
+      "category": "Compras",
+      "description": "",
+      "coords": [
+        35.7148,
+        139.7967
+      ]
+    },
+    {
+      "name": "Odaiba",
+      "category": "Atracción",
+      "description": "Large artificial island in Tokyo Bay, Japan, across the Rainbow Bridge from central Tokyo.",
+      "coords": [
+        35.63054,
+        139.77874
+      ]
     }
   ],
   "Kyoto": [
@@ -1069,7 +1204,13 @@
     {
       "name": "Tren Aoniyoshi",
       "category": "Tip",
-      "description": "Tren turístico que conecta Osaka, Nara y Kioto. Costo: ~$5."
+      "description": "Tren turístico que conecta Osaka, Nara y Kioto. Costo: ~$5. from Kyoto to Nara - aoniyoshi train for 9uss. Tren retro, need two ticket: basic fare, find kintetsu signs. Then limited express ticket for aoniyoshi (buy online 1 month before)"
+    },
+    {
+      "name": "Comprar parches para las piernas en cualquier farmacia",
+      "category": "Tip",
+      "description": "",
+      "coords": null
     }
   ],
   "Gyeongju": [
@@ -1520,6 +1661,24 @@
         127.766
       ],
       "maps_url": "https://maps.google.com/?cid=11590020228833235000&g_mp=CiVnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLkdldFBsYWNl"
+    },
+    {
+      "name": "Lotte World Tower",
+      "category": "Mirador",
+      "description": "Seoul Sky",
+      "coords": [
+        37.5125,
+        127.10278
+      ]
+    },
+    {
+      "name": "Arc N Book Library",
+      "category": "Atracción",
+      "description": "not sure what's see",
+      "coords": [
+        37.556,
+        126.97
+      ]
     }
   ],
   "Taipei": [
