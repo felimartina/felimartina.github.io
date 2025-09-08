@@ -90,7 +90,7 @@
   { "datetime": "2025-10-08T23:00:00.000Z", "type": "sleep", "title": "Night in Seoul", "location": "Seoul", "coords": [ 37.5665, 126.978 ], "details": { "Alojamiento": "NEED TO BOOK" } },
   { "datetime": "2025-10-09T09:00:00.000Z", "type": "activity", "title": "Día en Seoul", "location": "Seoul", "coords": [ 37.5665, 126.978 ], "details": { "Plan": "Explorar la ciudad." } },
   { "datetime": "2025-10-09T23:00:00.000Z", "type": "sleep", "title": "Noche en Seoul", "location": "Seoul", "coords": [ 37.5665, 126.978 ], "details": { "Alojamiento": "NEED TO BOOK" } },
-  { "datetime": "2025-10-10T09:00:00.000Z", "type": "activity", "title": "Día en Seoul", "location": "Seoul", "coords": [ 37.5665, 126.978 ], "details": { "Plan": "Explorar la ciudad." } },
+  { "datetime": "2025-10-10T09:00:00.000Z", "type": "business", "title": "Visita a Google Office", "location": "Seoul", "coords": [37.500012, 127.0364185], "details": { "Dirección": "Gangnam Finance Center, 22nd Floor, 152 Teheran-ro, Gangnam-gu, Seoul, South Korea" } },
   { "datetime": "2025-10-10T23:00:00.000Z", "type": "sleep", "title": "Noche en Seoul", "location": "Seoul", "coords": [ 37.5665, 126.978 ], "details": { "Alojamiento": "NEED TO BOOK" } },
   { "datetime": "2025-10-11T09:00:00.000Z", "type": "activity", "title": "Día en Seoul", "location": "Seoul", "coords": [ 37.5665, 126.978 ], "details": { "Plan": "Explorar la ciudad." } },
   { "datetime": "2025-10-11T23:00:00.000Z", "type": "sleep", "title": "Noche en Seoul", "location": "Seoul", "coords": [ 37.5665, 126.978 ], "details": { "Alojamiento": "NEED TO BOOK" } },
