@@ -48,8 +48,37 @@
   { "datetime": "2025-10-05T09:00:00.000Z", "type": "activity", "title": "Día en Tokyo", "location": "Tokyo", "coords": [ 35.6895, 139.6917 ], "details": { "Plan": "Día libre." } },
   { "datetime": "2025-10-05T23:00:00.000Z", "type": "sleep", "title": "Noche en Tokyo", "location": "Tokyo", "coords": [ 35.6895, 139.6917 ], "details": { "Alojamiento": "NEED TO BOOK" } },
   {
-    "datetime": "2025-10-06T10:30:00", "type": "flight", "title": "Vuelo a Busan", "location": "Busan", "coords": [ 35.1796, 129.0756 ], "duration": "2h 30m",
-    "details": { "Aerolínea": "Jeju Air", "Sale de": "Narita International Airport (NRT)", "Llega a": "Gimhae International Airport (PUS)", "Cost": "from $571 (Bravofly)", "Enlace": "https://www.google.com/travel/flights/s/AuPuZFsygNMxiMeN9" }
+    "datetime": "2025-10-06T07:00:00",
+    "type": "transport",
+    "title": "Train to Narita Airport",
+    "location": "Tokyo",
+    "coords": [ 35.6895, 139.6917 ],
+    "duration": "1h 30m",
+    "details": { "Transporte": "Narita Express (N'EX)" }
+  },
+  {
+    "datetime": "2025-10-06T10:30:00",
+    "type": "flight",
+    "title": "Vuelo a Busan",
+    "location": "Tokyo",
+    "coords": [ 35.772, 140.3863 ],
+    "duration": "2h 30m",
+    "details": {
+      "Reserva": "576625671",
+      "Referencia Aerolínea": "KFRB3U",
+      "Vuelo": "7C 1152",
+      "Aerolínea": "Jeju Air",
+      "Sale de": "Narita International Airport (NRT)",
+      "Llega a": "Gimhae International Airport (PUS)"
+    }
+  },
+  {
+    "datetime": "2025-10-06T14:00:00",
+    "type": "lodging",
+    "title": "Check-in en Busan",
+    "location": "Busan",
+    "coords": [ 35.1796, 129.0756 ],
+    "details": { "Alojamiento": "NEED TO BOOK" }
   },
   { "datetime": "2025-10-06T23:00:00.000Z", "type": "sleep", "title": "Noche en Busan", "location": "Busan", "coords": [ 35.1796, 129.0756 ], "details": { "Alojamiento": "NEED TO BOOK" } },
   { "datetime": "2025-10-07T09:00:00.000Z", "type": "activity", "title": "Día en Busan", "location": "Busan", "coords": [ 35.1796, 129.0756 ], "details": { "Plan": "Explorar la ciudad." } },
@@ -63,8 +92,42 @@
   { "datetime": "2025-10-11T09:00:00.000Z", "type": "activity", "title": "Día en Seoul", "location": "Seoul", "coords": [ 37.5665, 126.978 ], "details": { "Plan": "Explorar la ciudad." } },
   { "datetime": "2025-10-11T23:00:00.000Z", "type": "sleep", "title": "Noche en Seoul", "location": "Seoul", "coords": [ 37.5665, 126.978 ], "details": { "Alojamiento": "NEED TO BOOK" } },
   {
-    "datetime": "2025-10-12T09:55:00", "type": "flight", "title": "Vuelo a Okinawa", "location": "Okinawa", "coords": [ 26.2124, 127.6792 ], "duration": "2h 25m",
-    "details": { "Aerolínea": "Jin Air", "Vuelo": "LJ 341", "Sale de": "Incheon International Airport (ICN)", "Llega a": "Naha International Airport (OKA)", "Clase": "Economy", "Avión": "Boeing 777", "Notas": "Average legroom (30 in), In-seat power outlet", "Cost": "from $356 (Trip.com)", "Enlace": "https://www.google.com/travel/flights/s/cg5V2TmMcRDzST2U9" }
+    "datetime": "2025-10-12T06:55:00",
+    "type": "transport",
+    "title": "Train to Incheon Airport",
+    "location": "Seoul",
+    "coords": [ 37.5665, 126.978 ],
+    "duration": "1h",
+    "details": { "Transporte": "AREX Express Train" }
+  },
+  {
+    "datetime": "2025-10-12T09:55:00",
+    "type": "flight",
+    "title": "Vuelo a Okinawa",
+    "location": "Seoul",
+    "coords": [ 37.5665, 126.978 ],
+    "duration": "2h 25m",
+    "details": {
+      "Aerolínea": "Jin Air",
+      "Vuelo": "LJ341",
+      "Sale de": "Incheon International Airport",
+      "Llega a": "Naha Airport",
+      "Pasajeros": [
+        "FELIPE MARTINA",
+        "ROMINA CASTAGNO",
+        "JULIOCESAR CASTAGNO",
+        "CLELIAMARIADEJESUS AIMAR"
+      ],
+      "Precio": "US$334.80"
+    }
+  },
+  {
+    "datetime": "2025-10-12T13:20:00",
+    "type": "lodging",
+    "title": "Check-in en Okinawa",
+    "location": "Okinawa",
+    "coords": [ 26.2124, 127.6792 ],
+    "details": { "Alojamiento": "NEED TO BOOK" }
   },
   { "datetime": "2025-10-12T23:00:00.000Z", "type": "sleep", "title": "Noche en Okinawa", "location": "Okinawa", "coords": [ 26.2124, 127.6792 ], "details": { "Alojamiento": "NEED TO BOOK" } },
   { "datetime": "2025-10-13T09:00:00.000Z", "type": "activity", "title": "Día en Okinawa", "location": "Okinawa", "coords": [ 26.2124, 127.6792 ], "details": { "Plan": "Explorar la isla." } },
@@ -72,8 +135,37 @@
   { "datetime": "2025-10-14T09:00:00.000Z", "type": "activity", "title": "Día en Okinawa", "location": "Okinawa", "coords": [ 26.2124, 127.6792 ], "details": { "Plan": "Explorar la isla." } },
   { "datetime": "2025-10-14T23:00:00.000Z", "type": "sleep", "title": "Noche en Okinawa", "location": "Okinawa", "coords": [ 26.2124, 127.6792 ], "details": { "Alojamiento": "NEED TO BOOK" } },
   {
-    "datetime": "2025-10-15T11:40:00", "type": "flight", "title": "Vuelo a Osaka", "location": "Osaka", "coords": [ 34.6937, 135.5023 ], "duration": "2h 5m",
-    "details": { "Aerolínea": "Peach Aviation", "Sale de": "Naha International Airport (OKA)", "Llega a": "Kansai International Airport (KIX)", "Notas": "-16% emissions", "Cost": "from $247 (Bravofly)", "Enlace": "https://www.google.com/travel/flights/s/Pvc6UqerSurbDNxa8" }
+    "datetime": "2025-10-15T10:15:00",
+    "type": "transport",
+    "title": "Transport to Naha Airport",
+    "location": "Okinawa",
+    "coords": [ 26.2124, 127.6792 ],
+    "duration": "30m",
+    "details": { "Transporte": "Yui Rail (Monorail)" }
+  },
+  {
+    "datetime": "2025-10-15T12:45:00",
+    "type": "flight",
+    "title": "Vuelo a Osaka",
+    "location": "Okinawa",
+    "coords": [ 26.2124, 127.6792 ],
+    "duration": "2h 5m",
+    "details": {
+      "Reserva": "APUTVA",
+      "Vuelo": "GK352",
+      "Aerolínea": "Jetstar Japan",
+      "Avión": "Airbus A320",
+      "Sale de": "Naha Airport Domestic Terminal",
+      "Llega a": "Kansai International Airport - Terminal 1"
+    }
+  },
+  {
+    "datetime": "2025-10-15T15:50:00",
+    "type": "lodging",
+    "title": "Check-in en Osaka",
+    "location": "Osaka",
+    "coords": [ 34.6937, 135.5023 ],
+    "details": { "Alojamiento": "NEED TO BOOK" }
   },
   { "datetime": "2025-10-15T23:00:00.000Z", "type": "sleep", "title": "Noche en Osaka", "location": "Osaka", "coords": [ 34.6937, 135.5023 ], "details": { "Alojamiento": "NEED TO BOOK" } },
   { "datetime": "2025-10-16T09:00:00.000Z", "type": "activity", "title": "Día en Osaka", "location": "Osaka", "coords": [ 34.6937, 135.5023 ], "details": { "Plan": "Explorar la ciudad." } },
@@ -85,8 +177,29 @@
   { "datetime": "2025-10-19T09:00:00.000Z", "type": "activity", "title": "Día en Kyoto", "location": "Kyoto", "coords": [ 35.0116, 135.7681 ], "details": { "Plan": "Explorar la ciudad." } },
   { "datetime": "2025-10-19T23:00:00.000Z", "type": "sleep", "title": "Noche en Kyoto", "location": "Kyoto", "coords": [ 35.0116, 135.7681 ], "details": { "Alojamiento": "NEED TO BOOK" } },
   {
-    "datetime": "2025-10-20T11:50:00", "type": "flight", "title": "Vuelo a Narita", "location": "Narita", "coords": [ 35.772, 140.3863 ], "duration": "1h 30m",
-    "details": { "Aerolínea": "Jetstar", "Sale de": "Kansai International Airport (KIX)", "Llega a": "Narita International Airport (NRT)", "Cost": "from $236 (Jetstar)", "Enlace": "https://www.google.com/travel/flights/s/vHdscCrUWrTBMehs7" }
+    "datetime": "2025-10-20T08:20:00",
+    "type": "transport",
+    "title": "Train to Kansai Airport",
+    "location": "Kyoto",
+    "coords": [ 35.0116, 135.7681 ],
+    "duration": "1h 30m",
+    "details": { "Transporte": "JR Haruka Express" }
+  },
+  {
+    "datetime": "2025-10-20T11:50:00",
+    "type": "flight",
+    "title": "Vuelo a Tokyo",
+    "location": "Kyoto",
+    "coords": [ 35.0116, 135.7681 ],
+    "duration": "1h 30m",
+    "details": {
+      "Reserva": "IJUHTF",
+      "Vuelo": "GK228",
+      "Aerolínea": "Jetstar Japan",
+      "Avión": "Airbus A320-200",
+      "Sale de": "Osaka (Kansai) Terminal 1",
+      "Llega a": "Tokyo (Narita) Terminal 3"
+    }
   },
   {
     "datetime": "2025-10-20T16:55:00.000Z", "type": "flight", "title": "Vuelo desde Narita", "location": "Fort Lauderdale", "coords": [ 26.0726, -80.1528 ], "duration": "~12h 15m",
