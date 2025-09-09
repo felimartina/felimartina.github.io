@@ -120,7 +120,7 @@
 
         .transport-icon {
             position: absolute;
-            top: -28px; /* Positioned relative to the item top, to be above the line */
+            top: 20px; /* Positioned relative to the item top, to be above the line */
             left: 50%;
             transform: translateX(-50%);
             background-color: #fff;
@@ -139,13 +139,13 @@
 
         .day-trip-node {
             position: absolute;
-            top: -55px; /* Position below the timeline line */
+            top: 80px; /* Position below the timeline line */
             left: 25%; /* Position on the first half of the segment */
             transform: translateX(-50%);
             display: flex;
             flex-direction: column;
             align-items: center;
-            pointer-events: auto; /* Make it unclickable */
+            pointer-events: none; /* Make it unclickable */
             cursor: default;
         }
 
@@ -588,7 +588,7 @@
                 segment.forEach(e => {
                     if (e.type === 'daytrip' && !allSleepCities.includes(e.location)) {
                         if (!dayTrips.some(dt => dt.city === e.location)) {
-                            dayTrips.push({ city: e.location, flag: countryFlags[e.location] || '', event: e });
+                            dayTrips.push({ city: e.location, flag: countryFlags[e.location] || '' });
                         }
                     }
                 });
@@ -715,6 +715,7 @@
 
             const timelineDiv = document.createElement('div');
             timelineDiv.className = 'city-timeline';
+            const containersToAdjust = []; // Keep track of containers
 
             citiesToShow.forEach(cityKey => {
                 const stayInfo = cityStays[cityKey];
@@ -748,25 +749,20 @@
                 }
 
                 if (stayInfo.dayTrips.length > 0) {
-                    stayInfo.dayTrips.forEach((trip, index) => {
-                        const dayTripNode = document.createElement('div');
-                        dayTripNode.className = 'day-trip-node';
-                        // Position day trips along the timeline, starting at 75% of the item width
-                        dayTripNode.style.left = `${75 + index * 20}%`;
-                        dayTripNode.innerHTML = `
-                            <div class="city-timeline-node">
-                                <span class="material-symbols-outlined">tour</span>
-                            </div>
-                            <div class="city-timeline-label">${trip.city}</div>
+                    const dayTripsContainer = document.createElement('div');
+                    dayTripsContainer.className = 'day-trips-container-org';
+
+                    stayInfo.dayTrips.forEach(trip => {
+                        const dayTripItem = document.createElement('div');
+                        dayTripItem.className = 'day-trip-item-org';
+                        dayTripItem.innerHTML = `
+                            <div class="day-trip-icon"><span class="material-symbols-outlined">holiday_village</span></div>
+                            <div class="day-trip-label">${trip.city}</div>
                         `;
-                        if (trip.event) {
-                            dayTripNode.addEventListener('click', (e) => {
-                                e.stopPropagation(); // Prevent the main city item click
-                                showDetailsModal(trip.event);
-                            });
-                        }
-                        itemDiv.appendChild(dayTripNode);
+                        dayTripsContainer.appendChild(dayTripItem);
                     });
+                    itemDiv.appendChild(dayTripsContainer);
+                    containersToAdjust.push(dayTripsContainer); // Add to list for later processing
                 }
 
                 if (connectionDiv.hasChildNodes()) {
@@ -779,6 +775,27 @@
 
             cityTimelineContainer.innerHTML = '';
             cityTimelineContainer.appendChild(timelineDiv);
+
+            // Defer the height adjustment until after the DOM has been updated.
+            setTimeout(() => {
+                containersToAdjust.forEach(dayTripsContainer => {
+                    const items = dayTripsContainer.querySelectorAll('.day-trip-item-org');
+                    if (items.length > 0) {
+                        const lastItem = items[items.length - 1];
+                        const lastIcon = lastItem.querySelector('.day-trip-icon');
+                        if (lastIcon) {
+                            // We want the line to end at the center of the last icon.
+                            const containerTop = dayTripsContainer.getBoundingClientRect().top;
+                            const lastIconTop = lastIcon.getBoundingClientRect().top;
+                            if (lastIconTop > containerTop) { // Ensure calculation is valid
+                                const desiredHeight = lastIconTop - containerTop + (lastIcon.offsetHeight / 2);
+                                dayTripsContainer.style.setProperty('--line-height', `${desiredHeight}px`);
+                            }
+                        }
+                    }
+                });
+            }, 0);
+
 
             if (isMobile && allCities.length > windowSize) {
                 const leftArrow = document.createElement('button');
