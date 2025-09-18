@@ -33,21 +33,46 @@
     "coords": [ 35.772, 140.3863 ],
     "details": { "Transporte Sugerido": "Narita Express (N'EX) a Shinjuku/Tokyo Station." }
   },
-  { "datetime": "2025-09-29T23:00:00.000Z", "type": "sleep", "title": "Noche en Tokyo", "location": "Tokyo", "coords": [ 35.6895, 139.6917 ], "details": { "Alojamiento": "NEED TO BOOK" } },
+  {
+    "datetime": "2025-09-29T16:00:00.000Z",
+    "type": "transport",
+    "title": "Transporte a Airbnb en Akasaka",
+    "location": "Tokyo",
+    "coords": [ 35.772, 140.3863 ],
+    "duration": "~1h 30m",
+    "details": { "Transporte": "Narita Express (N'EX) a Tokyo Station, y luego taxi o metro a Akasaka." }
+  },
+  {
+    "datetime": "2025-09-29T17:30:00.000Z",
+    "type": "lodging",
+    "title": "Check-in en Airbnb Akasaka",
+    "location": "Tokyo",
+    "coords": [ 35.676821, 139.737119 ],
+    "details": {
+      "Dirección": "4 Chome 7-1 Akasaka, Minato City, Tokyo-to 107-0052, Japan",
+      "Plataforma": "Airbnb",
+      "Reserva": "https://www.airbnb.com/reservation/itinerary?code=HM5BS5Y2WX",
+      "Check-in": "4:00 PM",
+      "Check-out": "11:00 AM (Oct 6)",
+      "Costo": "$2,291.95 USD",
+      "Notas": "Self check-in con lockbox. Se puede dejar el equipaje después de las 12:00 PM."
+    }
+  },
+  { "datetime": "2025-09-29T23:00:00.000Z", "type": "sleep", "title": "Noche en Tokyo", "location": "Tokyo", "coords": [ 35.676821, 139.737119 ], "details": { "Alojamiento": "Airbnb Akasaka" } },
   { "datetime": "2025-09-30T09:00:00.000Z", "type": "activity", "title": "Día en Tokyo", "location": "Tokyo", "coords": [ 35.6895, 139.6917 ], "details": { "Plan": "Explorar la zona de Shibuya y Harajuku." } },
-  { "datetime": "2025-09-30T23:00:00.000Z", "type": "sleep", "title": "Noche en Tokyo", "location": "Tokyo", "coords": [ 35.6895, 139.6917 ], "details": { "Alojamiento": "NEED TO BOOK" } },
+  { "datetime": "2025-09-30T23:00:00.000Z", "type": "sleep", "title": "Noche en Tokyo", "location": "Tokyo", "coords": [ 35.676821, 139.737119 ], "details": { "Alojamiento": "Airbnb Akasaka" } },
   { "datetime": "2025-10-01T09:00:00.000Z", "type": "activity", "title": "Día en Tokyo", "location": "Tokyo", "coords": [ 35.6895, 139.6917 ], "details": { "Plan": "Explorar la zona de Asakusa y Ueno." } },
-  { "datetime": "2025-10-01T23:00:00.000Z", "type": "sleep", "title": "Noche en Tokyo", "location": "Tokyo", "coords": [ 35.6895, 139.6917 ], "details": { "Alojamiento": "NEED TO BOOK" } },
+  { "datetime": "2025-10-01T23:00:00.000Z", "type": "sleep", "title": "Noche en Tokyo", "location": "Tokyo", "coords": [ 35.676821, 139.737119 ], "details": { "Alojamiento": "Airbnb Akasaka" } },
   { "datetime": "2025-10-02T09:00:00.000Z", "type": "daytrip", "title": "Daytrip to Mt Fuji", "location": "Mt Fuji", "coords": [35.3606, 138.7278], "details": {} },
-  { "datetime": "2025-10-02T23:00:00.000Z", "type": "sleep", "title": "Noche en Tokyo", "location": "Tokyo", "coords": [ 35.6895, 139.6917 ], "details": { "Alojamiento": "NEED TO BOOK" } },
+  { "datetime": "2025-10-02T23:00:00.000Z", "type": "sleep", "title": "Noche en Tokyo", "location": "Tokyo", "coords": [ 35.676821, 139.737119 ], "details": { "Alojamiento": "Airbnb Akasaka" } },
   { "datetime": "2025-10-03T09:00:00.000Z", "type": "business", "title": "Visita a Google Office", "location": "Tokyo", "coords": [ 35.658, 139.7016 ], "details": { "Dirección": "Shibuya Stream, 3-21-3 Shibuya" } },
   { "datetime": "2025-10-03T13:00:00.000Z", "type": "activity", "title": "Tarde en Tokyo", "location": "Tokyo", "coords": [ 35.6895, 139.6917 ], "details": { "Plan": "Tiempo libre para explorar Shibuya y visitar el Festival Moon Art Night en Shimokitazawa." } },
-  { "datetime": "2025-10-03T23:00:00.000Z", "type": "sleep", "title": "Noche en Tokyo", "location": "Tokyo", "coords": [ 35.6895, 139.6917 ], "details": { "Alojamiento": "NEED TO BOOK" } },
+  { "datetime": "2025-10-03T23:00:00.000Z", "type": "sleep", "title": "Noche en Tokyo", "location": "Tokyo", "coords": [ 35.676821, 139.737119 ], "details": { "Alojamiento": "Airbnb Akasaka" } },
   { "datetime": "2025-10-04T10:00:00.000Z", "type": "transport", "title": "Pickup car", "location": "Tokyo", "coords": [ 35.6895, 139.6917 ], "details": {} },
   { "datetime": "2025-10-04T11:00:00.000Z", "type": "daytrip", "title": "Daytrip to Nihommatsu", "location": "Nihommatsu", "coords": [37.5833, 140.4333], "details": {} },
-  { "datetime": "2025-10-04T23:00:00.000Z", "type": "sleep", "title": "Noche en Tokyo", "location": "Tokyo", "coords": [ 35.6895, 139.6917 ], "details": { "Alojamiento": "NEED TO BOOK" } },
+  { "datetime": "2025-10-04T23:00:00.000Z", "type": "sleep", "title": "Noche en Tokyo", "location": "Tokyo", "coords": [ 35.676821, 139.737119 ], "details": { "Alojamiento": "Airbnb Akasaka" } },
   { "datetime": "2025-10-05T09:00:00.000Z", "type": "transport", "title": "Drop off car", "location": "Tokyo", "coords": [ 35.6895, 139.6917 ], "details": {} },
-  { "datetime": "2025-10-05T23:00:00.000Z", "type": "sleep", "title": "Noche en Tokyo", "location": "Tokyo", "coords": [ 35.6895, 139.6917 ], "details": { "Alojamiento": "NEED TO BOOK" } },
+  { "datetime": "2025-10-05T23:00:00.000Z", "type": "sleep", "title": "Noche en Tokyo", "location": "Tokyo", "coords": [ 35.676821, 139.737119 ], "details": { "Alojamiento": "Airbnb Akasaka" } },
   {
     "datetime": "2025-10-06T07:00:00",
     "type": "transport",
@@ -74,26 +99,76 @@
     }
   },
   {
-    "datetime": "2025-10-06T14:00:00",
-    "type": "lodging",
-    "title": "Check-in en Busan",
+    "datetime": "2025-10-06T13:00:00.000Z",
+    "type": "flight_arrival",
+    "title": "Llegada a Busan",
     "location": "Busan",
     "coords": [ 35.1796, 129.0756 ],
-    "details": { "Alojamiento": "NEED TO BOOK" }
+    "details": {}
   },
-  { "datetime": "2025-10-06T23:00:00.000Z", "type": "sleep", "title": "Noche en Busan", "location": "Busan", "coords": [ 35.1796, 129.0756 ], "details": { "Alojamiento": "NEED TO BOOK" } },
+  {
+    "datetime": "2025-10-06T13:30:00.000Z",
+    "type": "transport",
+    "title": "Transporte a Maron Hotel Nampo",
+    "location": "Busan",
+    "coords": [ 35.1796, 129.0756 ],
+    "duration": "~30m",
+    "details": { "Transporte": "Taxi o bus" }
+  },
+  {
+    "datetime": "2025-10-06T14:00:00",
+    "type": "lodging",
+    "title": "Check-in en Maron Hotel Nampo",
+    "location": "Busan",
+    "coords": [ 35.097883, 129.034663 ],
+    "details": {
+      "Dirección": "12, Gwangbok-ro 67beon-gil, Jung-gu, Jung-gu, 48952 Busan, South Korea",
+      "Plataforma": "Booking.com",
+      "Confirmación": "6467847962",
+      "Check-in": "4:00 PM",
+      "Check-out": "12:00 PM (Oct 8)",
+      "Costo": "367.04 USD",
+      "Notas": "Prepagado y no reembolsable. Se requiere identificación con foto y tarjeta de crédito."
+    }
+  },
+  { "datetime": "2025-10-06T23:00:00.000Z", "type": "sleep", "title": "Noche en Busan", "location": "Busan", "coords": [ 35.097883, 129.034663 ], "details": { "Alojamiento": "Maron Hotel Nampo" } },
   { "datetime": "2025-10-07T09:00:00.000Z", "type": "activity", "title": "Día en Busan", "location": "Busan", "coords": [ 35.1796, 129.0756 ], "details": { "Plan": "Explorar la ciudad." } },
-  { "datetime": "2025-10-07T23:00:00.000Z", "type": "sleep", "title": "Noche en Busan", "location": "Busan", "coords": [ 35.1796, 129.0756 ], "details": { "Alojamiento": "NEED TO BOOK" } },
+  { "datetime": "2025-10-07T23:00:00.000Z", "type": "sleep", "title": "Noche en Busan", "location": "Busan", "coords": [ 35.097883, 129.034663 ], "details": { "Alojamiento": "Maron Hotel Nampo" } },
   { "datetime": "2025-10-08T09:00:00.000Z", "type": "transport", "title": "Train from Busan to Gyeongju", "location": "Busan", "coords": [ 35.1796, 129.0756 ], "details": {} },
   { "datetime": "2025-10-08T10:00:00.000Z", "type": "daytrip", "title": "Daytrip in Gyeongju", "location": "Gyeongju", "coords": [ 35.8562, 129.2247 ], "details": {} },
   { "datetime": "2025-10-08T21:00:00.000Z", "type": "transport", "title": "Train from Gyeongju to Seoul", "location": "Gyeongju", "coords": [ 35.8562, 129.2247 ], "details": {} },
-  { "datetime": "2025-10-08T23:00:00.000Z", "type": "sleep", "title": "Night in Seoul", "location": "Seoul", "coords": [ 37.5665, 126.978 ], "details": { "Alojamiento": "NEED TO BOOK" } },
+  {
+    "datetime": "2025-10-08T21:30:00.000Z",
+    "type": "transport",
+    "title": "Transporte a Airbnb en Myeong-dong",
+    "location": "Seoul",
+    "coords": [ 37.5665, 126.978 ],
+    "duration": "~30m",
+    "details": { "Transporte": "Recogida gratuita del anfitrión" }
+  },
+  {
+    "datetime": "2025-10-08T22:00:00.000Z",
+    "type": "lodging",
+    "title": "Check-in en Airbnb Seoul",
+    "location": "Seoul",
+    "coords": [ 37.5613, 126.9846 ],
+    "details": {
+      "Dirección": "39 Toegye-ro 20na-gil, Jung-gu, Seoul, South Korea",
+      "Plataforma": "Airbnb",
+      "Reserva": "https://www.airbnb.com/reservation/itinerary?code=HMHNZDTQMP",
+      "Check-in": "3:00 PM",
+      "Check-out": "11:00 AM (Oct 12)",
+      "Costo": "$849.15 USD",
+      "Notas": "Self check-in con keypad. Recogida gratuita del aeropuerto (o estación de tren)."
+    }
+  },
+  { "datetime": "2025-10-08T23:00:00.000Z", "type": "sleep", "title": "Night in Seoul", "location": "Seoul", "coords": [ 37.5613, 126.9846 ], "details": { "Alojamiento": "Airbnb Seoul" } },
   { "datetime": "2025-10-09T09:00:00.000Z", "type": "activity", "title": "Día en Seoul", "location": "Seoul", "coords": [ 37.5665, 126.978 ], "details": { "Plan": "Explorar la ciudad." } },
-  { "datetime": "2025-10-09T23:00:00.000Z", "type": "sleep", "title": "Noche en Seoul", "location": "Seoul", "coords": [ 37.5665, 126.978 ], "details": { "Alojamiento": "NEED TO BOOK" } },
+  { "datetime": "2025-10-09T23:00:00.000Z", "type": "sleep", "title": "Noche en Seoul", "location": "Seoul", "coords": [ 37.5613, 126.9846 ], "details": { "Alojamiento": "Airbnb Seoul" } },
   { "datetime": "2025-10-10T09:00:00.000Z", "type": "business", "title": "Visita a Google Office", "location": "Seoul", "coords": [37.500012, 127.0364185], "details": { "Dirección": "Gangnam Finance Center, 22nd Floor, 152 Teheran-ro, Gangnam-gu, Seoul, South Korea" } },
-  { "datetime": "2025-10-10T23:00:00.000Z", "type": "sleep", "title": "Noche en Seoul", "location": "Seoul", "coords": [ 37.5665, 126.978 ], "details": { "Alojamiento": "NEED TO BOOK" } },
+  { "datetime": "2025-10-10T23:00:00.000Z", "type": "sleep", "title": "Noche en Seoul", "location": "Seoul", "coords": [ 37.5613, 126.9846 ], "details": { "Alojamiento": "Airbnb Seoul" } },
   { "datetime": "2025-10-11T09:00:00.000Z", "type": "activity", "title": "Día en Seoul", "location": "Seoul", "coords": [ 37.5665, 126.978 ], "details": { "Plan": "Explorar la ciudad." } },
-  { "datetime": "2025-10-11T23:00:00.000Z", "type": "sleep", "title": "Noche en Seoul", "location": "Seoul", "coords": [ 37.5665, 126.978 ], "details": { "Alojamiento": "NEED TO BOOK" } },
+  { "datetime": "2025-10-11T23:00:00.000Z", "type": "sleep", "title": "Noche en Seoul", "location": "Seoul", "coords": [ 37.5613, 126.9846 ], "details": { "Alojamiento": "Airbnb Seoul" } },
   {
     "datetime": "2025-10-12T06:55:00",
     "type": "transport",
@@ -163,22 +238,72 @@
     }
   },
   {
-    "datetime": "2025-10-15T15:50:00",
-    "type": "lodging",
-    "title": "Check-in en Osaka",
+    "datetime": "2025-10-15T14:50:00.000Z",
+    "type": "flight_arrival",
+    "title": "Llegada a Osaka",
     "location": "Osaka",
     "coords": [ 34.6937, 135.5023 ],
-    "details": { "Alojamiento": "NEED TO BOOK" }
+    "details": {}
   },
-  { "datetime": "2025-10-15T23:00:00.000Z", "type": "sleep", "title": "Noche en Osaka", "location": "Osaka", "coords": [ 34.6937, 135.5023 ], "details": { "Alojamiento": "NEED TO BOOK" } },
+  {
+    "datetime": "2025-10-15T15:20:00.000Z",
+    "type": "transport",
+    "title": "Transporte a Airbnb en Higashishinsaibashi",
+    "location": "Osaka",
+    "coords": [ 34.6937, 135.5023 ],
+    "duration": "~1h",
+    "details": { "Transporte": "Nankai Airport Express a Namba Station, y luego caminar." }
+  },
+  {
+    "datetime": "2025-10-15T16:20:00",
+    "type": "lodging",
+    "title": "Check-in en Airbnb Osaka",
+    "location": "Osaka",
+    "coords": [ 34.67399, 135.50557 ],
+    "details": {
+      "Dirección": "Higashishinsaibashi, Chuo Ward, Osaka, 542-0083, Japan",
+      "Plataforma": "Airbnb",
+      "Reserva": "https://www.airbnb.com/reservation/itinerary?code=HMHDZZ4EDX",
+      "Check-in": "4:00 PM",
+      "Check-out": "10:00 AM (Oct 17)",
+      "Costo": "$393.50 USD",
+      "Notas": "Self check-in con lockbox. Se puede dejar el equipaje después de las 12:00 PM."
+    }
+  },
+  { "datetime": "2025-10-15T23:00:00.000Z", "type": "sleep", "title": "Noche en Osaka", "location": "Osaka", "coords": [ 34.67399, 135.50557 ], "details": { "Alojamiento": "Airbnb Osaka" } },
   { "datetime": "2025-10-16T09:00:00.000Z", "type": "activity", "title": "Día en Osaka", "location": "Osaka", "coords": [ 34.6937, 135.5023 ], "details": { "Plan": "Explorar la ciudad." } },
-  { "datetime": "2025-10-16T23:00:00.000Z", "type": "sleep", "title": "Noche en Osaka", "location": "Osaka", "coords": [ 34.6937, 135.5023 ], "details": { "Alojamiento": "NEED TO BOOK" } },
+  { "datetime": "2025-10-16T23:00:00.000Z", "type": "sleep", "title": "Noche en Osaka", "location": "Osaka", "coords": [ 34.67399, 135.50557 ], "details": { "Alojamiento": "Airbnb Osaka" } },
   { "datetime": "2025-10-17T09:00:00.000Z", "type": "transport", "title": "Tren a Kyoto", "location": "Kyoto", "coords": [ 35.0116, 135.7681 ], "duration": "~30m", "details": { "Transporte": "Tren local." } },
-  { "datetime": "2025-10-17T23:00:00.000Z", "type": "sleep", "title": "Noche en Kyoto", "location": "Kyoto", "coords": [ 35.0116, 135.7681 ], "details": { "Alojamiento": "NEED TO BOOK" } },
+  {
+    "datetime": "2025-10-17T10:00:00.000Z",
+    "type": "transport",
+    "title": "Transporte a Airbnb en Higashiyama",
+    "location": "Kyoto",
+    "coords": [ 35.0116, 135.7681 ],
+    "duration": "~20m",
+    "details": { "Transporte": "Taxi o bus" }
+  },
+  {
+    "datetime": "2025-10-17T16:00:00.000Z",
+    "type": "lodging",
+    "title": "Check-in en Airbnb Kyoto",
+    "location": "Kyoto",
+    "coords": [ 34.99722, 135.77639 ],
+    "details": {
+      "Dirección": "596 Shinnochō, Higashiyama Ward, Kyoto, 605-0016, Japan",
+      "Plataforma": "Airbnb",
+      "Reserva": "https://www.airbnb.com/reservation/itinerary?code=HMRAEZKW58",
+      "Check-in": "4:00 PM",
+      "Check-out": "11:00 AM (Oct 20)",
+      "Costo": "$1,126.17 USD",
+      "Notas": "Self check-in. No hay servicio de almacenamiento de equipaje."
+    }
+  },
+  { "datetime": "2025-10-17T23:00:00.000Z", "type": "sleep", "title": "Noche en Kyoto", "location": "Kyoto", "coords": [ 34.99722, 135.77639 ], "details": { "Alojamiento": "Airbnb Kyoto" } },
   { "datetime": "2025-10-18T09:00:00.000Z", "type": "daytrip", "title": "Excursión a Nara", "location": "Nara", "coords": [ 34.6851, 135.8048 ], "details": { "Plan": "Explorar Nara y volver a Kyoto." } },
-  { "datetime": "2025-10-18T23:00:00.000Z", "type": "sleep", "title": "Noche en Kyoto", "location": "Kyoto", "coords": [ 35.0116, 135.7681 ], "details": { "Alojamiento": "NEED TO BOOK" } },
+  { "datetime": "2025-10-18T23:00:00.000Z", "type": "sleep", "title": "Noche en Kyoto", "location": "Kyoto", "coords": [ 34.99722, 135.77639 ], "details": { "Alojamiento": "Airbnb Kyoto" } },
   { "datetime": "2025-10-19T09:00:00.000Z", "type": "activity", "title": "Día en Kyoto", "location": "Kyoto", "coords": [ 35.0116, 135.7681 ], "details": { "Plan": "Explorar la ciudad." } },
-  { "datetime": "2025-10-19T23:00:00.000Z", "type": "sleep", "title": "Noche en Kyoto", "location": "Kyoto", "coords": [ 35.0116, 135.7681 ], "details": { "Alojamiento": "NEED TO BOOK" } },
+  { "datetime": "2025-10-19T23:00:00.000Z", "type": "sleep", "title": "Noche en Kyoto", "location": "Kyoto", "coords": [ 34.99722, 135.77639 ], "details": { "Alojamiento": "Airbnb Kyoto" } },
   {
     "datetime": "2025-10-20T08:20:00",
     "type": "transport",
