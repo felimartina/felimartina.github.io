@@ -1020,15 +1020,34 @@
             openModal();
         }
 
+        function linkify(key, value) {
+            if (typeof value !== 'string') {
+                return `<p><strong class="text-slate-600 font-semibold">${key}:</strong> <span class="text-slate-800">${value}</span></p>`;
+            }
+
+            const urlRegex = /(https?:\/\/[^\s]+)/g;
+            const urls = value.match(urlRegex);
+
+            if (!urls) {
+                return `<p><strong class="text-slate-600 font-semibold">${key}:</strong> <span class="text-slate-800">${value}</span></p>`;
+            }
+
+            // Case 1: Special key and value is a URL.
+            if ((key === 'Reserva' || key === 'Confirmation' || key.toLowerCase().includes('link')) && urls.length === 1 && value.trim() === urls[0]) {
+                return `<p><a href="${value}" target="_blank" rel="noopener noreferrer" class="text-emerald-600 hover:underline font-semibold">${key}</a></p>`;
+            }
+
+            // Case 2: Generic value with URLs inside.
+            const linkedValue = value.replace(urlRegex, (url) => `<a href="${url}" target="_blank" rel="noopener noreferrer" class="text-emerald-600 hover:underline">${url}</a>`);
+            return `<p><strong class="text-slate-600 font-semibold">${key}:</strong> <span class="text-slate-800">${linkedValue}</span></p>`;
+        }
+
         function showDetailsModal(item) {
             modalTitle.textContent = item.title;
             let contentHtml = '<div class="space-y-3 p-4 bg-slate-50 rounded-lg shadow-inner">';
             if (item.details && Object.keys(item.details).length > 0) {
                 for (const [key, value] of Object.entries(item.details)) {
-                    let valueHtml = (typeof value === 'string' && value.startsWith('http'))
-                        ? `<a href="${value}" target="_blank" rel="noopener noreferrer" class="text-emerald-600 hover:underline">${value}</a>`
-                        : value;
-                    contentHtml += `<p><strong class="text-slate-600 font-semibold">${key}:</strong> <span class="text-slate-800">${valueHtml}</span></p>`;
+                    contentHtml += linkify(key, value);
                 }
             } else {
                 contentHtml += '<p class="text-slate-500 italic">No hay detalles para mostrar.</p>';
