@@ -328,11 +328,15 @@
 
                     <!-- Map and Details Column -->
                     <div class="lg:col-span-2 space-y-8">
-                        <!-- Atracciones Button -->
-                        <div class="flex justify-start">
+                        <!-- Action Buttons -->
+                        <div class="flex justify-start gap-4">
                             <button id="poi-modal-btn" class="flex items-center gap-2 px-4 py-2 font-semibold rounded-lg shadow-md transition">
                                 <span class="material-symbols-outlined">place</span>
                                 Atracciones
+                            </button>
+                            <button id="filter-modal-btn" class="flex items-center gap-2 px-4 py-2 font-semibold rounded-lg shadow-md transition bg-white text-slate-700 hover:bg-slate-100 border border-slate-200">
+                                <span class="material-symbols-outlined">filter_list</span>
+                                Filtros
                             </button>
                         </div>
                          <!-- Map -->
@@ -356,6 +360,26 @@
             </div>
             <div id="modal-content" class="p-6 space-y-4" style="max-height: 75vh; overflow-y: auto;">
                 <!-- Content will be injected here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Filter Modal -->
+    <div id="filter-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 p-4">
+        <div id="filter-modal-card" class="bg-white rounded-xl shadow-2xl w-full max-w-md transform transition-transform duration-300 ease-out scale-95">
+            <div class="flex justify-between items-center border-b p-4">
+                <h3 class="text-xl font-bold text-slate-800">Filtrar Puntos de Interés</h3>
+                <button id="filter-modal-close-btn" class="p-2 rounded-full text-slate-500 hover:bg-slate-200 hover:text-slate-800 transition">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <div id="filter-modal-content" class="p-6" style="max-height: 70vh; overflow-y: auto;">
+                <div id="filter-categories" class="grid grid-cols-2 gap-4">
+                    <!-- Checkboxes will be injected here -->
+                </div>
+            </div>
+            <div class="flex justify-end gap-4 border-t p-4">
+                <button id="filter-apply-btn" class="px-4 py-2 bg-emerald-600 text-white font-semibold rounded-lg hover:bg-emerald-700 transition">Aplicar</button>
             </div>
         </div>
     </div>
@@ -443,6 +467,7 @@
         let mainMarker = null;
         let map;
         let poiLayerGroup;
+        let activeFilters = [];
 
         // --- COORDINATE PARSING & VALIDATION (ROBUST) ---
         function parseCoords(coords) {
@@ -520,6 +545,7 @@
                 groupedByDay = Object.values(byDate);
 
                 cityStays = calculateCityStays(sortedData);
+                populateFilterModal();
 
                 if (Object.keys(cityStays).length > 0) {
                     renderUI();
@@ -905,7 +931,11 @@
                 const cityMap = { "Susono": "Hakone", "Narita": "Tokyo", "Gyeongju": "Busan" };
                 let poiLookupLocation = cityMap[firstEvent.location] || firstEvent.location;
                 if (pointsOfInterest[poiLookupLocation]) {
-                     pointsOfInterest[poiLookupLocation].forEach(poi => {
+                    const poisToDisplay = pointsOfInterest[poiLookupLocation].filter(poi =>
+                        activeFilters.length === 0 || activeFilters.includes(poi.category)
+                    );
+
+                    poisToDisplay.forEach(poi => {
                         if (isValidLatLng(poi.coords)) {
                             allCoords.push(poi.coords);
                             const iconHtml = `<span class="material-symbols-outlined">${poiIcons[poi.category] || 'place'}</span>`;
@@ -969,13 +999,19 @@
             }
         });
 
-        // --- Modal ---
+        // --- Modals ---
         const detailsModal = document.getElementById('details-modal');
         const modalCard = document.getElementById('modal-card');
         const poiModalBtn = document.getElementById('poi-modal-btn');
         const modalTitle = document.getElementById('modal-title');
         const modalContent = document.getElementById('modal-content');
         const modalCloseBtn = document.getElementById('modal-close-btn');
+
+        const filterModal = document.getElementById('filter-modal');
+        const filterModalCard = document.getElementById('filter-modal-card');
+        const filterModalBtn = document.getElementById('filter-modal-btn');
+        const filterModalCloseBtn = document.getElementById('filter-modal-close-btn');
+        const filterApplyBtn = document.getElementById('filter-apply-btn');
 
         function showPoiModal(location) {
             const cityMap = { "Susono": "Hakone", "Narita": "Tokyo", "Gyeongju": "Busan" };
@@ -1075,6 +1111,47 @@
             const mainLocation = groupedByDay[currentDayIndex]?.events[0]?.location;
             if (mainLocation) showPoiModal(mainLocation);
         });
+
+        filterModalBtn.addEventListener('click', () => {
+            filterModal.classList.remove('hidden');
+            filterModal.classList.add('flex');
+            setTimeout(() => filterModalCard.classList.remove('scale-95'), 10);
+        });
+
+        function hideFilterModal() {
+            filterModalCard.classList.add('scale-95');
+            setTimeout(() => filterModal.classList.add('hidden'), 200);
+        }
+
+        filterModalCloseBtn.addEventListener('click', hideFilterModal);
+        filterModal.addEventListener('click', (e) => { if (e.target === filterModal) hideFilterModal(); });
+
+        filterApplyBtn.addEventListener('click', () => {
+            const selectedCategories = Array.from(document.querySelectorAll('#filter-categories input:checked')).map(cb => cb.value);
+            activeFilters = selectedCategories;
+            renderDayView(); // This will re-render the map
+            hideFilterModal();
+        });
+
+        function populateFilterModal() {
+            const filterCategoriesContainer = document.getElementById('filter-categories');
+            if (!filterCategoriesContainer) return;
+
+            const allPois = Object.values(pointsOfInterest).flat();
+            const uniqueCategories = [...new Set(allPois.map(poi => poi.category).filter(Boolean))].sort();
+
+            filterCategoriesContainer.innerHTML = uniqueCategories.map(category => {
+                const checkboxId = `filter-${category.replace(/[^a-zA-Z0-9]/g, '-')}`;
+                const isChecked = activeFilters.length === 0 || activeFilters.includes(category);
+                return `
+                    <label for="${checkboxId}" class="flex items-center space-x-3 cursor-pointer hover:bg-slate-50 p-2 rounded-md">
+                        <input type="checkbox" id="${checkboxId}" name="poi-category" value="${category}" ${isChecked ? 'checked' : ''} class="h-4 w-4 rounded border-gray-300 text-emerald-600 focus:ring-emerald-500">
+                        <span class="text-slate-700">${category}</span>
+                    </label>
+                `;
+            }).join('');
+        }
+
 
         // --- Start the Application ---
         initializeTripData();
