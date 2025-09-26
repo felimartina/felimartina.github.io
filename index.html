@@ -231,38 +231,26 @@
         /* --- City Timeline Mobile Scroll --- */
         #city-timeline-container {
             position: relative;
+            overflow-x: auto; /* Enable horizontal scrolling */
+            padding-bottom: 1rem; /* Add some space for the scrollbar if visible */
         }
-        .scroll-arrow {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: rgba(255, 255, 255, 0.9);
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            z-index: 20;
-            transition: opacity 0.2s;
+        /* Hide scrollbar for a cleaner look on WebKit browsers */
+        #city-timeline-container::-webkit-scrollbar {
+            display: none;
         }
-        .scroll-arrow:disabled {
-            opacity: 0.3;
-            cursor: not-allowed;
+        /* Hide scrollbar for Firefox */
+        #city-timeline-container {
+            scrollbar-width: none; /* For Firefox */
+            -ms-overflow-style: none;  /* For Internet Explorer and Edge */
         }
-        .scroll-arrow.left { left: -10px; }
-        .scroll-arrow.right { right: -10px; }
-
         /* --- City Timeline Responsive Behavior --- */
         @media (min-width: 1024px) {
             .city-timeline {
                 flex-wrap: wrap;
                 justify-content: center;
             }
-            .scroll-arrow {
-                display: none;
+            #city-timeline-container {
+                overflow-x: visible; /* Disable scrolling on desktop */
             }
         }
 
@@ -274,6 +262,15 @@
         }
         .poi-category-details[open] .poi-list-modal {
             max-height: 1000px; /* Arbitrary large value */
+        }
+
+        /* --- Modal Content Responsiveness --- */
+        #modal-content {
+            word-wrap: break-word; /* For older browsers */
+            overflow-wrap: break-word; /* Standard property */
+        }
+        #modal-content a {
+            word-break: break-all; /* Force break for long URLs */
         }
 
         /* --- Atracciones Button --- */
@@ -471,7 +468,6 @@
 
         // --- Initialization & Setup ---
         const LG_BREAKPOINT = 1024;
-        let isMobile = window.innerWidth < LG_BREAKPOINT;
         
         const loadingOverlay = document.getElementById('loading-overlay');
         const mainContent = document.getElementById('main-content');
@@ -484,7 +480,6 @@
         
         // --- State Variables ---
         let currentDayIndex = 0;
-        let cityPageIndex = 0;
         let groupedByDay = [];
         let mainMarker = null;
         let map;
@@ -751,15 +746,7 @@
 
         function renderCityTimeline() {
             const allCities = Object.keys(cityStays);
-            const windowSize = 2;
-
-            if (isMobile) {
-                cityPageIndex = Math.max(0, Math.min(cityPageIndex, allCities.length - windowSize));
-            }
-
-            const citiesToShow = isMobile && allCities.length > windowSize
-                ? allCities.slice(cityPageIndex, cityPageIndex + windowSize)
-                : allCities;
+            const citiesToShow = allCities; // Always show all cities
 
             const timelineDiv = document.createElement('div');
             timelineDiv.className = 'city-timeline';
@@ -844,24 +831,6 @@
                 });
             }, 0);
 
-
-            if (isMobile && allCities.length > windowSize) {
-                const leftArrow = document.createElement('button');
-                leftArrow.className = 'scroll-arrow left';
-                leftArrow.innerHTML = `<span class="material-symbols-outlined">arrow_back_ios</span>`;
-                leftArrow.disabled = cityPageIndex === 0;
-                leftArrow.onclick = () => { if (cityPageIndex > 0) { cityPageIndex--; renderCityTimeline(); } };
-
-                const rightArrow = document.createElement('button');
-                rightArrow.className = 'scroll-arrow right';
-                rightArrow.innerHTML = `<span class="material-symbols-outlined">arrow_forward_ios</span>`;
-                rightArrow.disabled = cityPageIndex >= allCities.length - windowSize;
-                rightArrow.onclick = () => { if (cityPageIndex < allCities.length - windowSize) { cityPageIndex++; renderCityTimeline(); } };
-
-                cityTimelineContainer.appendChild(leftArrow);
-                cityTimelineContainer.appendChild(rightArrow);
-            }
-
             if (groupedByDay.length > 0) {
                 const currentEventTime = groupedByDay[currentDayIndex].date;
                 updateCityTimelineActiveState(currentEventTime);
@@ -872,25 +841,6 @@
             if (groupedByDay.length === 0) return;
 
             const currentDayData = groupedByDay[currentDayIndex];
-            const allCities = Object.keys(cityStays);
-            const windowSize = 2;
-
-            if (isMobile) {
-                const activeCity = getActiveCity(currentDayData.date);
-                if (activeCity) {
-                    const activeCityIndex = allCities.indexOf(activeCity);
-                    if (activeCityIndex !== -1) {
-                        let targetIndex = activeCityIndex - 1;
-                        const maxIndex = allCities.length > windowSize ? allCities.length - windowSize : 0;
-                        targetIndex = Math.max(0, Math.min(targetIndex, maxIndex));
-                        if (cityPageIndex !== targetIndex) {
-                            cityPageIndex = targetIndex;
-                            renderCityTimeline();
-                        }
-                    }
-                }
-            }
-
             const date = currentDayData.date;
             const dayName = date.toLocaleDateString('es-ES', { weekday: 'long' });
             dateDisplay.innerHTML = `
@@ -1013,14 +963,6 @@
 
         nextDayBtn.addEventListener('click', () => {
             if (currentDayIndex < groupedByDay.length - 1) { currentDayIndex++; renderDayView(); }
-        });
-
-        window.addEventListener('resize', () => {
-            const newIsMobile = window.innerWidth < LG_BREAKPOINT;
-            if (newIsMobile !== isMobile) {
-                isMobile = newIsMobile;
-                renderCityTimeline();
-            }
         });
 
         // --- Modals ---
