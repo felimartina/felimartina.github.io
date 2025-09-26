@@ -225,6 +225,8 @@
         /* --- Map Marker Styles --- */
         .leaflet-div-icon { background: #fff; border: 2px solid #64748b; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); }
         .leaflet-div-icon .material-symbols-outlined { font-size: 18px; color: #64748b; }
+        .alojamiento-icon { border-color: #3B82F6 !important; /* Tailwind blue-500 */ }
+        .alojamiento-icon .material-symbols-outlined { color: #3B82F6 !important; }
 
         /* --- City Timeline Mobile Scroll --- */
         #city-timeline-container {
@@ -959,7 +961,9 @@
                         if (isValidLatLng(poi.coords)) {
                             allCoords.push(poi.coords);
                             const iconHtml = `<span class="material-symbols-outlined">${poiIcons[poi.category] || 'place'}</span>`;
-                            const divIcon = L.divIcon({ className: 'leaflet-div-icon', html: iconHtml, iconSize: [30, 30], iconAnchor: [15, 15] });
+                            const isLodging = poi.category === 'Alojamiento';
+                            const className = isLodging ? 'leaflet-div-icon alojamiento-icon' : 'leaflet-div-icon';
+                            const divIcon = L.divIcon({ className: className, html: iconHtml, iconSize: [30, 30], iconAnchor: [15, 15] });
                             let popupContent = `<b>${poi.name}</b><br>${poi.category}`;
                             if (poi.maps_url) popupContent += `<br><a href="${poi.maps_url}" target="_blank" rel="noopener noreferrer">Ver en Google Maps</a>`;
                             L.marker(poi.coords, { icon: divIcon }).addTo(poiLayerGroup).bindPopup(popupContent);
