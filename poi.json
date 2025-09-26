@@ -665,6 +665,15 @@
         138.96
       ],
       "maps_url": "https://maps.google.com/?cid=14592182054696010041"
+    },
+    {
+      "name": "Check-in en Airbnb Akasaka",
+      "category": "Alojamiento",
+      "description": "4 Chome 7-1 Akasaka, Minato City, Tokyo-to 107-0052, Japan",
+      "coords": [
+        35.676821,
+        139.737119
+      ]
     }
   ],
   "Kamakura": [
@@ -1487,6 +1496,15 @@
         135.707
       ],
       "maps_url": "https://maps.google.com/?cid=12140411303212456456"
+    },
+    {
+      "name": "Check-in en Airbnb Kyoto",
+      "category": "Alojamiento",
+      "description": "596 Shinnochō, Higashiyama Ward, Kyoto, 605-0016, Japan",
+      "coords": [
+        34.99722,
+        135.77639
+      ]
     }
   ],
   "Osaka": [
@@ -1732,6 +1750,15 @@
         135.68
       ],
       "maps_url": "https://maps.google.com/?cid=14592182054696010041"
+    },
+    {
+      "name": "Check-in en Airbnb Osaka",
+      "category": "Alojamiento",
+      "description": "Higashishinsaibashi, Chuo Ward, Osaka, 542-0083, Japan",
+      "coords": [
+        34.67399,
+        135.50557
+      ]
     }
   ],
   "Nara": [
@@ -2352,6 +2379,15 @@
         129.18
       ],
       "maps_url": "https://maps.google.com/?cid=17175959656016792249"
+    },
+    {
+      "name": "Check-in en Maron Hotel Nampo",
+      "category": "Alojamiento",
+      "description": "12, Gwangbok-ro 67beon-gil, Jung-gu, Jung-gu, 48952 Busan, South Korea",
+      "coords": [
+        35.097883,
+        129.034663
+      ]
     }
   ],
   "Seoul": [
@@ -2905,7 +2941,26 @@
         126.98
       ],
       "maps_url": "https://maps.google.com/?cid=16412558064175448496"
+    },
+    {
+      "name": "Check-in en Airbnb Seoul",
+      "category": "Alojamiento",
+      "description": "39 Toegye-ro 20na-gil, Jung-gu, Seoul, South Korea",
+      "coords": [
+        37.5613,
+        126.9846
+      ]
+    }
+  ],
+  "Montreal": [
+    {
+      "name": "DoubleTree by Hilton Montreal Airport",
+      "category": "Alojamiento",
+      "description": "705 Avenue Michel-Jasmin Dorval QC H9P 1B8 CA",
+      "coords": [
+        45.4706,
+        -73.7408
+      ]
     }
   ]
 }
-
