@@ -374,11 +374,13 @@
                 </button>
             </div>
             <div id="filter-modal-content" class="p-6" style="max-height: 70vh; overflow-y: auto;">
-                <div class="flex justify-between mb-4 pb-4 border-b border-slate-200">
-                    <button id="filter-select-all" class="px-3 py-1 text-sm font-semibold text-emerald-700 bg-emerald-100 rounded-md hover:bg-emerald-200 transition">Seleccionar todo</button>
-                    <button id="filter-deselect-all" class="px-3 py-1 text-sm font-semibold text-slate-700 bg-slate-100 rounded-md hover:bg-slate-200 transition">Deseleccionar todo</button>
+                <div class="flex items-center mb-4 pb-4 border-b border-slate-200">
+                    <button id="filter-toggle-all-btn" class="flex items-center gap-2 text-sm font-semibold text-slate-700 hover:text-slate-900 transition">
+                        <span id="filter-toggle-all-icon" class="material-symbols-outlined">check_box_outline_blank</span>
+                        <span id="filter-toggle-all-text">Seleccionar todo</span>
+                    </button>
                 </div>
-                <div id="filter-categories" class="grid grid-cols-2 gap-4 pt-4">
+                <div id="filter-categories" class="grid grid-cols-2 gap-4">
                     <!-- Checkboxes will be injected here -->
                 </div>
             </div>
@@ -1016,8 +1018,7 @@
         const filterModalBtn = document.getElementById('filter-modal-btn');
         const filterModalCloseBtn = document.getElementById('filter-modal-close-btn');
         const filterApplyBtn = document.getElementById('filter-apply-btn');
-        const filterSelectAllBtn = document.getElementById('filter-select-all');
-        const filterDeselectAllBtn = document.getElementById('filter-deselect-all');
+        const filterToggleAllBtn = document.getElementById('filter-toggle-all-btn');
 
         function showPoiModal(location) {
             const cityMap = { "Susono": "Hakone", "Narita": "Tokyo", "Gyeongju": "Busan" };
@@ -1119,6 +1120,7 @@
         });
 
         filterModalBtn.addEventListener('click', () => {
+            updateToggleAllButtonState();
             filterModal.classList.remove('hidden');
             filterModal.classList.add('flex');
             setTimeout(() => filterModalCard.classList.remove('scale-95'), 10);
@@ -1132,23 +1134,38 @@
         filterModalCloseBtn.addEventListener('click', hideFilterModal);
         filterModal.addEventListener('click', (e) => { if (e.target === filterModal) hideFilterModal(); });
 
+        function updateToggleAllButtonState() {
+            const checkboxes = document.querySelectorAll('#filter-categories input[type="checkbox"]');
+            const checkedCount = document.querySelectorAll('#filter-categories input[type="checkbox"]:checked').length;
+            const icon = document.getElementById('filter-toggle-all-icon');
+            const text = document.getElementById('filter-toggle-all-text');
+
+            if (checkedCount === checkboxes.length) {
+                icon.textContent = 'check_box';
+                text.textContent = 'Deseleccionar todo';
+            } else if (checkedCount === 0) {
+                icon.textContent = 'check_box_outline_blank';
+                text.textContent = 'Seleccionar todo';
+            } else {
+                icon.textContent = 'indeterminate_check_box';
+                text.textContent = 'Seleccionar todo';
+            }
+        }
+
+        filterToggleAllBtn.addEventListener('click', () => {
+            const checkboxes = document.querySelectorAll('#filter-categories input[type="checkbox"]');
+            const checkedCount = document.querySelectorAll('#filter-categories input[type="checkbox"]:checked').length;
+            const shouldSelectAll = checkedCount < checkboxes.length;
+
+            checkboxes.forEach(cb => cb.checked = shouldSelectAll);
+            updateToggleAllButtonState();
+        });
+
         filterApplyBtn.addEventListener('click', () => {
             const selectedCategories = Array.from(document.querySelectorAll('#filter-categories input:checked')).map(cb => cb.value);
             activeFilters = selectedCategories;
             renderDayView(); // This will re-render the map
             hideFilterModal();
-        });
-
-        filterSelectAllBtn.addEventListener('click', () => {
-            document.querySelectorAll('#filter-categories input[type="checkbox"]').forEach(cb => {
-                cb.checked = true;
-            });
-        });
-
-        filterDeselectAllBtn.addEventListener('click', () => {
-            document.querySelectorAll('#filter-categories input[type="checkbox"]').forEach(cb => {
-                cb.checked = false;
-            });
         });
 
         function populateFilterModal() {
@@ -1163,7 +1180,7 @@
                 const isChecked = activeFilters.length === 0 || activeFilters.includes(category);
                 return `
                     <label for="${checkboxId}" class="flex items-center space-x-3 cursor-pointer hover:bg-slate-50 p-2 rounded-md">
-                        <input type="checkbox" id="${checkboxId}" name="poi-category" value="${category}" ${isChecked ? 'checked' : ''} class="h-4 w-4 rounded border-gray-300 text-emerald-600 focus:ring-emerald-500">
+                        <input type="checkbox" id="${checkboxId}" name="poi-category" value="${category}" ${isChecked ? 'checked' : ''} class="h-4 w-4 rounded border-gray-300 text-emerald-600 focus:ring-emerald-500" onchange="updateToggleAllButtonState()">
                         <span class="text-slate-700">${category}</span>
                     </label>
                 `;
