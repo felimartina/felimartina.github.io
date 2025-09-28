@@ -561,6 +561,13 @@
                 }, {});
                 groupedByDay = Object.values(byDate);
 
+                const today = new Date();
+                const todayIndex = groupedByDay.findIndex(day => day.date.toDateString() === today.toDateString());
+
+                if (todayIndex !== -1) {
+                    currentDayIndex = todayIndex;
+                }
+
                 cityStays = calculateCityStays(sortedData);
                 populateFilterModal();
 
