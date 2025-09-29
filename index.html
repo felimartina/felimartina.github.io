@@ -720,8 +720,8 @@
         // --- MAP INITIALIZATION ---
         function initializeMap() {
             map = L.map('map').setView([35.6895, 139.6917], 5);
-            L.tileLayer('https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}{r}.png?lang=es', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+                attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
                 maxZoom: 19
             }).addTo(map);
             poiLayerGroup = L.layerGroup().addTo(map);
