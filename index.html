@@ -720,8 +720,8 @@
         // --- MAP INITIALIZATION ---
         function initializeMap() {
             map = L.map('map').setView([35.6895, 139.6917], 5);
-            L.tileLayer('https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}{r}.png?lang=es', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+                attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
                 maxZoom: 19
             }).addTo(map);
             poiLayerGroup = L.layerGroup().addTo(map);
@@ -929,23 +929,13 @@
                 }
             }
 
-            const lodgingEvent = events.find(e => (e.type === 'lodging' || e.type === 'sleep') && isValidLatLng(e.coords));
+            const uniqueCoords = allCoords.filter((pt, idx, arr) => arr.findIndex(other => other[0] === pt[0] && other[1] === pt[1]) === idx);
 
-            map.invalidateSize();
-
-            if (lodgingEvent) {
-                // Zoom to 10km radius around lodging
-                const lodgingCoords = L.latLng(lodgingEvent.coords);
-                const bounds = lodgingCoords.toBounds(10000); // 10000 meters = 10km radius
-                map.fitBounds(bounds);
-            } else {
-                 const uniqueCoords = allCoords.filter((pt, idx, arr) => arr.findIndex(other => other[0] === pt[0] && other[1] === pt[1]) === idx);
-
-                if (uniqueCoords.length > 0) {
-                    const bounds = L.latLngBounds(uniqueCoords);
-                    if (bounds.isValid()) {
-                        map.fitBounds(bounds, { padding: [50, 50], maxZoom: 14 });
-                    }
+            if (uniqueCoords.length > 0) {
+                const bounds = L.latLngBounds(uniqueCoords);
+                map.invalidateSize();
+                if (bounds.isValid()) {
+                    map.fitBounds(bounds, { padding: [50, 50], maxZoom: 14 });
                 }
             }
         }
