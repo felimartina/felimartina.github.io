@@ -18,14 +18,9 @@ async def main():
         # Wait for the city timeline to be rendered
         await page.wait_for_selector('#city-timeline-container .city-timeline')
 
-        # Wait for the main content (including the map) to become visible
-        await page.wait_for_selector('#main-content', state='visible')
-
-        # Add a small delay for map tiles to load
-        await page.wait_for_timeout(2000)
-
-        # Take a screenshot of the entire page
-        await page.screenshot(path=args.output, full_page=True)
+        # Take a screenshot of the city timeline container
+        element_handle = await page.query_selector('#city-timeline-container')
+        await element_handle.screenshot(path=args.output)
 
         await browser.close()
         print(f"Screenshot saved to {args.output}")
