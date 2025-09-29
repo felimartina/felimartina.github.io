@@ -60,18 +60,6 @@
   },
   { "datetime": "2025-09-29T23:00:00.000Z", "type": "sleep", "title": "Noche en Tokyo", "location": "Tokyo", "coords": [ 35.676821, 139.737119 ], "details": { "Alojamiento": "Airbnb Akasaka" } },
   { "datetime": "2025-09-30T09:00:00.000Z", "type": "activity", "title": "Día en Tokyo", "location": "Tokyo", "coords": [ 35.6895, 139.6917 ], "details": { "Plan": "Explorar la zona de Shibuya y Harajuku." } },
-  {
-    "datetime": "2025-09-30T10:00:00.000Z",
-    "type": "activity",
-    "title": "Asakusa Free Walking Tour",
-    "location": "Tokyo",
-    "coords": [35.710694, 139.796500],
-    "details": {
-      "Lugar": "In front of Asakusa Culture Tourist Information Center",
-      "Link": "https://g.co/kgs/SDWKNDy",
-      "Precio": "Tip Based Tour"
-    }
-  },
   { "datetime": "2025-09-30T23:00:00.000Z", "type": "sleep", "title": "Noche en Tokyo", "location": "Tokyo", "coords": [ 35.676821, 139.737119 ], "details": { "Alojamiento": "Airbnb Akasaka" } },
   { "datetime": "2025-10-01T09:00:00.000Z", "type": "activity", "title": "Día en Tokyo", "location": "Tokyo", "coords": [ 35.6895, 139.6917 ], "details": { "Plan": "Explorar la zona de Asakusa y Ueno." } },
   { "datetime": "2025-10-01T23:00:00.000Z", "type": "sleep", "title": "Noche en Tokyo", "location": "Tokyo", "coords": [ 35.676821, 139.737119 ], "details": { "Alojamiento": "Airbnb Akasaka" } },
