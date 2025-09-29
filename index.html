@@ -720,8 +720,8 @@
         // --- MAP INITIALIZATION ---
         function initializeMap() {
             map = L.map('map').setView([35.6895, 139.6917], 5);
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+                attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
                 maxZoom: 19
             }).addTo(map);
             poiLayerGroup = L.layerGroup().addTo(map);
@@ -900,79 +900,42 @@
                 mainMarker = null;
             }
 
-            let centerCoords = null;
             const allCoords = [];
-            const firstEvent = events[0];
-            let poiLookupLocation = null;
-
-            if (firstEvent) {
-                const cityMap = { "Susono": "Hakone", "Narita": "Tokyo", "Gyeongju": "Busan" };
-                poiLookupLocation = cityMap[firstEvent.location] || firstEvent.location;
-            }
-
-            // --- 1. Determine Center Point ---
-            if (poiLookupLocation && pointsOfInterest[poiLookupLocation]) {
-                const lodgingPoi = pointsOfInterest[poiLookupLocation].find(poi =>
-                    poi.category === 'Alojamiento' && isValidLatLng(poi.coords)
-                );
-                if (lodgingPoi) {
-                    centerCoords = lodgingPoi.coords;
-                }
-            }
-
-            if (!centerCoords) {
-                const lodgingEvent = events.find(item => item.type === 'lodging' && isValidLatLng(item.coords));
-                if (lodgingEvent) {
-                    centerCoords = lodgingEvent.coords;
-                }
-            }
-
-            if (!centerCoords) {
-                const firstValidEvent = events.find(item => isValidLatLng(item.coords));
-                if (firstValidEvent) {
-                    centerCoords = firstValidEvent.coords;
-                }
-            }
-
-            // --- 2. Render all markers ---
             events.forEach(item => {
                 if (isValidLatLng(item.coords)) allCoords.push(item.coords);
             });
 
-            if (poiLookupLocation && pointsOfInterest[poiLookupLocation]) {
-                const poisToDisplay = pointsOfInterest[poiLookupLocation].filter(poi =>
-                    activeFilters.length === 0 || activeFilters.includes(poi.category)
-                );
+            const firstEvent = events[0];
+            if (firstEvent) {
+                const cityMap = { "Susono": "Hakone", "Narita": "Tokyo", "Gyeongju": "Busan" };
+                let poiLookupLocation = cityMap[firstEvent.location] || firstEvent.location;
+                if (pointsOfInterest[poiLookupLocation]) {
+                    const poisToDisplay = pointsOfInterest[poiLookupLocation].filter(poi =>
+                        activeFilters.length === 0 || activeFilters.includes(poi.category)
+                    );
 
-                poisToDisplay.forEach(poi => {
-                    if (isValidLatLng(poi.coords)) {
-                        allCoords.push(poi.coords);
-                        const iconHtml = `<span class="material-symbols-outlined">${poiIcons[poi.category] || 'place'}</span>`;
-                        const isLodging = poi.category === 'Alojamiento';
-                        const className = isLodging ? 'leaflet-div-icon alojamiento-icon' : 'leaflet-div-icon';
-                        const divIcon = L.divIcon({ className: className, html: iconHtml, iconSize: [30, 30], iconAnchor: [15, 15] });
-                        let popupContent = `<b>${poi.name}</b><br>${poi.category}`;
-                        if (poi.maps_url) popupContent += `<br><a href="${poi.maps_url}" target="_blank" rel="noopener noreferrer">Ver en Google Maps</a>`;
-                        L.marker(poi.coords, { icon: divIcon }).addTo(poiLayerGroup).bindPopup(popupContent);
-                    }
-                });
+                    poisToDisplay.forEach(poi => {
+                        if (isValidLatLng(poi.coords)) {
+                            allCoords.push(poi.coords);
+                            const iconHtml = `<span class="material-symbols-outlined">${poiIcons[poi.category] || 'place'}</span>`;
+                            const isLodging = poi.category === 'Alojamiento';
+                            const className = isLodging ? 'leaflet-div-icon alojamiento-icon' : 'leaflet-div-icon';
+                            const divIcon = L.divIcon({ className: className, html: iconHtml, iconSize: [30, 30], iconAnchor: [15, 15] });
+                            let popupContent = `<b>${poi.name}</b><br>${poi.category}`;
+                            if (poi.maps_url) popupContent += `<br><a href="${poi.maps_url}" target="_blank" rel="noopener noreferrer">Ver en Google Maps</a>`;
+                            L.marker(poi.coords, { icon: divIcon }).addTo(poiLayerGroup).bindPopup(popupContent);
+                        }
+                    });
+                }
             }
 
-            // --- 3. Set Map View ---
-            map.invalidateSize();
-            if (centerCoords) {
-                // Create a circle with a 10km radius to define the view bounds
-                const circle = L.circle(centerCoords, { radius: 10000 }); // 10000 meters = 10km
-                const bounds = circle.getBounds();
-                map.fitBounds(bounds);
-            } else {
-                // Fallback to original behavior if no center point could be determined
-                const uniqueCoords = allCoords.filter((pt, idx, arr) => arr.findIndex(other => other[0] === pt[0] && other[1] === pt[1]) === idx);
-                if (uniqueCoords.length > 0) {
-                    const bounds = L.latLngBounds(uniqueCoords);
-                    if (bounds.isValid()) {
-                        map.fitBounds(bounds, { padding: [50, 50], maxZoom: 14 });
-                    }
+            const uniqueCoords = allCoords.filter((pt, idx, arr) => arr.findIndex(other => other[0] === pt[0] && other[1] === pt[1]) === idx);
+
+            if (uniqueCoords.length > 0) {
+                const bounds = L.latLngBounds(uniqueCoords);
+                map.invalidateSize();
+                if (bounds.isValid()) {
+                    map.fitBounds(bounds, { padding: [50, 50], maxZoom: 14 });
                 }
             }
         }
