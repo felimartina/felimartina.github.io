@@ -228,6 +228,14 @@
         .alojamiento-icon { border-color: #3B82F6 !important; /* Tailwind blue-500 */ }
         .alojamiento-icon .material-symbols-outlined { color: #3B82F6 !important; }
 
+        .user-location-icon {
+            background-color: #3B82F6; /* blue-500 */
+            border-color: #93C5FD; /* blue-300 */
+        }
+        .user-location-icon .material-symbols-outlined {
+            color: white;
+        }
+
         /* --- City Timeline Mobile Scroll --- */
         #city-timeline-container {
             position: relative;
@@ -337,9 +345,8 @@
                                 <span class="material-symbols-outlined">filter_list</span>
                                 Filtros
                             </button>
-                            <button id="locate-me-btn" class="flex items-center gap-2 px-4 py-2 font-semibold rounded-lg shadow-md transition bg-white text-slate-700 hover:bg-slate-100 border border-slate-200">
+                            <button id="locate-me-btn" class="flex items-center justify-center w-10 h-10 rounded-lg shadow-md transition bg-white text-slate-700 hover:bg-slate-100 border border-slate-200" title="Ubicarme">
                                 <span class="material-symbols-outlined">my_location</span>
-                                Ubicarme
                             </button>
                         </div>
                          <!-- Map -->
@@ -1024,12 +1031,18 @@
                     const userLatLng = [latitude, longitude];
 
                     if (userLocationMarker) map.removeLayer(userLocationMarker);
-                    if (userLocationCircle) map.removeLayer(userLocationCircle);
+                    if (userLocationCircle) map.removeLayer(userLocationCircle); // Keep for cleanup, though it's no longer created
 
-                    userLocationMarker = L.marker(userLatLng).addTo(map).bindPopup("<b>Estás aquí</b>").openPopup();
-                    userLocationCircle = L.circle(userLatLng, { radius: 3000, color: '#1E90FF', fillColor: '#1E90FF', fillOpacity: 0.2 }).addTo(map);
+                    const userIcon = L.divIcon({
+                        className: 'leaflet-div-icon user-location-icon',
+                        html: `<span class="material-symbols-outlined">person_pin</span>`,
+                        iconSize: [30, 30],
+                        iconAnchor: [15, 30]
+                    });
 
-                    map.fitBounds(userLocationCircle.getBounds());
+                    userLocationMarker = L.marker(userLatLng, { icon: userIcon }).addTo(map).bindPopup("<b>Estás aquí</b>");
+
+                    map.setView(userLatLng, 13); // Center map with a fixed zoom
                     showNotification("Ubicación encontrada.", false);
 
                     // Restore button
