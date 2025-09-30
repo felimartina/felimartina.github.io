@@ -337,6 +337,10 @@
                                 <span class="material-symbols-outlined">filter_list</span>
                                 Filtros
                             </button>
+                            <button id="locate-me-btn" class="flex items-center gap-2 px-4 py-2 font-semibold rounded-lg shadow-md transition bg-white text-slate-700 hover:bg-slate-100 border border-slate-200">
+                                <span class="material-symbols-outlined">my_location</span>
+                                Ubicarme
+                            </button>
                         </div>
                          <!-- Map -->
                         <div id="map-container" class="w-full h-96 lg:h-[60vh] bg-white rounded-xl shadow-xl">
@@ -459,6 +463,28 @@
             return string.charAt(0).toUpperCase() + string.slice(1);
         }
 
+        function showNotification(message, isError = false) {
+            const notification = document.createElement('div');
+            notification.textContent = message;
+            notification.className = `fixed bottom-5 right-5 p-4 rounded-lg shadow-lg text-white ${isError ? 'bg-red-500' : 'bg-emerald-600'} transform transition-transform duration-300 translate-y-20 opacity-0 z-[9999]`;
+            document.body.appendChild(notification);
+
+            // Animate in
+            setTimeout(() => {
+                notification.classList.remove('translate-y-20', 'opacity-0');
+            }, 10);
+
+            // Animate out and remove after 3 seconds
+            setTimeout(() => {
+                notification.classList.add('translate-y-20', 'opacity-0');
+                setTimeout(() => {
+                    if (document.body.contains(notification)) {
+                        document.body.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
+        }
+
         // Normalize the keys of the flags object for robust matching
         const countryFlags = Object.keys(rawCountryFlags).reduce((acc, key) => {
             acc[normalizeStr(key)] = rawCountryFlags[key];
@@ -485,6 +511,8 @@
         let map;
         let poiLayerGroup;
         let activeFilters = [];
+        let userLocationMarker = null;
+        let userLocationCircle = null;
 
         // --- COORDINATE PARSING & VALIDATION (ROBUST) ---
         function parseCoords(coords) {
@@ -970,6 +998,52 @@
 
         nextDayBtn.addEventListener('click', () => {
             if (currentDayIndex < groupedByDay.length - 1) { currentDayIndex++; renderDayView(); }
+        });
+
+        document.getElementById('locate-me-btn').addEventListener('click', (e) => {
+            const btn = e.currentTarget;
+            const originalContent = btn.innerHTML;
+
+            if (!navigator.geolocation) {
+                showNotification("Geolocalización no es soportada por este navegador.", true);
+                return;
+            }
+
+            // Show loading state
+            btn.disabled = true;
+            btn.innerHTML = `
+                <svg class="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Ubicando...`;
+
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const { latitude, longitude } = position.coords;
+                    const userLatLng = [latitude, longitude];
+
+                    if (userLocationMarker) map.removeLayer(userLocationMarker);
+                    if (userLocationCircle) map.removeLayer(userLocationCircle);
+
+                    userLocationMarker = L.marker(userLatLng).addTo(map).bindPopup("<b>Estás aquí</b>").openPopup();
+                    userLocationCircle = L.circle(userLatLng, { radius: 3000, color: '#1E90FF', fillColor: '#1E90FF', fillOpacity: 0.2 }).addTo(map);
+
+                    map.fitBounds(userLocationCircle.getBounds());
+                    showNotification("Ubicación encontrada.", false);
+
+                    // Restore button
+                    btn.disabled = false;
+                    btn.innerHTML = originalContent;
+                },
+                (error) => {
+                    showNotification(`Error al obtener la ubicación: ${error.message}`, true);
+
+                    // Restore button
+                    btn.disabled = false;
+                    btn.innerHTML = originalContent;
+                }
+            );
         });
 
         // --- Modals ---
