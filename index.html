@@ -940,38 +940,60 @@
                 if (isValidLatLng(item.coords)) allCoords.push(item.coords);
             });
 
-            const firstEvent = events[0];
-            if (firstEvent) {
-                const cityMap = { "Susono": "Hakone", "Narita": "Tokyo", "Gyeongju": "Busan" };
-                let poiLookupLocation = cityMap[firstEvent.location] || firstEvent.location;
-                if (pointsOfInterest[poiLookupLocation]) {
-                    const poisToDisplay = pointsOfInterest[poiLookupLocation].filter(poi =>
-                        activeFilters.length === 0 || activeFilters.includes(poi.category)
-                    );
+            const currentEventDate = events[0]?.datetime;
+            if (currentEventDate) {
+                const activeCityKey = getActiveCity(currentEventDate);
+                if (activeCityKey) {
+                    const activeCityName = cityStays[activeCityKey].city;
+                    const cityMap = { "Susono": "Hakone", "Narita": "Tokyo", "Gyeongju": "Busan" };
+                    const baseLocation = cityMap[activeCityName] || activeCityName;
 
-                    poisToDisplay.forEach(poi => {
-                        if (isValidLatLng(poi.coords)) {
-                            allCoords.push(poi.coords);
-                            const iconHtml = `<span class="material-symbols-outlined">${poiIcons[poi.category] || 'place'}</span>`;
-                            const isLodging = poi.category === 'Alojamiento';
-                            const className = isLodging ? 'leaflet-div-icon alojamiento-icon' : 'leaflet-div-icon';
-                            const divIcon = L.divIcon({ className: className, html: iconHtml, iconSize: [30, 30], iconAnchor: [15, 15] });
+                    const locationsToDisplay = new Set([baseLocation]);
 
-                            const searchQuery = encodeURIComponent(`${poi.name}, ${poiLookupLocation}`);
-                            const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${searchQuery}`;
+                    // Check for day trips and add their locations from the event title
+                    const knownPoiCities = Object.keys(pointsOfInterest);
+                    events.forEach(event => {
+                        if (event.type === 'daytrip') {
+                            const eventTitleLower = (event.title || '').toLowerCase();
+                            knownPoiCities.forEach(city => {
+                                if (eventTitleLower.includes(city.toLowerCase())) {
+                                    locationsToDisplay.add(city);
+                                }
+                            });
+                        }
+                    });
 
-                            const popupContent = `
-                                <div class="flex flex-col gap-1 p-1">
-                                    <div class="font-bold text-base">${poi.name}</div>
-                                    <div class="text-sm text-slate-500 mb-1">${poi.category}</div>
-                                    <a href="${mapsUrl}" target="_blank" rel="noopener noreferrer"
-                                       class="inline-flex items-center gap-1 text-sm font-semibold text-emerald-600 hover:text-emerald-700 hover:underline">
-                                        <span class="material-symbols-outlined" style="font-size: 16px;">open_in_new</span>
-                                        Abrir en Maps
-                                    </a>
-                                </div>
-                            `;
-                            L.marker(poi.coords, { icon: divIcon }).addTo(poiLayerGroup).bindPopup(popupContent);
+                    locationsToDisplay.forEach(poiLookupLocation => {
+                        if (pointsOfInterest[poiLookupLocation]) {
+                            const poisToDisplay = pointsOfInterest[poiLookupLocation].filter(poi =>
+                                activeFilters.length === 0 || activeFilters.includes(poi.category)
+                            );
+
+                            poisToDisplay.forEach(poi => {
+                                if (isValidLatLng(poi.coords)) {
+                                    allCoords.push(poi.coords);
+                                    const iconHtml = `<span class="material-symbols-outlined">${poiIcons[poi.category] || 'place'}</span>`;
+                                    const isLodging = poi.category === 'Alojamiento';
+                                    const className = isLodging ? 'leaflet-div-icon alojamiento-icon' : 'leaflet-div-icon';
+                                    const divIcon = L.divIcon({ className: className, html: iconHtml, iconSize: [30, 30], iconAnchor: [15, 15] });
+
+                                    const searchQuery = encodeURIComponent(`${poi.name}, ${poiLookupLocation}`);
+                                    const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${searchQuery}`;
+
+                                    const popupContent = `
+                                    <div class="flex flex-col gap-1 p-1">
+                                        <div class="font-bold text-base">${poi.name}</div>
+                                        <div class="text-sm text-slate-500 mb-1">${poi.category}</div>
+                                        <a href="${mapsUrl}" target="_blank" rel="noopener noreferrer"
+                                           class="inline-flex items-center gap-1 text-sm font-semibold text-emerald-600 hover:text-emerald-700 hover:underline">
+                                            <span class="material-symbols-outlined" style="font-size: 16px;">open_in_new</span>
+                                            Abrir en Maps
+                                        </a>
+                                    </div>
+                                `;
+                                    L.marker(poi.coords, { icon: divIcon }).addTo(poiLayerGroup).bindPopup(popupContent);
+                                }
+                            });
                         }
                     });
                 }
