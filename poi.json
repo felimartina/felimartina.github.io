@@ -700,6 +700,127 @@
         35.676821,
         139.737119
       ]
+    },
+    {
+      "name": "Shibuya Scramble Crossing (渋谷スクランブル交差点)",
+      "category": "Atracción",
+      "description": "The world's busiest pedestrian intersection, where hundreds of people cross from multiple directions at once. It's a quintessential symbol of modern Tokyo's energy and dynamism.",
+      "cost": "Free to watch. For a good view, you can buy a drink at the Starbucks in the Tsutaya building opposite the station.",
+      "tip_recommendation": "Evenings on weekdays or anytime on weekends to see the largest crowds. The neon lights at night make it particularly spectacular.",
+      "coords": [
+        35.6595,
+        139.7005
+      ]
+    },
+    {
+      "name": "Hachiko Statue (忠犬ハチ公像)",
+      "category": "Atracción",
+      "description": "A bronze statue commemorating the famously loyal Akita dog, Hachiko, who waited at Shibuya Station for his deceased owner for over nine years. It's one of Tokyo's most popular meeting points.",
+      "cost": "Free",
+      "tip_recommendation": "Anytime, but it can be very crowded. Visiting early in the morning or later at night might allow for a photo with fewer people.",
+      "coords": [
+        35.6591,
+        139.7006
+      ]
+    },
+    {
+      "name": "Ichiran Shibuya (一蘭 渋谷店)",
+      "category": "Comida y Bebida",
+      "description": "A famous ramen chain known for its classic tonkotsu (pork bone broth) ramen. Customers can customize their order completely and eat in individual 'flavor concentration' booths.",
+      "cost": "¥1,000 - ¥2,000 per person.",
+      "tip_recommendation": "To avoid long queues, try to go during off-peak hours (e.g., mid-afternoon between 3 PM and 5 PM).",
+      "coords": [
+        35.6585,
+        139.7013
+      ]
+    },
+    {
+      "name": "Uobei Shibuya Dogenzaka Store (魚べい 渋谷道玄坂店)",
+      "category": "Comida y Bebida",
+      "description": "A fun and affordable conveyor belt sushi restaurant where you order from a tablet and your sushi is delivered directly to your seat on high-speed trays.",
+      "cost": "¥1,500 - ¥3,000 per person. Most plates are very reasonably priced.",
+      "tip_recommendation": "Weekday afternoons. Lunch and dinner times, especially on weekends, can have very long waits.",
+      "coords": [
+        35.6583,
+        139.6983
+      ]
+    },
+    {
+      "name": "Gyukatsu Motomura Shibuya (牛かつ もと村 渋谷店)",
+      "category": "Comida y Bebida",
+      "description": "Specializes in gyukatsu—a breaded, deep-fried beef cutlet that is served rare. You finish cooking the slices yourself on a personal stone grill at your table.",
+      "cost": "¥2,000 - ¥4,000 per person.",
+      "tip_recommendation": "Go at least 30 minutes before opening or during off-peak hours to minimize wait times, as queues are common.",
+      "coords": [
+        35.6589,
+        139.7016
+      ]
+    },
+    {
+      "name": "Shibuya 109 (SHIBUYA109渋谷店)",
+      "category": "Compras",
+      "description": "An iconic, cylinder-shaped department store that is the epicenter of Japanese youth fashion and 'gyaru' culture. It features dozens of small boutiques with trendy clothing and accessories.",
+      "cost": "Varies widely by store.",
+      "tip_recommendation": "Weekday afternoons are generally less crowded than weekends.",
+      "coords": [
+        35.6595,
+        139.6982
+      ]
+    },
+    {
+      "name": "Shibuya Scramble Square (渋谷スクランブルスクエア)",
+      "category": "Compras",
+      "description": "A 230-meter-tall skyscraper directly connected to Shibuya Station. It houses trendy shops, restaurants, and the Shibuya Sky observation deck on its rooftop.",
+      "cost": "Varies by store.",
+      "tip_recommendation": "Anytime during opening hours.",
+      "coords": [
+        35.6590,
+        139.7023
+      ]
+    },
+    {
+      "name": "Tokyu Hands Shibuya Store (東急ハンズ 渋谷店)",
+      "category": "Compras",
+      "description": "A massive 'creative life' department store offering an incredible selection of goods, from high-quality stationery and art supplies to home goods, gadgets, and DIY materials. It's a fun place to browse for unique souvenirs.",
+      "cost": "Varies widely.",
+      "tip_recommendation": "Weekdays are less crowded than weekends.",
+      "coords": [
+        35.6617,
+        139.6982
+      ]
+    },
+    {
+      "name": "Meiji Jingu (明治神宮)",
+      "category": "Templos y Santuarios",
+      "description": "A major Shinto shrine dedicated to the deified spirits of Emperor Meiji and his wife, Empress Shoken. It is a peaceful, forested oasis in the middle of the bustling city.",
+      "cost": "Free admission to the main shrine grounds.",
+      "tip_recommendation": "Early mornings are the most tranquil. The shrine closes around sunset, so check the hours before you go.",
+      "coords": [
+        35.6764,
+        139.6993
+      ]
+    },
+    {
+      "name": "SHIBUYA SKY",
+      "category": "Lugar de interés y Mirador",
+      "description": "An open-air observation deck on the roof of Shibuya Scramble Square. It offers stunning 360-degree views of Tokyo, including the Shibuya Crossing directly below.",
+      "cost": "Around ¥2,200 - ¥2,500 for an adult ticket purchased on-site. It's often cheaper to book online in advance.",
+      "tip_recommendation": "45-60 minutes before sunset to see the city in daylight, watch the sunset, and see the skyline light up at night. Booking tickets in advance is highly recommended.",
+      "coords": [
+        35.6590,
+        139.7023
+      ]
+    },
+    {
+      "name": "Nonbei Yokocho (のんべい横丁)",
+      "category": "Comida y Bebida",
+      "description": "A charming, narrow alleyway near Shibuya Station filled with tiny, traditional lantern-lit izakayas (Japanese pubs) and bars, some seating only a handful of people. It offers a glimpse of old-world Tokyo.",
+      "cost": "¥3,000 - ¥6,000 per person for food and drinks, depending on the establishment. Many places have a seating charge.",
+      "tip_recommendation": "After 7 PM, when the small bars and eateries start to fill up and the atmosphere becomes lively.",
+      "coords": [
+        35.6604,
+        139.7008
+      ]
     }
   ],
   "Kamakura": [
