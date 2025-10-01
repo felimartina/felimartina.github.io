@@ -207,6 +207,42 @@
       ]
     },
     {
+      "name": "Uniqlo Flagship Store",
+      "category": "Compras",
+      "description": "The largest Uniqlo store in Japan, spanning 12 floors with a vast selection of apparel and a UT floor for an immersive brand experience.",
+      "coords": [
+        35.6695694,
+        139.7640806
+      ]
+    },
+    {
+      "name": "Itoya",
+      "category": "Compras",
+      "description": "A stunning, multi-story flagship store dedicated entirely to stationery, pens, paper, and art supplies. It’s a must-visit even if you're not a stationery enthusiast.",
+      "coords": [
+        35.6732778,
+        139.7672111
+      ]
+    },
+    {
+      "name": "Yurakucho Gado-shita",
+      "category": "Comida y Bebida",
+      "description": "For a more atmospheric and casual experience, head toward Yurakucho Station, where you'll find cozy izakayas and bars nestled under the elevated train tracks.",
+      "coords": [
+        35.67425,
+        139.76144
+      ]
+    },
+    {
+      "name": "Ginza Six Rooftop Garden",
+      "category": "Lugar de interés y Mirador",
+      "description": "A serene escape in Tokyo's bustling Ginza district. Located atop the Ginza Six complex, this rooftop garden features grass zones, water features, forest areas, and promenade paths, creating a lush and tranquil environment. It offers stunning 360-degree views of Ginza and Tokyo.",
+      "coords": [
+        35.6695694,
+        139.7640806
+      ]
+    },
+    {
       "name": "Santuario Hie",
       "category": "Templos y Santuarios",
       "description": "Un complejo de santuarios y jardines sinto\u00edstas famoso por su escalera de toriis rojos, similar a Fushimi Inari pero en Tokio.",
