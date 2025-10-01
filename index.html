@@ -956,8 +956,21 @@
                             const isLodging = poi.category === 'Alojamiento';
                             const className = isLodging ? 'leaflet-div-icon alojamiento-icon' : 'leaflet-div-icon';
                             const divIcon = L.divIcon({ className: className, html: iconHtml, iconSize: [30, 30], iconAnchor: [15, 15] });
-                            let popupContent = `<b>${poi.name}</b><br>${poi.category}`;
-                            if (poi.maps_url) popupContent += `<br><a href="${poi.maps_url}" target="_blank" rel="noopener noreferrer">Ver en Google Maps</a>`;
+
+                            const searchQuery = encodeURIComponent(`${poi.name}, ${poiLookupLocation}`);
+                            const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${searchQuery}`;
+
+                            const popupContent = `
+                                <div class="flex flex-col gap-1 p-1">
+                                    <div class="font-bold text-base">${poi.name}</div>
+                                    <div class="text-sm text-slate-500 mb-1">${poi.category}</div>
+                                    <a href="${mapsUrl}" target="_blank" rel="noopener noreferrer"
+                                       class="inline-flex items-center justify-center gap-2 px-3 py-1.5 text-sm font-semibold text-white bg-emerald-600 rounded-md hover:bg-emerald-700 transition-colors shadow-sm">
+                                        <span class="material-symbols-outlined" style="font-size: 16px;">open_in_new</span>
+                                        Abrir en Maps
+                                    </a>
+                                </div>
+                            `;
                             L.marker(poi.coords, { icon: divIcon }).addTo(poiLayerGroup).bindPopup(popupContent);
                         }
                     });
@@ -1099,13 +1112,21 @@
                                 <span class="material-symbols-outlined transition-transform duration-300 group-open:rotate-180">expand_more</span>
                             </summary>
                             <div class="poi-list-modal p-3 space-y-3">
-                                ${groupedPOIs[category].map(poi => `
-                                    <div class="poi-item-modal border-l-2 border-slate-200 pl-4 py-2">
+                                ${groupedPOIs[category].map(poi => {
+                                    const searchQuery = encodeURIComponent(`${poi.name}, ${poiLookupLocation}`);
+                                    const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${searchQuery}`;
+                                    return `
+                                    <div class="poi-item-modal border-l-2 border-slate-200 pl-4 py-2 flex flex-col items-start gap-1">
                                         <p class="font-semibold text-slate-800">${poi.name}</p>
                                         <p class="text-sm text-slate-600">${poi.description}</p>
-                                        ${poi.maps_url ? `<a href="${poi.maps_url}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-sm text-emerald-600 hover:text-emerald-800 font-semibold mt-1">Ver en Google Maps <span class="material-symbols-outlined" style="font-size: 16px;">open_in_new</span></a>` : ''}
+                                        <a href="${mapsUrl}" target="_blank" rel="noopener noreferrer"
+                                           class="inline-flex items-center justify-center gap-2 px-3 py-1.5 text-sm font-semibold text-white bg-emerald-600 rounded-md hover:bg-emerald-700 transition-colors shadow-sm mt-1">
+                                            <span class="material-symbols-outlined" style="font-size: 16px;">open_in_new</span>
+                                            Abrir en Maps
+                                        </a>
                                     </div>
-                                `).join('')}
+                                    `;
+                                }).join('')}
                             </div>
                         </details>`;
                 }
