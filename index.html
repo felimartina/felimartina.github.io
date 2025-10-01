@@ -980,17 +980,43 @@
                                     const searchQuery = encodeURIComponent(`${poi.name}, ${poiLookupLocation}`);
                                     const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${searchQuery}`;
 
-                                    const popupContent = `
-                                    <div class="flex flex-col gap-1 p-1">
+                                    let popupContent = `<div class="flex flex-col gap-2 p-1 max-w-xs" style="word-wrap: break-word; max-height: 200px; overflow-y: auto;">
                                         <div class="font-bold text-base">${poi.name}</div>
-                                        <div class="text-sm text-slate-500 mb-1">${poi.category}</div>
-                                        <a href="${mapsUrl}" target="_blank" rel="noopener noreferrer"
-                                           class="inline-flex items-center gap-1 text-sm font-semibold text-emerald-600 hover:text-emerald-700 hover:underline">
-                                            <span class="material-symbols-outlined" style="font-size: 16px;">open_in_new</span>
-                                            Abrir en Maps
-                                        </a>
-                                    </div>
-                                `;
+                                        <div class="text-sm text-slate-500 -mt-1 mb-1">${poi.category}</div>`;
+
+                                    for (const [key, value] of Object.entries(poi)) {
+                                        if (key === 'name' || key === 'category' || key === 'coords' || !value) {
+                                            continue;
+                                        }
+
+                                        const displayKey = capitalizeFirstLetter(key.replace(/_/g, ' '));
+
+                                        let displayValue = value;
+                                        if (typeof value === 'string' && value.startsWith('http')) {
+                                            displayValue = `<a href="${value}" target="_blank" rel="noopener noreferrer" class="text-emerald-600 hover:underline break-all">${value}</a>`;
+                                        } else if (Array.isArray(value)) {
+                                            displayValue = value.map(item => {
+                                                if (typeof item === 'string' && item.startsWith('http')) {
+                                                    return `<a href="${item}" target="_blank" rel="noopener noreferrer" class="text-emerald-600 hover:underline break-all">${item}</a>`;
+                                                }
+                                                return item;
+                                            }).join('<br>');
+                                        }
+
+                                        popupContent += `<div class="text-sm">
+                                            <strong class="font-semibold text-slate-700">${displayKey}:</strong>
+                                            <span class="text-slate-600">${displayValue}</span>
+                                        </div>`;
+                                    }
+
+                                    popupContent += `<a href="${mapsUrl}" target="_blank" rel="noopener noreferrer"
+                                                       class="inline-flex items-center gap-1 text-sm font-semibold text-emerald-600 hover:text-emerald-700 hover:underline mt-2">
+                                                        <span class="material-symbols-outlined" style="font-size: 16px;">open_in_new</span>
+                                                        Abrir en Maps
+                                                    </a>`;
+
+                                    popupContent += `</div>`;
+
                                     L.marker(poi.coords, { icon: divIcon }).addTo(poiLayerGroup).bindPopup(popupContent);
                                 }
                             });
