@@ -198,6 +198,59 @@
       ]
     },
     {
+      "name": "Toyosu Market",
+      "category": "Mercado",
+      "description": "The world's largest wholesale fish market, which replaced the historic Tsukiji fish market. Visitors can observe the tuna auction and enjoy fresh seafood.",
+      "coords": [
+        35.64333,
+        139.78167
+      ]
+    },
+    {
+      "name": "Wagyu Yakiniku Black Hole (焼肉食べ放題 ブラックホール 新宿三丁目店)",
+      "category": "Comida y Bebida",
+      "description": "Restaurante de Yakiniku en Shinjuku. Rango de precios para la cena: ¥5,000 - ¥8,000.",
+      "location": "3 Chome-5-3 Shinjuku, Shinjuku City, Tokyo",
+      "cost": "¥5,000 - ¥8,000",
+      "coords": [
+        35.691861,
+        139.705667
+      ]
+    },
+    {
+      "name": "Nikuya Yokocho Udagawacho (肉屋横丁 宇田川町)",
+      "category": "Comida y Bebida",
+      "description": "Restaurante de Yakiniku en Shibuya. Rango de precios para la cena: ¥6,000 - ¥8,000.",
+      "location": "HULIC & New UDAGAWA 8F, 32-7 Udagawacho, Shibuya City, Tokyo",
+      "cost": "¥6,000 - ¥8,000",
+      "coords": [
+        35.66113,
+        139.6979
+      ]
+    },
+    {
+      "name": "Yakiniku A FIVE Toku (焼肉 A FIVE 徳 銀座八丁目店)",
+      "category": "Comida y Bebida",
+      "description": "Restaurante de Yakiniku en Ginza. Rango de precios para la cena: ¥7,000 - ¥10,000.",
+      "location": "GINZA TOKIDEN Building 9F, 8 Chome-3-1 Ginza, Chuo City, Tokyo",
+      "cost": "¥7,000 - ¥10,000",
+      "coords": [
+        35.6702,
+        139.7613
+      ]
+    },
+    {
+      "name": "Kakekomi Gyoza",
+      "category": "Comida y Bebida",
+      "description": "Restaurante de gyoza en Kabukicho.",
+      "location": "1-12-2, Kabukicho, Shinjuku, Tokyo",
+      "cost": "Not available",
+      "coords": [
+        35.6946,
+        139.7027
+      ]
+    },
+    {
       "name": "Ginza",
       "category": "Barrio",
       "description": "Un lujoso distrito de compras, restaurantes y entretenimiento en Tokio.",
